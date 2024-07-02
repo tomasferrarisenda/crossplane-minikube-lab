@@ -1,7 +1,8 @@
 apiVersion: aws.upbound.io/v1beta1
 kind: ProviderConfig
 metadata:
-  name: aws
+  name: default
+  # name: aws
 spec:
   credentials:
     source: Secret
