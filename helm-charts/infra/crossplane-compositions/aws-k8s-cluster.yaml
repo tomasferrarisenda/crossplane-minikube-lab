@@ -760,7 +760,7 @@ spec:
             Name: crossplane-minikube-lab-role
 
   # Role Policy Attachment
-  - name: role
+  - name: role-policy-attachment
     base:
       apiVersion: iam.aws.upbound.io/v1beta1
       kind: RolePolicyAttachment
