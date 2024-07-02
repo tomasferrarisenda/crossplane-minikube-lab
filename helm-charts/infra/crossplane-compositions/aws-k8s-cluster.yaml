@@ -433,6 +433,9 @@ spec:
     base:
       apiVersion: ec2.aws.crossplane.io/v1beta1
       kind: InternetGateway
+      metadata:
+        labels:
+          gateway: internet
       spec:
         forProvider:
           region: us-east-1
@@ -516,27 +519,43 @@ spec:
             Name: crossplane-minikube-lab-eip-c
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-  - name: routetable
+# Route Table Public
+  - name: route-table-public
     base:
-      apiVersion: ec2.aws.crossplane.io/v1beta1
+      apiVersion: ec2.aws.upbound.io/v1beta1
       kind: RouteTable
+      metadata:
+        labels:
+          access: public
       spec:
         forProvider:
           region: us-east-1
           vpcIdSelector:
             matchControllerRef: true
+          tags:
+            Name: crossplane-minikube-lab-route-table-public
+
+# Route Public
+  - name: route-public
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: RouteTable
+      spec:
+        forProvider:
+          region: us-east-1
+          destinationCidrBlock: 0.0.0.0/0
+          gatewayIdSelector:
+            matchControllerRef: true
+            matchLabels:
+              gateway: internet
+          routeTableIdSelector:
+            matchControllerRef: true
+            matchLabels:
+              access: public
+          tags:
+            Name: crossplane-minikube-lab-route-public
+
+
           routes:
             - destinationCidrBlock: 0.0.0.0/0
               gatewayIdSelector:
