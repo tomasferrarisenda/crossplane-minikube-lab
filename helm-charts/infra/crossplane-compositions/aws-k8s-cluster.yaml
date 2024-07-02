@@ -728,3 +728,46 @@ spec:
             Name: crossplane-minikube-lab-open-id-provider
 
 
+#########################################################################
+# IAM
+#########################################################################
+
+  # Role
+  - name: role
+    base:
+      apiVersion: iam.aws.upbound.io/v1beta1
+      kind: Role
+      spec:
+        forProvider:
+          assumeRolePolicy: |
+            {
+              "Version": "2012-10-17",
+              "Statement": [
+                  {
+                      "Effect": "Allow",
+                      "Principal": {
+                          "Service": [
+                              "eks.amazonaws.com"
+                          ]
+                      },
+                      "Action": [
+                          "sts:AssumeRole"
+                      ]
+                  }
+              ]
+            }
+          tags:
+            Name: crossplane-minikube-lab-role
+
+  # Role Policy Attachment
+  - name: role
+    base:
+      apiVersion: iam.aws.upbound.io/v1beta1
+      kind: RolePolicyAttachment
+      spec:
+        forProvider:
+          policyArn: arn:aws:iam::aws:policy/AmazonEKSClusterPolicy
+          roleSelector:
+            matchControllerRef: true
+          tags:
+            Name: crossplane-minikube-lab-role-policy-policy-attachment
