@@ -519,7 +519,7 @@ spec:
             Name: crossplane-minikube-lab-eip-c
 
 
-# Route Table Public
+  # Route Table Public
   - name: route-table-public
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -535,7 +535,7 @@ spec:
           tags:
             Name: crossplane-minikube-lab-route-table-public
 
-# Route Public
+  # Route Public
   - name: route-public
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -554,3 +554,37 @@ spec:
               access: public
           tags:
             Name: crossplane-minikube-lab-route-public
+
+  # Route Table Private B
+  - name: route-table-private-b
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: RouteTable
+      metadata:
+        labels:
+          access: private
+          zone: b
+      spec:
+        forProvider:
+          region: us-east-1
+          vpcIdSelector:
+            matchControllerRef: true
+          tags:
+            Name: crossplane-minikube-lab-route-table-private-b
+
+  # Route Table Private C
+  - name: route-table-private-c
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: RouteTable
+      metadata:
+        labels:
+          access: private
+          zone: c
+      spec:
+        forProvider:
+          region: us-east-1
+          vpcIdSelector:
+            matchControllerRef: true
+          tags:
+            Name: crossplane-minikube-lab-route-table-private-c
