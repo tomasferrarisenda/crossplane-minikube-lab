@@ -600,25 +600,25 @@ spec:
           tags:
             Name: crossplane-minikube-lab-route-table-public
 
-  # # Route Public
-  # - name: route-public
-  #   base:
-  #     apiVersion: ec2.aws.upbound.io/v1beta1
-  #     kind: RouteTable
-  #     spec:
-  #       forProvider:
-  #         region: us-east-1
-  #         destinationCidrBlock: 0.0.0.0/0
-  #         gatewayIdSelector:
-  #           matchControllerRef: true
-  #           matchLabels:
-  #             gateway: internet
-  #         routeTableIdSelector:
-  #           matchControllerRef: true
-  #           matchLabels:
-  #             access: public
-  #         tags:
-  #           Name: crossplane-minikube-lab-route-public
+  # Route Public
+  - name: route-public
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: RouteTable
+      spec:
+        forProvider:
+          region: us-east-1
+          destinationCidrBlock: 0.0.0.0/0
+          gatewayIdSelector:
+            matchControllerRef: true
+            matchLabels:
+              gateway: internet
+          routeTableIdSelector:
+            matchControllerRef: true
+            matchLabels:
+              access: public
+          tags:
+            Name: crossplane-minikube-lab-route-public
 
   # Route Table Private B
   - name: route-table-private-b
