@@ -693,7 +693,7 @@ spec:
             Name: crossplane-minikube-lab-security-group-rule-1
 
   # Security Group Rule 2
-  - name: security-group-rule-1
+  - name: security-group-rule-2
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
       kind: SecurityGroupRule
