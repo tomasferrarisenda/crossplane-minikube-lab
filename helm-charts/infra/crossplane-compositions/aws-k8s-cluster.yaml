@@ -206,6 +206,12 @@ spec:
   #           matchLabels:
   #             role: nodegroup
 
+
+#########################################################################
+# NETWORKING
+#########################################################################
+
+  # VPC
   - name: vpc
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -236,34 +242,6 @@ spec:
   #           ipProtocol: "-1"
   #           ipRanges:
   #           - cidrIp: "0.0.0.0/0"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   # Subnet Public B
@@ -306,14 +284,10 @@ spec:
             matchLabels:
               zone: us-east-1b
               access: public
-          # subnetIdRef:
-          #   name: aatt-demo-public-subnet-c
           routeTableIdSelector:
             matchControllerRef: true
             matchLabels:
               access: public
-          # routeTableIdRef:
-          #   name: aatt-demo-route-table-public
           tags:
             Name: crossplane-minikube-lab-rta-public-b
             kubernetes.io/role/internal-elb: "1" # Required for EKS
@@ -361,14 +335,10 @@ spec:
             matchLabels:
               zone: us-east-1c
               access: public
-          # subnetIdRef:
-          #   name: aatt-demo-public-subnet-c
           routeTableIdSelector:
             matchControllerRef: true
             matchLabels:
               access: public
-          # routeTableIdRef:
-          #   name: aatt-demo-route-table-public
           tags:
             Name: crossplane-minikube-lab-rta-public-c
             kubernetes.io/role/internal-elb: "1" # Required for EKS
@@ -415,15 +385,11 @@ spec:
             matchLabels:
               zone: us-east-1b
               access: private
-          # subnetIdRef:
-          #   name: aatt-demo-public-subnet-c
           routeTableIdSelector:
             matchControllerRef: true
             matchLabels:
               access: private
               zone: b
-          # routeTableIdRef:
-          #   name: aatt-demo-route-table-public
           tags:
             Name: crossplane-minikube-lab
             kubernetes.io/role/internal-elb: "1" # Required for EKS
@@ -470,15 +436,11 @@ spec:
             matchLabels:
               zone: us-east-1c
               access: private
-          # subnetIdRef:
-          #   name: aatt-demo-public-subnet-c
           routeTableIdSelector:
             matchControllerRef: true
             matchLabels:
               access: private
               zone: c
-          # routeTableIdRef:
-          #   name: aatt-demo-route-table-public
           tags:
             Name: crossplane-minikube-lab-rta-private-c
             kubernetes.io/role/internal-elb: "1" # Required for EKS
@@ -583,7 +545,6 @@ spec:
           tags:
             Name: crossplane-minikube-lab-eip-c
 
-
   # Route Table Public
   - name: route-table-public
     base:
@@ -676,7 +637,7 @@ spec:
           tags:
             Name: crossplane-minikube-lab-route-table-private-c
 
-  # # Route Private C
+  # Route Private C
   - name: route-private-c
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -697,3 +658,17 @@ spec:
               zone: c
           tags:
             Name: crossplane-minikube-lab-route-private-c
+
+  # Security Group
+  - name: security-group
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: SecurityGroup
+      spec:
+        forProvider:
+          description: Allow TLS inbound traffic
+          region: us-east-1
+          vpcIdSelector:
+            matchControllerRef: true
+          tags:
+            Name: crossplane-minikube-lab-security-group
