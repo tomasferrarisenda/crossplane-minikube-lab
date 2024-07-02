@@ -672,3 +672,41 @@ spec:
             matchControllerRef: true
           tags:
             Name: crossplane-minikube-lab-security-group
+
+  # Security Group Rule 1
+  - name: security-group-rule-1
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: SecurityGroupRule
+      spec:
+        forProvider:
+          cidrBlocks:
+            - 0.0.0.0/0
+          fromPort: 0
+          protocol: "-1"
+          toPort: 0
+          type: ingress
+          region: us-east-1
+          securityGroupIdSelector:
+            matchControllerRef: true
+          tags:
+            Name: crossplane-minikube-lab-security-group-rule-1
+
+  # Security Group Rule 2
+  - name: security-group-rule-1
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: SecurityGroupRule
+      spec:
+        forProvider:
+          cidrBlocks:
+            - 0.0.0.0/0
+          fromPort: 0
+          protocol: "-1"
+          toPort: 0
+          type: egress
+          region: us-east-1
+          securityGroupIdSelector:
+            matchControllerRef: true
+          tags:
+            Name: crossplane-minikube-lab-security-group-rule-2
