@@ -449,6 +449,10 @@ spec:
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
       kind: NATGateway
+      metadata:
+        labels:
+          gateway: nat
+          zone: b
       spec:
         forProvider:
           region: us-east-1
@@ -486,6 +490,10 @@ spec:
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
       kind: NATGateway
+      metadata:
+        labels:
+          gateway: nat
+          zone: c
       spec:
         forProvider:
           region: us-east-1
@@ -571,6 +579,28 @@ spec:
             matchControllerRef: true
           tags:
             Name: crossplane-minikube-lab-route-table-private-b
+
+  # Route Private B
+  - name: route-private-b
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: RouteTable
+      spec:
+        forProvider:
+          region: us-east-1
+          destinationCidrBlock: 0.0.0.0/0
+          natGatewayIdSelector:
+            matchControllerRef: true
+            matchLabels:
+              gateway: nat
+              zone: b
+          routeTableIdSelector:
+            matchControllerRef: true
+            matchLabels:
+              access: private
+              zone: b
+          tags:
+            Name: crossplane-minikube-lab-route-public
 
   # Route Table Private C
   - name: route-table-private-c
