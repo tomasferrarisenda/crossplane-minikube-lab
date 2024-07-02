@@ -852,3 +852,8 @@ spec:
               role: nodegroup
           tags:
             Name: crossplane-minikube-lab-role-policy-policy-attachment-nodegroup-ec2containerregistryreadonly
+
+
+#########################################################################
+# EKS
+#########################################################################
