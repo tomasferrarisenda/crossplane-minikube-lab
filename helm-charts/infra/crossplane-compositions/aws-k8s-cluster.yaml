@@ -462,6 +462,22 @@ spec:
           tags:
             Name: crossplane-minikube-lab-nat-gateway-b
 
+  # EIP B
+  - name: eip-b
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: EIP
+      metadata:
+        labels:
+          zone: us-east-1b
+          access: public
+      spec:
+        forProvider:
+          region: us-east-1
+          vpc: true
+          tags:
+            Name: crossplane-minikube-lab-eip-b
+
   # NAT Gateway C
   - name: nat-gateway-c
     base:
@@ -482,6 +498,35 @@ spec:
               access: public
           tags:
             Name: crossplane-minikube-lab-nat-gateway-c
+
+  # EIP C
+  - name: eip-c
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: EIP
+      metadata:
+        labels:
+          zone: us-east-1c
+          access: public
+      spec:
+        forProvider:
+          region: us-east-1
+          vpc: true
+          tags:
+            Name: crossplane-minikube-lab-eip-c
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   - name: routetable
     base:
