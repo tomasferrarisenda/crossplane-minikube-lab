@@ -776,3 +776,79 @@ spec:
               role: controlplane
           tags:
             Name: crossplane-minikube-lab-role-policy-policy-attachment-controlplane
+
+
+  # Role Nodegroup
+  - name: role-nodegroup
+    base:
+      apiVersion: iam.aws.upbound.io/v1beta1
+      kind: Role
+      metadata:
+        labels:
+          role: nodegroup
+      spec:
+        forProvider:
+          assumeRolePolicy: |
+            {
+              "Version": "2012-10-17",
+              "Statement": [
+                  {
+                      "Effect": "Allow",
+                      "Principal": {
+                          "Service": [
+                              "ec2.amazonaws.com"
+                          ]
+                      },
+                      "Action": [
+                          "sts:AssumeRole"
+                      ]
+                  }
+              ]
+            }
+          tags:
+            Name: crossplane-minikube-lab-role-nodegroup
+
+  # Role Policy Attachment Nodegroup Workernode
+  - name: role-policy-attachment-nodegroup-workernode
+    base:
+      apiVersion: iam.aws.upbound.io/v1beta1
+      kind: RolePolicyAttachment
+      spec:
+        forProvider:
+          policyArn: arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
+          roleSelector:
+            matchControllerRef: true
+            matchLabels:
+              role: nodegroup
+          tags:
+            Name: crossplane-minikube-lab-role-policy-policy-attachment-nodegroup-workernode
+
+  # Role Policy Attachment Nodegroup CNI
+  - name: role-policy-attachment-nodegroup-cni
+    base:
+      apiVersion: iam.aws.upbound.io/v1beta1
+      kind: RolePolicyAttachment
+      spec:
+        forProvider:
+          policyArn: arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
+          roleSelector:
+            matchControllerRef: true
+            matchLabels:
+              role: nodegroup
+          tags:
+            Name: crossplane-minikube-lab-role-policy-policy-attachment-nodegroup-cni
+
+  # Role Policy Attachment Nodegroup EC2ContainerRegistryReadOnly
+  - name: role-policy-attachment-nodegroup-ec2containerregistryreadonly
+    base:
+      apiVersion: iam.aws.upbound.io/v1beta1
+      kind: RolePolicyAttachment
+      spec:
+        forProvider:
+          policyArn: arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+          roleSelector:
+            matchControllerRef: true
+            matchLabels:
+              role: nodegroup
+          tags:
+            Name: crossplane-minikube-lab-role-policy-policy-attachment-nodegroup-ec2containerregistryreadonly
