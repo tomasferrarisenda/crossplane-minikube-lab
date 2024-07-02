@@ -266,7 +266,7 @@ spec:
 
 
 
-
+  # Subnet Public B
   - name: public-subnet-b
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -289,7 +289,7 @@ spec:
             kubernetes.io/cluster/crossplane-minikube-lab-cluster: "owned" # Required for EKS
             kubernetes.io/cluster/crossplane-minikube-lab: shared
 
-
+  # Route Table Association Public B
   - name: rta-public-b
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -320,7 +320,7 @@ spec:
             kubernetes.io/cluster/crossplane-minikube-lab-cluster: "owned" # Required for EKS
             kubernetes.io/cluster/crossplane-minikube-lab: shared
 
-
+  # Subnet Public C
   - name: public-subnet-c
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -344,7 +344,7 @@ spec:
             kubernetes.io/cluster/crossplane-minikube-lab: shared
 
 
-          
+  # Route Table Association Public C
   - name: rta-public-c
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -375,107 +375,109 @@ spec:
             kubernetes.io/cluster/crossplane-minikube-lab-cluster: "owned" # Required for EKS
             kubernetes.io/cluster/crossplane-minikube-lab: shared
 
+  # Subnet Private B
+  - name: private-subnet-b
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: Subnet
+      metadata:
+        labels:
+          zone: us-east-1b
+          access: private
+      spec:
+        forProvider:
+          region: us-east-1
+          availabilityZone: us-east-1b
+          cidrBlock: 10.0.64.0/19
+          vpcIdSelector:
+            matchControllerRef: true
+          # mapPublicIPOnLaunch: true
+          tags:
+            Name: crossplane-minikube-lab-private-subnet-b
+            kubernetes.io/role/internal-elb: "1" # Required for EKS
+            kubernetes.io/cluster/crossplane-minikube-lab-cluster: "owned" # Required for EKS
+            kubernetes.io/cluster/crossplane-minikube-lab: shared
 
-  # - name: private-subnet-b
-  #   base:
-  #     apiVersion: ec2.aws.upbound.io/v1beta1
-  #     kind: Subnet
-  #     metadata:
-  #       labels:
-  #         zone: us-east-1b
-  #         access: private
-  #     spec:
-  #       forProvider:
-  #         region: us-east-1
-  #         availabilityZone: us-east-1b
-  #         cidrBlock: 10.0.64.0/19
-  #         vpcIdSelector:
-  #           matchControllerRef: true
-  #         # mapPublicIPOnLaunch: true
-  #         tags:
-  #           Name: crossplane-minikube-lab-private-subnet-b
-  #           kubernetes.io/role/internal-elb: "1" # Required for EKS
-  #           kubernetes.io/cluster/crossplane-minikube-lab-cluster: "owned" # Required for EKS
-  #           kubernetes.io/cluster/crossplane-minikube-lab: shared
+  # Route Table Association Private B
+  - name: rta-private-b
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: RouteTableAssociation
+      metadata:
+        labels:
+          zone: us-east-1b
+          access: private
+      spec:
+        forProvider:
+          region: us-east-1
+          subnetIdSelector:
+            matchControllerRef: true
+            matchLabels:
+              zone: us-east-1b
+              access: private
+          # subnetIdRef:
+          #   name: aatt-demo-public-subnet-c
+          routeTableIdSelector:
+            matchControllerRef: true
+          # routeTableIdRef:
+          #   name: aatt-demo-route-table-public
+          tags:
+            Name: crossplane-minikube-lab
+            kubernetes.io/role/internal-elb: "1" # Required for EKS
+            kubernetes.io/cluster/crossplane-minikube-lab-cluster: "owned" # Required for EKS
+            kubernetes.io/cluster/crossplane-minikube-lab: shared
 
+  # Subnet Private C
+  - name: private-subnet-c
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: Subnet
+      metadata:
+        labels:
+          zone: us-east-1c
+          access: private
+      spec:
+        forProvider:
+          region: us-east-1
+          availabilityZone: us-east-1c
+          cidrBlock: 10.0.96.0/19
+          vpcIdSelector:
+            matchControllerRef: true
+          mapPublicIPOnLaunch: true
+          tags:
+            Name: crossplane-minikube-lab-private-subnet-c
+            kubernetes.io/role/internal-elb: "1" # Required for EKS
+            kubernetes.io/cluster/crossplane-minikube-lab-cluster: "owned" # Required for EKS
+            kubernetes.io/cluster/crossplane-minikube-lab: shared
 
-  # - name: rta-private-b
-  #   base:
-  #     apiVersion: ec2.aws.upbound.io/v1beta1
-  #     kind: RouteTableAssociation
-  #     metadata:
-  #       labels:
-  #         zone: us-east-1b
-  #         access: private
-  #     spec:
-  #       forProvider:
-  #         region: us-east-1
-  #         subnetIdSelector:
-  #           matchControllerRef: true
-  #           matchLabels:
-  #             zone: us-east-1b
-  #             access: private
-  #         # subnetIdRef:
-  #         #   name: aatt-demo-public-subnet-c
-  #         routeTableIdSelector:
-  #           matchControllerRef: true
-  #         # routeTableIdRef:
-  #         #   name: aatt-demo-route-table-public
-  #         tags:
-  #           Name: crossplane-minikube-lab
-  #           kubernetes.io/role/internal-elb: "1" # Required for EKS
-  #           kubernetes.io/cluster/crossplane-minikube-lab-cluster: "owned" # Required for EKS
-  #           kubernetes.io/cluster/crossplane-minikube-lab: shared
-  # - name: private-subnet-c
-  #   base:
-  #     apiVersion: ec2.aws.upbound.io/v1beta1
-  #     kind: Subnet
-  #     metadata:
-  #       labels:
-  #         zone: us-east-1c
-  #         access: private
-  #     spec:
-  #       forProvider:
-  #         region: us-east-1
-  #         availabilityZone: us-east-1c
-  #         cidrBlock: 10.0.96.0/19
-  #         vpcIdSelector:
-  #           matchControllerRef: true
-  #         mapPublicIPOnLaunch: true
-  #         tags:
-  #           Name: crossplane-minikube-lab-private-subnet-c
-  #           kubernetes.io/role/internal-elb: "1" # Required for EKS
-  #           kubernetes.io/cluster/crossplane-minikube-lab-cluster: "owned" # Required for EKS
-  #           kubernetes.io/cluster/crossplane-minikube-lab: shared
-
-
-  # - name: rta-private-c
-  #   base:
-  #     apiVersion: ec2.aws.upbound.io/v1beta1
-  #     kind: RouteTableAssociation
-  #     metadata:
-  #       labels:
-  #         zone: us-east-1c
-  #         access: private
-  #     spec:
-  #       forProvider:
-  #         region: us-east-1
-  #         subnetIdSelector:
-  #           matchControllerRef: true
-  #           matchLabels:
-  #             zone: us-east-1c
-  #             access: private
-  #         # subnetIdRef:
-  #         #   name: aatt-demo-public-subnet-c
-  #         routeTableIdSelector:
-  #           matchControllerRef: true
-  #         # routeTableIdRef:
-  #         #   name: aatt-demo-route-table-public
-  #         tags:
-  #           Name: crossplane-minikube-lab-rta-private-c
-  #           kubernetes.io/role/internal-elb: "1" # Required for EKS
-  #           kubernetes.io/cluster/crossplane-minikube-lab-cluster: "owned" # Required for EKS
-  #           kubernetes.io/cluster/crossplane-minikube-lab: shared
+  # Route Table Association Private C
+  - name: rta-private-c
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: RouteTableAssociation
+      metadata:
+        labels:
+          zone: us-east-1c
+          access: private
+      spec:
+        forProvider:
+          region: us-east-1
+          subnetIdSelector:
+            matchControllerRef: true
+            matchLabels:
+              zone: us-east-1c
+              access: private
+          # subnetIdRef:
+          #   name: aatt-demo-public-subnet-c
+          routeTableIdSelector:
+            matchControllerRef: true
+          # routeTableIdRef:
+          #   name: aatt-demo-route-table-public
+          tags:
+            Name: crossplane-minikube-lab-rta-private-c
+            kubernetes.io/role/internal-elb: "1" # Required for EKS
+            kubernetes.io/cluster/crossplane-minikube-lab-cluster: "owned" # Required for EKS
+            kubernetes.io/cluster/crossplane-minikube-lab: shared
   
   # # Internet Gateway
   # - name: internet-gateway
@@ -612,22 +614,22 @@ spec:
   #         tags:
   #           Name: crossplane-minikube-lab-route-public
 
-  # # Route Table Private B
-  # - name: route-table-private-b
-  #   base:
-  #     apiVersion: ec2.aws.upbound.io/v1beta1
-  #     kind: RouteTable
-  #     metadata:
-  #       labels:
-  #         access: private
-  #         zone: b
-  #     spec:
-  #       forProvider:
-  #         region: us-east-1
-  #         vpcIdSelector:
-  #           matchControllerRef: true
-  #         tags:
-  #           Name: crossplane-minikube-lab-route-table-private-b
+  # Route Table Private B
+  - name: route-table-private-b
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: RouteTable
+      metadata:
+        labels:
+          access: private
+          zone: b
+      spec:
+        forProvider:
+          region: us-east-1
+          vpcIdSelector:
+            matchControllerRef: true
+          tags:
+            Name: crossplane-minikube-lab-route-table-private-b
 
   # # Route Private B
   # - name: route-private-b
@@ -651,19 +653,19 @@ spec:
   #         tags:
   #           Name: crossplane-minikube-lab-route-public
 
-  # # Route Table Private C
-  # - name: route-table-private-c
-  #   base:
-  #     apiVersion: ec2.aws.upbound.io/v1beta1
-  #     kind: RouteTable
-  #     metadata:
-  #       labels:
-  #         access: private
-  #         zone: c
-  #     spec:
-  #       forProvider:
-  #         region: us-east-1
-  #         vpcIdSelector:
-  #           matchControllerRef: true
-  #         tags:
-  #           Name: crossplane-minikube-lab-route-table-private-c
+  # Route Table Private C
+  - name: route-table-private-c
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: RouteTable
+      metadata:
+        labels:
+          access: private
+          zone: c
+      spec:
+        forProvider:
+          region: us-east-1
+          vpcIdSelector:
+            matchControllerRef: true
+          tags:
+            Name: crossplane-minikube-lab-route-table-private-c
