@@ -637,27 +637,27 @@ spec:
           tags:
             Name: crossplane-minikube-lab-route-table-private-b
 
-  # # Route Private B
-  # - name: route-private-b
-  #   base:
-  #     apiVersion: ec2.aws.upbound.io/v1beta1
-  #     kind: RouteTable
-  #     spec:
-  #       forProvider:
-  #         region: us-east-1
-  #         destinationCidrBlock: 0.0.0.0/0
-  #         natGatewayIdSelector:
-  #           matchControllerRef: true
-  #           matchLabels:
-  #             gateway: nat
-  #             zone: b
-  #         routeTableIdSelector:
-  #           matchControllerRef: true
-  #           matchLabels:
-  #             access: private
-  #             zone: b
-  #         tags:
-  #           Name: crossplane-minikube-lab-route-public
+  # Route Private B
+  - name: route-private-b
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: RouteTable
+      spec:
+        forProvider:
+          region: us-east-1
+          destinationCidrBlock: 0.0.0.0/0
+          natGatewayIdSelector:
+            matchControllerRef: true
+            matchLabels:
+              gateway: nat
+              zone: b
+          routeTableIdSelector:
+            matchControllerRef: true
+            matchLabels:
+              access: private
+              zone: b
+          tags:
+            Name: crossplane-minikube-lab-route-private-b
 
   # Route Table Private C
   - name: route-table-private-c
@@ -675,3 +675,25 @@ spec:
             matchControllerRef: true
           tags:
             Name: crossplane-minikube-lab-route-table-private-c
+
+  # # Route Private C
+  - name: route-private-c
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: RouteTable
+      spec:
+        forProvider:
+          region: us-east-1
+          destinationCidrBlock: 0.0.0.0/0
+          natGatewayIdSelector:
+            matchControllerRef: true
+            matchLabels:
+              gateway: nat
+              zone: c
+          routeTableIdSelector:
+            matchControllerRef: true
+            matchLabels:
+              access: private
+              zone: c
+          tags:
+            Name: crossplane-minikube-lab-route-private-c
