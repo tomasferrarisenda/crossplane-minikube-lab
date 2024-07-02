@@ -732,11 +732,14 @@ spec:
 # IAM
 #########################################################################
 
-  # Role
-  - name: role
+  # Role Controlplane
+  - name: role-controlplane
     base:
       apiVersion: iam.aws.upbound.io/v1beta1
       kind: Role
+      metadata:
+        labels:
+          role: controlplane
       spec:
         forProvider:
           assumeRolePolicy: |
@@ -757,10 +760,10 @@ spec:
               ]
             }
           tags:
-            Name: crossplane-minikube-lab-role
+            Name: crossplane-minikube-lab-role-controlplane
 
-  # Role Policy Attachment
-  - name: role-policy-attachment
+  # Role Policy Attachment Controlplane
+  - name: role-policy-attachment-controlplane
     base:
       apiVersion: iam.aws.upbound.io/v1beta1
       kind: RolePolicyAttachment
@@ -769,5 +772,7 @@ spec:
           policyArn: arn:aws:iam::aws:policy/AmazonEKSClusterPolicy
           roleSelector:
             matchControllerRef: true
+            matchLabels:
+              role: controlplane
           tags:
-            Name: crossplane-minikube-lab-role-policy-policy-attachment
+            Name: crossplane-minikube-lab-role-policy-policy-attachment-controlplane
