@@ -488,7 +488,7 @@ spec:
   # Internet Gateway
   - name: internet-gateway
     base:
-      apiVersion: ec2.aws.crossplane.io/v1beta1
+      apiVersion: ec2.aws.upbound.io/v1beta1
       kind: InternetGateway
       metadata:
         labels:
