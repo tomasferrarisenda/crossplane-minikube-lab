@@ -419,6 +419,9 @@ spec:
           #   name: aatt-demo-public-subnet-c
           routeTableIdSelector:
             matchControllerRef: true
+            matchLabels:
+              access: private
+              zone: b
           # routeTableIdRef:
           #   name: aatt-demo-route-table-public
           tags:
@@ -471,6 +474,9 @@ spec:
           #   name: aatt-demo-public-subnet-c
           routeTableIdSelector:
             matchControllerRef: true
+            matchLabels:
+              access: private
+              zone: c
           # routeTableIdRef:
           #   name: aatt-demo-route-table-public
           tags:
