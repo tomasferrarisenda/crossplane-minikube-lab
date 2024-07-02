@@ -554,25 +554,3 @@ spec:
               access: public
           tags:
             Name: crossplane-minikube-lab-route-public
-
-
-          routes:
-            - destinationCidrBlock: 0.0.0.0/0
-              gatewayIdSelector:
-                matchControllerRef: true
-          associations:
-            - subnetIdSelector:
-                matchControllerRef: true
-                matchLabels:
-                  zone: us-east-1a
-                  access: public
-            - subnetIdSelector:
-                matchControllerRef: true
-                matchLabels:
-                  zone: us-east-1b
-                  access: public
-            - subnetIdSelector:
-                matchControllerRef: true
-                matchLabels:
-                  zone: us-east-1c
-                  access: public
