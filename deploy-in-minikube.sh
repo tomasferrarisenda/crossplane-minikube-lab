@@ -23,7 +23,7 @@ echo "##########################################################################
 echo "#############################################################################"
 echo " "
 echo "TO ACCESS THE ARGOCD DASHBOARD, RUN THE FOLLOWING COMMAND:"
-echo "kubectl port-forward svc/argocd-server -n argocd 8081:443"
+echo "kubectl port-forward svc/argocd-server -n argocd 8080:443"
 echo " "
 echo "user: admin"
 echo "password: $(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)"
@@ -40,7 +40,7 @@ kubectl create -n argocd -f argo-cd/self-manage/argocd-app-of-apps-application.y
 
 # This is for the ArgoCD plugin. We need to get the ArgoCD token for the Backstage service account
 # We expose argocd on port 8081 in the background so we can then login to get the token
-kubectl port-forward -n argocd service/argocd-server 8081:443 &
+kubectl port-forward -n argocd service/argocd-server 8080:443 &
 # sleep 10
 # export ARGOCD_ADMIN_PASSWORD=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
 # export ARGOCD_ADMIN_BEARER_TOKEN=$(curl http://localhost:8081/api/v1/session -d '{"username":"admin","password":"'"$ARGOCD_ADMIN_PASSWORD"'"}' | grep -Po '"token":\s*"\K([^"]*)')
@@ -125,8 +125,9 @@ kubectl port-forward -n argocd service/argocd-server 8081:443 &
 # kubectl port-forward -n backstage service/backstage 8080:7007
 
 echo -e "[default]\naws_access_key_id = $AWS_ACCESS_KEY_ID\naws_secret_access_key = $AWS_SECRET_ACCESS_KEY" > aws-credentials.txt
-
-kubectl create secret generic aws-secret --dry-run=client -n crossplane-system --from-file=creds=./aws-credentials.txt 
+kubectl create ns crossplane-system
+kubectl create secret generic aws-secret -n crossplane-system --from-file=creds=./aws-credentials.txt
+rm aws-credentials.txt
 
 # kubectl create secret generic  --dry-run=client -n backstage \
 #     --from-literal=GITHUB_TOKEN="$GITHUB_TOKEN" \
