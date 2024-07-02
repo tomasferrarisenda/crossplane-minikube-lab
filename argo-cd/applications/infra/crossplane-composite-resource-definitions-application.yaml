@@ -3,8 +3,8 @@ kind: Application
 metadata:
   name: crossplane-composite-resource-definitions
   namespace: argocd
-  annotations:
-    argocd.argoproj.io/sync-wave: "-2"
+  # annotations:
+  #   argocd.argoproj.io/sync-wave: "-2"
   # We don't want ProviderConfigs nor Providers nor Crossplane itself to be deleted before all Managed Resources are deleted
   # So we'll remove the finalizers from all the crossplane-realted applications: crossplane, crossplane-providers & crossplane-provider-configs
   # These will make it so that the resources created by the applications are not deleted when the applications are deleted, remaining in the cluster until the cluster is destroyed
