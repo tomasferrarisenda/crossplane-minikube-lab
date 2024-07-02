@@ -18,3 +18,5 @@ spec:
   writeConnectionSecretToRef:
     namespace: crossplane-system
     name: cluster
+  providerConfigRef:
+    name: aws
