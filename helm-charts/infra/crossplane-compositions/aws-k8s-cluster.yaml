@@ -706,7 +706,7 @@ spec:
           region: us-east-1
           clusterNameSelector:
             matchControllerRef: true
-          nodeRoleSelector:
+          nodeRoleArnSelector:
             matchControllerRef: true
             matchLabels:
               role: nodegroup
