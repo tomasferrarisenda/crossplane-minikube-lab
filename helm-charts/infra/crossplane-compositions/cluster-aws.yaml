@@ -44,10 +44,10 @@ spec:
       toFieldPath: metadata.annotations
     - fromFieldPath: spec.id
       toFieldPath: metadata.name
-      transforms:
-        - type: string
-          string:
-            fmt: "%s"
+      # transforms:
+      #   - type: string
+      #     string:
+      #       fmt: "%s"
 
   # Subnet Public A
   - name: public-subnet-a
@@ -79,7 +79,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-a"
+            fmt: "%s-public-a"
 
   # Route Table Association Public A
   - name: rta-public-a
@@ -115,7 +115,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-a"
+            fmt: "%s-public-a"
 
   # Subnet Public B
   - name: public-subnet-b
@@ -147,7 +147,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-b"
+            fmt: "%s-public-b"
 
 
   # Route Table Association Public B
@@ -184,7 +184,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-b"
+            fmt: "%s-public-b"
 
   # Subnet Private A
   - name: private-subnet-a
@@ -216,7 +216,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-a"
+            fmt: "%s-private-a"
 
   # Route Table Association Private A
   - name: rta-private-a
@@ -253,7 +253,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-a"
+            fmt: "%s-private-a"
 
   # Subnet Private B
   - name: private-subnet-b
@@ -285,7 +285,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-b"
+            fmt: "%s-private-b"
 
   # Route Table Association Private B
   - name: rta-private-b
@@ -322,7 +322,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-b"
+            fmt: "%s-private-b"
 
   # Internet Gateway
   - name: internet-gateway
@@ -344,10 +344,10 @@ spec:
       toFieldPath: metadata.annotations
     - fromFieldPath: spec.id
       toFieldPath: metadata.name
-      transforms:
-        - type: string
-          string:
-            fmt: "%s"
+      # transforms:
+      #   - type: string
+      #     string:
+      #       fmt: "%s"
 
   # NAT Gateway A
   - name: nat-gateway-a
@@ -490,7 +490,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s"
+            fmt: "%s-public"
 
   # Route Public
   - name: route-public
@@ -519,7 +519,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s"
+            fmt: "%s-public"
 
   # Route Table Private A
   - name: route-table-private-a
@@ -545,7 +545,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-a"
+            fmt: "%s-private-a"
 
   # Route Private A
   - name: route-private-a
@@ -576,7 +576,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-a"
+            fmt: "%s-private-a"
 
   # Route Table Private B
   - name: route-table-private-b
@@ -602,7 +602,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-b"
+            fmt: "%s-private-b"
 
   # Route Private B
   - name: route-private-b
@@ -633,7 +633,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-b"
+            fmt: "%s-private-b"
 
   # Security Group
   - name: security-group
@@ -653,10 +653,10 @@ spec:
       toFieldPath: metadata.annotations
     - fromFieldPath: spec.id
       toFieldPath: metadata.name
-      transforms:
-        - type: string
-          string:
-            fmt: "%s"
+      # transforms:
+      #   - type: string
+      #     string:
+      #       fmt: "%s"
 
   # Security Group Rule 1
   - name: security-group-rule-1
@@ -684,7 +684,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s"
+            fmt: "%s-1"
 
   # Security Group Rule 2
   - name: security-group-rule-2
@@ -712,7 +712,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s"
+            fmt: "%s-2"
 
   # Open ID Provider
   ## This binds AWS's IAM with Kubernetes's RBAC. It allows Kubernetes to authenticate AWS users.
@@ -734,10 +734,10 @@ spec:
       toFieldPath: metadata.annotations
     - fromFieldPath: spec.id
       toFieldPath: metadata.name
-      transforms:
-        - type: string
-          string:
-            fmt: "%s"
+      # transforms:
+      #   - type: string
+      #     string:
+      #       fmt: "%s"
 
 #########################################################################
 # IAM
@@ -780,7 +780,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s"
+            fmt: "%s-controlplane"
 
   # Role Policy Attachment Controlplane
   - name: role-policy-attachment-controlplane
@@ -804,7 +804,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s"
+            fmt: "%s-eksclusterpolicy"
 
   # Role Nodegroup
   - name: role-nodegroup
@@ -843,7 +843,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s"
+            fmt: "%s-nodegroup"
 
   # Role Policy Attachment Nodegroup Workernode
   - name: role-policy-attachment-nodegroup-workernode
@@ -867,7 +867,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s"
+            fmt: "%s-workernode"
 
   # Role Policy Attachment Nodegroup CNI
   - name: role-policy-attachment-nodegroup-cni
@@ -891,7 +891,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s"
+            fmt: "%s-cni"
 
   # Role Policy Attachment Nodegroup EC2ContainerRegistryReadOnly
   - name: role-policy-attachment-nodegroup-ec2containerregistryreadonly
@@ -915,7 +915,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s"
+            fmt: "%s-ec2containerregistryreadonly"
 
 
 #########################################################################
