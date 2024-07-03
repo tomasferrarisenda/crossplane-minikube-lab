@@ -18,5 +18,5 @@ spec:
   writeConnectionSecretToRef:
     namespace: crossplane-system
     name: cluster
-  # providerConfigRef:
+  # providerConfigRef: # Se esta usando default pero no se donde cambiarlo
   #   name: aws

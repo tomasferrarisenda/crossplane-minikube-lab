@@ -668,6 +668,8 @@ spec:
               matchControllerRef: true
           tags:
             Name: crossplane-minikube-lab-cluster
+        writeConnectionSecretToRef: # ESTO NO TIENE Q ESTAR HARCODEADO
+          namespace: crossplane-system
     patches:
     - fromFieldPath: metadata.annotations[crossplane.io/external-name]
       toFieldPath: metadata.annotations[crossplane.io/external-name]
