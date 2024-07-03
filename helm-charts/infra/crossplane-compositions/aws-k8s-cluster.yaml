@@ -661,11 +661,11 @@ spec:
             matchControllerRef: true
             matchLabels:
               role: controlplane
-          resourcesVpcConfig:
-            endpointPrivateAccess: false
-            endpointPublicAccess: true
-            subnetIdSelector:
-              matchControllerRef: true
+          vpcConfig:
+            - endpointPublicAccess: true
+              endpointPrivateAccess: false 
+              subnetIdSelector:
+                matchControllerRef: true
           tags:
             Name: crossplane-minikube-lab-cluster
         writeConnectionSecretToRef: # ESTO NO TIENE Q ESTAR HARCODEADO
