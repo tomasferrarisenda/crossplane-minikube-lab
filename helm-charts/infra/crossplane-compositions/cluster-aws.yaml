@@ -954,12 +954,8 @@ spec:
       #   - type: string
       #     string:
       #       fmt: "%s"
-
     - fromFieldPath: spec.id
       toFieldPath: spec.writeConnectionSecretToRef.name
-
-    # - fromFieldPath: metadata.annotations[crossplane.io/external-name]
-    #   toFieldPath: metadata.annotations[crossplane.io/external-name]
     - fromFieldPath: spec.parameters.version
       toFieldPath: spec.forProvider.version
 
@@ -1012,10 +1008,10 @@ spec:
   #     toFieldPath: metadata.annotations
   #   - fromFieldPath: spec.id
   #     toFieldPath: metadata.name
-  #     transforms:
-  #       - type: string
-  #         string:
-  #           fmt: "%s"
+  #     # transforms:
+  #     #   - type: string
+  #     #     string:
+  #     #       fmt: "%s"
   #   - fromFieldPath: spec.parameters.nodeSize
   #     toFieldPath: spec.forProvider.instanceTypes[0]
   #     transforms:
@@ -1030,6 +1026,7 @@ spec:
   #     toFieldPath: spec.forProvider.scalingConfig[0].minSize
   #   - fromFieldPath: spec.parameters.minNodeCount
   #     toFieldPath: spec.forProvider.scalingConfig[0].desiredSize
+
   #   - type: ToCompositeFieldPath
   #     fromFieldPath: status.atProvider.status
   #     toFieldPath: status.nodePoolStatus
