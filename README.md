@@ -20,6 +20,11 @@
 PROVIDERS, CONFIGURATIONS AND FUNCTIONS ARE ALL TYPES of "PACKAGES"
 CAN BE LISTED WITH kubectl get pkgrev
 
+
+1. CompositeResourceDefinitions: Extend k8s API by creating CRDs
+2. Compositions
+3. CompositeResources
+
 <p title="Banner" align="center"> <img src="https://i.imgur.com/FbsIwSJ.jpg"> </p>
 
 # INDEX
