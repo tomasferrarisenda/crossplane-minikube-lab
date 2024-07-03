@@ -712,8 +712,6 @@ spec:
               role: nodegroup
           subnetSelector:
             matchLabels:
-              zone: us-east-1b
-              zone: us-east-1c
               access: private
           scalingConfig:
             - desiredSize: 1
