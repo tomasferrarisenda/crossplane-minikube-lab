@@ -213,7 +213,7 @@ spec:
             # matchControllerRef: true
             matchLabels:
               access: private
-              zone: b
+              zone: a
           tags:
             Name: crossplane-minikube-lab-rta-private-a
             kubernetes.io/role/internal-elb: "1" # Required for EKS
