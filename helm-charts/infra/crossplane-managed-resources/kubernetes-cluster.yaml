@@ -11,10 +11,10 @@ spec:
     # Possible values cluster-google, cluster-azure, cluster-aws
     name: cluster-aws
   parameters:
-    # Possible values small, medium, large
-    nodeSize: small
-    # version: "1.20"
-    # minNodeCount: 2
+    # Possible values xsmall, small, medium, large, xlarge
+    nodeSize: xsmall
+    # version: "1.20" # Default value: "1.29"
+    # minNodeCount: 2 # Default value: 1
   writeConnectionSecretToRef:
     namespace: crossplane-system
     name: cluster
