@@ -710,7 +710,7 @@ spec:
             matchControllerRef: true
             matchLabels:
               role: nodegroup
-          subnetSelector:
+          subnetIdSelector:
             matchControllerRef: true
             matchLabels:
               access: private

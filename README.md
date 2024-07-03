@@ -17,6 +17,9 @@
     <a  href="/docs/readme_es.md">Versión en Español</a>
 </p> -->
 
+PROVIDERS, CONFIGURATIONS AND FUNCTIONS ARE ALL TYPES of "PACKAGES"
+CAN BE LISTED WITH kubectl get pkgrev
+
 <p title="Banner" align="center"> <img src="https://i.imgur.com/FbsIwSJ.jpg"> </p>
 
 # INDEX
