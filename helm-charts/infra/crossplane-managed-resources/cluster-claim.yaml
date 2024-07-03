@@ -2,16 +2,13 @@ apiVersion: devopstoolkitseries.com/v1alpha1
 kind: ClusterClaim
 metadata:
   name: team-a
-  # labels:
-  #   cluster-owner: vfarcic
 spec:
   compositionSelector:
-    matchLabels:
+    matchLabels: # These are the metadata.labels of the Composition
       provider: aws  # Possible values aws, azure, gcp
       cluster: eks # Possible values eks, aks, gke
   parameters:
-    # Possible values xsmall, small, medium, large, xlarge. Default value: xsmall
-    nodeSize: xsmall
+    nodeSize: xsmall # Possible values xsmall, small, medium, large, xlarge. Default value: xsmall
     # version: "1.20" # Default value: "1.29"
     # minNodeCount: 2 # Default value: 1
   writeConnectionSecretToRef:
