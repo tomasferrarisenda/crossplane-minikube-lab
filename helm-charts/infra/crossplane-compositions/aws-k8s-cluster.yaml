@@ -697,52 +697,52 @@ spec:
       - fromConnectionSecretKey: kubeconfig
 
   # NodeGroup
-  # - name: eksnodegroup
-  #   base:
-  #     apiVersion: eks.aws.upbound.io/v1beta1
-  #     kind: NodeGroup
-  #     spec:
-  #       forProvider:
-  #         region: us-east-1
-  #         clusterNameSelector:
-  #           matchControllerRef: true
-  #         nodeRoleSelector:
-  #           matchControllerRef: true
-  #           matchLabels:
-  #             role: nodegroup
-  #         subnetSelector:
-  #           matchLabels:
-  #             zone: us-east-1b
-  #             zone: us-east-1c
-  #             access: private
-  #         scalingConfig:
-  #           minSize: 1
-  #           maxSize: 10
-  #           desiredSize: 1
-  #         instanceTypes:
-  #           - t3.nano
-  #         diskSize: 5
-  #         tags:
-  #           Name: crossplane-minikube-lab-nodegroup
-  #   patches:
-  #   - fromFieldPath: spec.parameters.nodeSize
-  #     toFieldPath: spec.forProvider.instanceTypes[0]
-  #     transforms:
-  #       - type: map
-  #         map:
-  #           xsmall: t3.nano
-  #           small: t3.small
-  #           medium: t3.medium
-  #           large: t3.large
-  #           xlarge: t3.xlarge
-  #   - fromFieldPath: spec.parameters.minNodeCount
-  #     toFieldPath: spec.forProvider.scalingConfig.minSize
-  #   - fromFieldPath: spec.parameters.minNodeCount
-  #     toFieldPath: spec.forProvider.scalingConfig.desiredSize
-  #   - type: ToCompositeFieldPath
-  #     fromFieldPath: status.atProvider.status
-  #     toFieldPath: status.nodePoolStatus
-  #   readinessChecks:
-  #   - type: MatchString
-  #     fieldPath: status.atProvider.status
-  #     matchString: ACTIVE
+  - name: eksnodegroup
+    base:
+      apiVersion: eks.aws.upbound.io/v1beta1
+      kind: NodeGroup
+      spec:
+        forProvider:
+          region: us-east-1
+          clusterNameSelector:
+            matchControllerRef: true
+          nodeRoleSelector:
+            matchControllerRef: true
+            matchLabels:
+              role: nodegroup
+          subnetSelector:
+            matchLabels:
+              zone: us-east-1b
+              zone: us-east-1c
+              access: private
+          scalingConfig:
+            minSize: 1
+            maxSize: 10
+            desiredSize: 1
+          instanceTypes:
+            - t3.nano
+          diskSize: 5
+          tags:
+            Name: crossplane-minikube-lab-nodegroup
+    patches:
+    - fromFieldPath: spec.parameters.nodeSize
+      toFieldPath: spec.forProvider.instanceTypes[0]
+      transforms:
+        - type: map
+          map:
+            xsmall: t3.nano
+            small: t3.small
+            medium: t3.medium
+            large: t3.large
+            xlarge: t3.xlarge
+    - fromFieldPath: spec.parameters.minNodeCount
+      toFieldPath: spec.forProvider.scalingConfig.minSize
+    - fromFieldPath: spec.parameters.minNodeCount
+      toFieldPath: spec.forProvider.scalingConfig.desiredSize
+    - type: ToCompositeFieldPath
+      fromFieldPath: status.atProvider.status
+      toFieldPath: status.nodePoolStatus
+    readinessChecks:
+    - type: MatchString
+      fieldPath: status.atProvider.status
+      matchString: ACTIVE
