@@ -736,9 +736,9 @@ spec:
             large: t3.large
             xlarge: t3.xlarge
     - fromFieldPath: spec.parameters.minNodeCount
-      toFieldPath: spec.forProvider.scalingConfig.minSize
+      toFieldPath: spec.forProvider.scalingConfig[0].minSize # aca hay w ver como asociarlo ya q scalingConfgi es un array
     - fromFieldPath: spec.parameters.minNodeCount
-      toFieldPath: spec.forProvider.scalingConfig.desiredSize
+      toFieldPath: spec.forProvider.scalingConfig[0].desiredSize
     - type: ToCompositeFieldPath
       fromFieldPath: status.atProvider.status
       toFieldPath: status.nodePoolStatus
