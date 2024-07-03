@@ -711,6 +711,7 @@ spec:
             matchLabels:
               role: nodegroup
           subnetSelector:
+            matchControllerRef: true
             matchLabels:
               access: private
           scalingConfig:
