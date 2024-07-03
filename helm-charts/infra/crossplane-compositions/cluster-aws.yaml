@@ -6,7 +6,7 @@ metadata:
     provider: aws
     cluster: eks
 spec:
-  writeConnectionSecretToRef: crossplane-system
+  writeConnectionSecretToNamespace: crossplane-system
 
   compositeTypeRef:
     apiVersion: devopstoolkitseries.com/v1alpha1 # This is spec.group + spec.version from CompositeResourceDefinition
