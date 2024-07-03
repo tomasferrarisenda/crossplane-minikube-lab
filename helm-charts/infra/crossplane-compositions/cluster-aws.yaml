@@ -4,6 +4,7 @@ metadata:
   name: aws-cluster
   labels:
     provider: aws
+    cluster: eks
 spec:
   compositeTypeRef:
     apiVersion: devopstoolkitseries.com/v1alpha1 # This is spec.group + spec.version from CompositeResourceDefinition
