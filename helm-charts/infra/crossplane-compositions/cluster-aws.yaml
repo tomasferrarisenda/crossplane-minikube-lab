@@ -70,12 +70,12 @@ spec:
         forProvider:
           region: us-east-1
           subnetIdSelector:
-            matchControllerRef: true
+            # matchControllerRef: true
             matchLabels:
               zone: us-east-1b
               access: public
           routeTableIdSelector:
-            matchControllerRef: true
+            # matchControllerRef: true
             matchLabels:
               access: public
           tags:
@@ -121,12 +121,12 @@ spec:
         forProvider:
           region: us-east-1
           subnetIdSelector:
-            matchControllerRef: true
+            # matchControllerRef: true
             matchLabels:
               zone: us-east-1c
               access: public
           routeTableIdSelector:
-            matchControllerRef: true
+            # matchControllerRef: true
             matchLabels:
               access: public
           tags:
@@ -171,12 +171,12 @@ spec:
         forProvider:
           region: us-east-1
           subnetIdSelector:
-            matchControllerRef: true
+            # matchControllerRef: true
             matchLabels:
               zone: us-east-1b
               access: private
           routeTableIdSelector:
-            matchControllerRef: true
+            # matchControllerRef: true
             matchLabels:
               access: private
               zone: b
@@ -222,12 +222,12 @@ spec:
         forProvider:
           region: us-east-1
           subnetIdSelector:
-            matchControllerRef: true
+            # matchControllerRef: true
             matchLabels:
               zone: us-east-1c
               access: private
           routeTableIdSelector:
-            matchControllerRef: true
+            # matchControllerRef: true
             matchLabels:
               access: private
               zone: c
@@ -266,12 +266,12 @@ spec:
         forProvider:
           region: us-east-1
           subnetIdSelector:
-            matchControllerRef: true
+            # matchControllerRef: true
             matchLabels:
               zone: us-east-1b
               access: public
           allocationIdSelector:
-            matchControllerRef: true
+            # matchControllerRef: true
             matchLabels:
               zone: us-east-1b
               access: public
@@ -307,12 +307,12 @@ spec:
         forProvider:
           region: us-east-1
           subnetIdSelector:
-            matchControllerRef: true
+            # matchControllerRef: true
             matchLabels:
               zone: us-east-1c
               access: public
           allocationIdSelector:
-            matchControllerRef: true
+            # matchControllerRef: true
             matchLabels:
               zone: us-east-1c
               access: public
@@ -361,11 +361,11 @@ spec:
           region: us-east-1
           destinationCidrBlock: 0.0.0.0/0
           gatewayIdSelector:
-            matchControllerRef: true
+            # matchControllerRef: true
             matchLabels:
               gateway: internet
           routeTableIdSelector:
-            matchControllerRef: true
+            # matchControllerRef: true
             matchLabels:
               access: public
           tags:
@@ -398,12 +398,12 @@ spec:
           region: us-east-1
           destinationCidrBlock: 0.0.0.0/0
           natGatewayIdSelector:
-            matchControllerRef: true
+            # matchControllerRef: true
             matchLabels:
               gateway: nat
               zone: b
           routeTableIdSelector:
-            matchControllerRef: true
+            # matchControllerRef: true
             matchLabels:
               access: private
               zone: b
@@ -437,12 +437,12 @@ spec:
           region: us-east-1
           destinationCidrBlock: 0.0.0.0/0
           natGatewayIdSelector:
-            matchControllerRef: true
+            # matchControllerRef: true
             matchLabels:
               gateway: nat
               zone: c
           routeTableIdSelector:
-            matchControllerRef: true
+            # matchControllerRef: true
             matchLabels:
               access: private
               zone: c
@@ -561,7 +561,7 @@ spec:
         forProvider:
           policyArn: arn:aws:iam::aws:policy/AmazonEKSClusterPolicy
           roleSelector:
-            matchControllerRef: true
+            # matchControllerRef: true
             matchLabels:
               role: controlplane
           tags:
@@ -607,7 +607,7 @@ spec:
         forProvider:
           policyArn: arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
           roleSelector:
-            matchControllerRef: true
+            # matchControllerRef: true
             matchLabels:
               role: nodegroup
           tags:
@@ -622,7 +622,7 @@ spec:
         forProvider:
           policyArn: arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
           roleSelector:
-            matchControllerRef: true
+            # matchControllerRef: true
             matchLabels:
               role: nodegroup
           tags:
@@ -637,7 +637,7 @@ spec:
         forProvider:
           policyArn: arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
           roleSelector:
-            matchControllerRef: true
+            # matchControllerRef: true
             matchLabels:
               role: nodegroup
           tags:
@@ -658,7 +658,7 @@ spec:
           region: us-east-1
           version: "1.29"
           roleArnSelector:
-            matchControllerRef: true
+            # matchControllerRef: true
             matchLabels:
               role: controlplane
           vpcConfig:
@@ -707,11 +707,11 @@ spec:
           clusterNameSelector:
             matchControllerRef: true
           nodeRoleArnSelector:
-            matchControllerRef: true
+            # matchControllerRef: true
             matchLabels:
               role: nodegroup
           subnetIdSelector:
-            matchControllerRef: true
+            # matchControllerRef: true
             matchLabels:
               access: private
           scalingConfig:
