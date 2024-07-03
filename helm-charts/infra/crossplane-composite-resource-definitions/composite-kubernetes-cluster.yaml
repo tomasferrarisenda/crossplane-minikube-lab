@@ -25,6 +25,9 @@ spec:
           spec:
             type: object
             properties:
+              id: 
+                type: string
+                description: Cluster ID
               parameters:
                 type: object
                 properties:
@@ -32,7 +35,7 @@ spec:
                     description: The Kubernetes version for the cluster.
                     type: string
                   nodeSize:
-                    description: The size of the nodes; small, medium, large
+                    description: The size of the nodes; xsmall, small, medium, large, xlarge
                     type: string
                   minNodeCount:
                     description: The minimum number of nodes
@@ -42,25 +45,25 @@ spec:
                 - nodeSize
             required:
             - parameters
-          status:
-            type: object
-            properties:
-              clusterName:
-                description: The name of the cluster
-                type: string
-              controlPlaneStatus:
-                description: The status of the control plane
-                type: string
-              nodePoolStatus:
-                description: The status of the node pool
-                type: string
-    additionalPrinterColumns:
-    - name: clusterName
-      type: string
-      jsonPath: ".status.clusterName"
-    - name: controlPlane
-      type: string
-      jsonPath: ".status.controlPlaneStatus"
-    - name: nodePool
-      type: string
-      jsonPath: ".status.nodePoolStatus"
+    #       status:
+    #         type: object
+    #         properties:
+    #           clusterName:
+    #             description: The name of the cluster
+    #             type: string
+    #           controlPlaneStatus:
+    #             description: The status of the control plane
+    #             type: string
+    #           nodePoolStatus:
+    #             description: The status of the node pool
+    #             type: string
+    # additionalPrinterColumns:
+    # - name: clusterName
+    #   type: string
+    #   jsonPath: ".status.clusterName"
+    # - name: controlPlane
+    #   type: string
+    #   jsonPath: ".status.controlPlaneStatus"
+    # - name: nodePool
+    #   type: string
+    #   jsonPath: ".status.nodePoolStatus"
