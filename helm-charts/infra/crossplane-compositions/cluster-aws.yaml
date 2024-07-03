@@ -923,60 +923,60 @@ spec:
 #########################################################################
 
   # Cluster
-  # - name: cluster
-  #   base:
-  #     apiVersion: eks.aws.upbound.io/v1beta1
-  #     kind: Cluster
-  #     spec:
-  #       forProvider:
-  #         region: us-east-1
-  #         version: "1.29"
-  #         roleArnSelector:
-  #           # matchControllerRef: true
-  #           matchLabels:
-  #             role: controlplane
-  #         vpcConfig:
-  #           - endpointPublicAccess: true
-  #             endpointPrivateAccess: false 
-  #             subnetIdSelector:
-  #               matchControllerRef: true
-  #         tags:
-  #           Name: crossplane-minikube-lab-cluster
-  #       writeConnectionSecretToRef:
-  #         namespace: crossplane-system
-  #   patches:
-  #   - fromFieldPath: metadata.annotations
-  #     toFieldPath: metadata.annotations
+  - name: cluster
+    base:
+      apiVersion: eks.aws.upbound.io/v1beta1
+      kind: Cluster
+      spec:
+        forProvider:
+          region: us-east-1
+          version: "1.29"
+          roleArnSelector:
+            # matchControllerRef: true
+            matchLabels:
+              role: controlplane
+          vpcConfig:
+            - endpointPublicAccess: true
+              endpointPrivateAccess: false 
+              subnetIdSelector:
+                matchControllerRef: true
+          tags:
+            Name: crossplane-minikube-lab-cluster
+        writeConnectionSecretToRef:
+          namespace: crossplane-system
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
 
-  #   - fromFieldPath: spec.id
-  #     toFieldPath: metadata.name
-  #     # transforms:
-  #     #   - type: string
-  #     #     string:
-  #     #       fmt: "%s"
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      # transforms:
+      #   - type: string
+      #     string:
+      #       fmt: "%s"
 
-  #   - fromFieldPath: spec.id
-  #     toFieldPath: spec.writeConnectionSecretToRef.name
+    - fromFieldPath: spec.id
+      toFieldPath: spec.writeConnectionSecretToRef.name
 
-  #   # - fromFieldPath: metadata.annotations[crossplane.io/external-name]
-  #   #   toFieldPath: metadata.annotations[crossplane.io/external-name]
-  #   - fromFieldPath: spec.parameters.version
-  #     toFieldPath: spec.forProvider.version
+    # - fromFieldPath: metadata.annotations[crossplane.io/external-name]
+    #   toFieldPath: metadata.annotations[crossplane.io/external-name]
+    - fromFieldPath: spec.parameters.version
+      toFieldPath: spec.forProvider.version
 
-  #   - type: ToCompositeFieldPath
-  #     fromFieldPath: metadata.annotations[crossplane.io/external-name]
-  #     toFieldPath: status.clusterName
-  #   - type: ToCompositeFieldPath
-  #     fromFieldPath: status.atProvider.status
-  #     toFieldPath: status.controlPlaneStatus
-  #   - fromFieldPath: spec.writeConnectionSecretToRef.namespace
-  #     toFieldPath: spec.writeConnectionSecretToRef.namespace
-  #   readinessChecks:
-  #   - type: MatchString
-  #     fieldPath: status.atProvider.status
-  #     matchString: ACTIVE
-  #   connectionDetails:
-  #     - fromConnectionSecretKey: kubeconfig
+    - type: ToCompositeFieldPath
+      fromFieldPath: metadata.annotations[crossplane.io/external-name]
+      toFieldPath: status.clusterName
+    - type: ToCompositeFieldPath
+      fromFieldPath: status.atProvider.status
+      toFieldPath: status.controlPlaneStatus
+    - fromFieldPath: spec.writeConnectionSecretToRef.namespace
+      toFieldPath: spec.writeConnectionSecretToRef.namespace
+    readinessChecks:
+    - type: MatchString
+      fieldPath: status.atProvider.status
+      matchString: ACTIVE
+    connectionDetails:
+      - fromConnectionSecretKey: kubeconfig
 
 
 
