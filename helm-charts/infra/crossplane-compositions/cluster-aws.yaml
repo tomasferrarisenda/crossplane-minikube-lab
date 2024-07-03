@@ -6,6 +6,8 @@ metadata:
     provider: aws
     cluster: eks
 spec:
+  writeConnectionSecretToRef: crossplane-system
+
   compositeTypeRef:
     apiVersion: devopstoolkitseries.com/v1alpha1 # This is spec.group + spec.version from CompositeResourceDefinition
     kind: Cluster # This is spec.names.kind from CompositeResourceDefinition
@@ -45,7 +47,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-a"
+            fmt: "%s"
 
   # Subnet Public A
   - name: public-subnet-a
@@ -145,7 +147,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-a"
+            fmt: "%s-b"
 
 
   # Route Table Association Public B
@@ -182,7 +184,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-a"
+            fmt: "%s-b"
 
   # Subnet Private A
   - name: private-subnet-a
@@ -283,7 +285,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-a"
+            fmt: "%s-b"
 
   # Route Table Association Private B
   - name: rta-private-b
@@ -320,7 +322,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-a"
+            fmt: "%s-b"
 
   # Internet Gateway
   - name: internet-gateway
@@ -345,7 +347,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-a"
+            fmt: "%s"
 
   # NAT Gateway A
   - name: nat-gateway-a
@@ -438,7 +440,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-a"
+            fmt: "%s-b"
 
   # EIP B
   - name: eip-b
@@ -463,7 +465,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-a"
+            fmt: "%s-b"
 
   # Route Table Public
   - name: route-table-public
@@ -488,7 +490,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-a"
+            fmt: "%s"
 
   # Route Public
   - name: route-public
@@ -517,7 +519,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-a"
+            fmt: "%s"
 
   # Route Table Private A
   - name: route-table-private-a
@@ -600,7 +602,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-a"
+            fmt: "%s-b"
 
   # Route Private B
   - name: route-private-b
@@ -631,7 +633,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-a"
+            fmt: "%s-b"
 
   # Security Group
   - name: security-group
@@ -654,7 +656,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-a"
+            fmt: "%s"
 
   # Security Group Rule 1
   - name: security-group-rule-1
@@ -682,7 +684,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-a"
+            fmt: "%s"
 
   # Security Group Rule 2
   - name: security-group-rule-2
@@ -710,7 +712,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-a"
+            fmt: "%s"
 
   # Open ID Provider
   ## This binds AWS's IAM with Kubernetes's RBAC. It allows Kubernetes to authenticate AWS users.
@@ -735,7 +737,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-a"
+            fmt: "%s"
 
 #########################################################################
 # IAM
@@ -778,7 +780,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-a"
+            fmt: "%s"
 
   # Role Policy Attachment Controlplane
   - name: role-policy-attachment-controlplane
@@ -802,7 +804,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-a"
+            fmt: "%s"
 
   # Role Nodegroup
   - name: role-nodegroup
@@ -841,7 +843,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-a"
+            fmt: "%s"
 
   # Role Policy Attachment Nodegroup Workernode
   - name: role-policy-attachment-nodegroup-workernode
@@ -865,7 +867,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-a"
+            fmt: "%s"
 
   # Role Policy Attachment Nodegroup CNI
   - name: role-policy-attachment-nodegroup-cni
@@ -889,7 +891,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-a"
+            fmt: "%s"
 
   # Role Policy Attachment Nodegroup EC2ContainerRegistryReadOnly
   - name: role-policy-attachment-nodegroup-ec2containerregistryreadonly
@@ -913,7 +915,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-a"
+            fmt: "%s"
 
 
 #########################################################################
@@ -950,7 +952,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-a"
+            fmt: "%s"
     # - fromFieldPath: metadata.annotations[crossplane.io/external-name]
     #   toFieldPath: metadata.annotations[crossplane.io/external-name]
     - fromFieldPath: spec.parameters.version
@@ -1011,7 +1013,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-a"
+            fmt: "%s"
     - fromFieldPath: spec.parameters.nodeSize
       toFieldPath: spec.forProvider.instanceTypes[0]
       transforms:
