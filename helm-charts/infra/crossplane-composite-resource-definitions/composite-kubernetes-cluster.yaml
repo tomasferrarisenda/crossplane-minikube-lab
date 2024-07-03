@@ -10,8 +10,8 @@ spec:
   claimNames:
     kind: ClusterClaim
     plural: clusterclaims
-  defaultCompositionRef:
-    name: cluster-google
+  # defaultCompositionRef:
+  #   name: cluster-google
   connectionSecretKeys:
   - kubeconfig
   versions:

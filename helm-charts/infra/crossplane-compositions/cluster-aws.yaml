@@ -4,11 +4,10 @@ metadata:
   name: aws-cluster
   labels:
     provider: aws
-    # cluster: eks
 spec:
   compositeTypeRef:
-    apiVersion: devopstoolkitseries.com/v1alpha1
-    kind: Cluster
+    apiVersion: devopstoolkitseries.com/v1alpha1 # This is spec.group + spec.version from CompositeResourceDefinition
+    kind: Cluster # This is spec.names.kind from CompositeResourceDefinition
   patchSets:
   - name: metadata
     patches:
