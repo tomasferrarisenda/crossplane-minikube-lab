@@ -2,7 +2,11 @@ apiVersion: devopstoolkitseries.com/v1alpha1
 kind: ClusterClaim
 metadata:
   name: team-a
+  annotations:
+    organization: automate-all-the-things
+    author: Tomas Ferrari
 spec:
+  id: my-cluster
   compositionSelector:
     matchLabels: # These are the metadata.labels of the Composition
       provider: aws  # Possible values aws, azure, gcp
