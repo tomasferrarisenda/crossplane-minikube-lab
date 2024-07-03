@@ -716,9 +716,9 @@ spec:
               zone: us-east-1c
               access: private
           scalingConfig:
-            - minSize: 1
+            - desiredSize: 1
+              minSize: 1
               maxSize: 10
-              desiredSize: 1
           instanceTypes:
             - t3.nano
           diskSize: 5
