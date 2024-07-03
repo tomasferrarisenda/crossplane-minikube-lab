@@ -783,7 +783,7 @@ spec:
             fmt: "%s-controlplane"
 
   # Role Policy Attachment Controlplane
-  - name: role-policy-attachment-controlplane
+  - name: role-policy-attachment-controlplane-eksclusterpolicy
     base:
       apiVersion: iam.aws.upbound.io/v1beta1
       kind: RolePolicyAttachment
@@ -804,7 +804,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-eksclusterpolicy"
+            fmt: "%s-controlplane-eksclusterpolicy"
 
   # Role Nodegroup
   - name: role-nodegroup
@@ -867,7 +867,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-workernode"
+            fmt: "%s-nodegroup-workernode"
 
   # Role Policy Attachment Nodegroup CNI
   - name: role-policy-attachment-nodegroup-cni
@@ -891,7 +891,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-cni"
+            fmt: "%s-nodegroup-cni"
 
   # Role Policy Attachment Nodegroup EC2ContainerRegistryReadOnly
   - name: role-policy-attachment-nodegroup-ec2containerregistryreadonly
@@ -915,7 +915,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-ec2containerregistryreadonly"
+            fmt: "%s-nodegroup-ec2containerregistryreadonly"
 
 
 #########################################################################
