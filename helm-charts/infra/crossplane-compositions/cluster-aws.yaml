@@ -1,14 +1,14 @@
 apiVersion: apiextensions.crossplane.io/v1
 kind: Composition
 metadata:
-  name: cluster-aws
+  name: aws-cluster
   labels:
     provider: aws
-    cluster: eks
+    # cluster: eks
 spec:
   compositeTypeRef:
     apiVersion: devopstoolkitseries.com/v1alpha1
-    kind: CompositeKubernetesCluster
+    kind: Cluster
   patchSets:
   - name: metadata
     patches:

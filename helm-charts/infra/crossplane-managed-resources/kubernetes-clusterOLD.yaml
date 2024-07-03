@@ -1,0 +1,22 @@
+# # #
+
+# apiVersion: devopstoolkitseries.com/v1alpha1
+# kind: KubernetesCluster
+# metadata:
+#   name: team-a
+#   labels:
+#     cluster-owner: vfarcic
+# spec:
+#   compositionRef:
+#     # Possible values cluster-google, cluster-azure, cluster-aws
+#     name: cluster-aws
+#   parameters:
+#     # Possible values xsmall, small, medium, large, xlarge. Default value: xsmall
+#     nodeSize: xsmall
+#     # version: "1.20" # Default value: "1.29"
+#     # minNodeCount: 2 # Default value: 1
+#   writeConnectionSecretToRef:
+#     namespace: crossplane-system
+#     name: cluster
+#   # providerConfigRef: # Se esta usando default pero no se donde cambiarlo
+#   #   name: aws
