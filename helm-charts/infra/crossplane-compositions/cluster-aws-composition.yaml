@@ -6,7 +6,7 @@ metadata:
     provider: aws
     cluster: eks
 spec:
-  writeConnectionSecretsToNamespace: crossplane-system
+  # writeConnectionSecretsToNamespace: crossplane-system
 
   compositeTypeRef:
     apiVersion: devopstoolkitseries.com/v1alpha1 # This is spec.group + spec.version from CompositeResourceDefinition
@@ -966,8 +966,8 @@ spec:
                 matchControllerRef: true
           tags:
             Name: crossplane-minikube-lab-cluster
-        writeConnectionSecretToRef:
-          namespace: crossplane-system
+        # writeConnectionSecretToRef:
+        #   namespace: crossplane-system
     patches:
     - fromFieldPath: metadata.annotations
       toFieldPath: metadata.annotations
@@ -978,8 +978,13 @@ spec:
       #   - type: string
       #     string:
       #       fmt: "%s"
+
     - fromFieldPath: spec.id
       toFieldPath: spec.writeConnectionSecretToRef.name
+    - fromFieldPath: spec.claimRef.namespace # We tell it to create the secret in the same namespace as the claim
+      toFieldPath: spec.writeConnectionSecretToRef.namespace
+
+
     - fromFieldPath: spec.parameters.version
       toFieldPath: spec.forProvider.version
 

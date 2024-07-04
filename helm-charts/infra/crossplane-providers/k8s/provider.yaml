@@ -1,3 +1,6 @@
+# All of this is required for the Kubernetes provider to have permissions to create additional resources in the cluster through the Kubernetes API.
+# See: https://youtu.be/X7E6YfXWgvE?si=TxyAWc__V8WSURAV&t=2705
+
 apiVersion: v1
 kind: ServiceAccount
 metadata:
