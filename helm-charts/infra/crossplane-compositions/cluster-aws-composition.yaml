@@ -22,6 +22,30 @@ spec:
   
   resources:
 #########################################################################
+# CROSSPLANE
+#########################################################################
+  # ProviderConfig
+  # - name: provider-config
+  #   base:
+  #     apiVersion: aws.upbound.io/v1beta1
+  #     kind: ProviderConfig
+  #     metadata:
+  #       name: default
+  #       # name: aws
+  #     spec:
+  #       credentials:
+  #         source: Secret
+  #         secretRef:
+  #           namespace: crossplane-system
+  #           name: aws-secret
+  #           key: creds
+  #   patches:
+  #   - fromFieldPath: metadata.annotations
+  #     toFieldPath: metadata.annotations
+  #   - fromFieldPath: spec.id
+  #     toFieldPath: metadata.name
+  
+#########################################################################
 # NETWORKING
 #########################################################################
 
