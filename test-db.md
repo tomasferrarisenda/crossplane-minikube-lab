@@ -56,3 +56,14 @@ Output should be:
 ```
 
 Where "my-db" is the DB created through the composition.
+
+
+
+### When deleting some resources will be left hanging
+```bash
+kubectl patch database.postgresql.sql.crossplane.io $DB \
+    --patch '{"metadata":{"finalizers":[]}}' --type=merge
+
+kubectl patch object.kubernetes.crossplane.io $DB \
+    --patch '{"metadata":{"finalizers":[]}}' --type=merge
+```
