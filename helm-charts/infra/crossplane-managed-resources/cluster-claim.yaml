@@ -2,7 +2,7 @@ apiVersion: devopstoolkitseries.com/v1alpha1
 kind: ClusterClaim
 metadata:
   name: my-cluster
-  # namespace: my-cluster 
+  namespace: my-cluster 
   annotations:
     organization: automate-all-the-things
     author: Tomas Ferrari

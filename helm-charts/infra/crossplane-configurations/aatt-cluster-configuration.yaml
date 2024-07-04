@@ -1,0 +1,21 @@
+apiVersion: meta.pkg.crossplane.io/v1
+kind: Configuration
+metadata:
+  name: aatt-cluster
+  annotations:
+    meta.crossplane.io/maintainer: Tomas Ferrari
+    meta.crossplane.io/source: github.com/vfarcic/crossplane-tutorial
+    meta.crossplane.io/license: MIT
+    meta.crossplane.io/description: Fully operational Kubernetes clusters in AWS, Google Cloud Platform, and Azure.
+    meta.crossplane.io/readme: A Configuration package that defines a Cluster and ClusterClaim types that can be used to create and provision fully operational Kubernetes clusters in AWS, Google Cloud Platform, and Azure.
+spec:
+  crossplane:
+    version: ">=v1.14.0"
+  dependsOn:
+  - provider: xpkg.upbound.io/upbound/provider-aws-ec2
+    version: ">=v1.4.0"
+  - provider: xpkg.upbound.io/upbound/provider-aws-eks
+    version: ">=v1.8.0"
+  - provider: xpkg.upbound.io/upbound/provider-aws-iam
+    version: ">=v1.4.0"
+# Agregar para Azure y GCP
