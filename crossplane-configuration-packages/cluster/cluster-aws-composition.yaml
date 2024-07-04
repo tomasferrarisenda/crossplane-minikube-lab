@@ -1,0 +1,1065 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: aws-cluster
+  labels:
+    provider: aws
+    cluster: eks
+spec:
+  # writeConnectionSecretsToNamespace: crossplane-system
+
+  compositeTypeRef:
+    apiVersion: devopstoolkitseries.com/v1alpha1 # This is spec.group + spec.version from CompositeResourceDefinition
+    kind: Cluster # This is spec.names.kind from CompositeResourceDefinition
+
+  patchSets:
+  - name: metadata
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id # Custom field that we defined in the OpenAPI schema in the CompositeResourceDefinition
+      toFieldPath: metadata.name
+  
+  resources:
+#########################################################################
+# CROSSPLANE
+#########################################################################
+  # ProviderConfig
+  # - name: provider-config
+  #   base:
+  #     apiVersion: aws.upbound.io/v1beta1
+  #     kind: ProviderConfig
+  #     metadata:
+  #       name: default
+  #       # name: aws
+  #     spec:
+  #       credentials:
+  #         source: Secret
+  #         secretRef:
+  #           namespace: crossplane-system
+  #           name: aws-secret
+  #           key: creds
+  #   patches:
+  #   - fromFieldPath: metadata.annotations
+  #     toFieldPath: metadata.annotations
+  #   - fromFieldPath: spec.id
+  #     toFieldPath: metadata.name
+  
+#########################################################################
+# NETWORKING
+#########################################################################
+
+  # VPC
+  - name: vpc
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: VPC
+      spec:
+        forProvider:
+          enableDnsHostnames: true
+          enableDnsSupport: true
+          cidrBlock: 10.0.0.0/16
+          region: us-east-1
+          tags:
+            Name: crossplane-minikube-lab-vpc
+            kubernetes.io/cluster/crossplane-minikube-lab: shared
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      # transforms:
+      #   - type: string
+      #     string:
+      #       fmt: "%s"
+
+  # Subnet Public A
+  - name: public-subnet-a
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: Subnet
+      metadata:
+        labels:
+          zone: us-east-1a
+          access: public
+      spec:
+        forProvider:
+          region: us-east-1
+          availabilityZone: us-east-1a
+          cidrBlock: 10.0.0.0/19
+          vpcIdSelector:
+            matchControllerRef: true
+          mapPublicIPOnLaunch: true
+          tags:
+            Name: crossplane-minikube-lab-public-subnet-a
+            kubernetes.io/role/internal-elb: "1" # Required for EKS
+            kubernetes.io/cluster/crossplane-minikube-lab-cluster: "owned" # Required for EKS
+            kubernetes.io/cluster/crossplane-minikube-lab: shared
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-public-a"
+
+  # Route Table Association Public A
+  - name: rta-public-a
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: RouteTableAssociation
+      metadata:
+        labels:
+          zone: us-east-1a
+          access: public
+      spec:
+        forProvider:
+          region: us-east-1
+          subnetIdSelector:
+            # matchControllerRef: true
+            matchLabels:
+              zone: us-east-1a
+              access: public
+          routeTableIdSelector:
+            # matchControllerRef: true
+            matchLabels:
+              access: public
+          tags:
+            Name: crossplane-minikube-lab-rta-public-a
+            kubernetes.io/role/internal-elb: "1" # Required for EKS
+            kubernetes.io/cluster/crossplane-minikube-lab-cluster: "owned" # Required for EKS
+            kubernetes.io/cluster/crossplane-minikube-lab: shared
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-public-a"
+
+  # Subnet Public B
+  - name: public-subnet-b
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: Subnet
+      metadata:
+        labels:
+          zone: us-east-1b
+          access: public
+      spec:
+        forProvider:
+          region: us-east-1
+          availabilityZone: us-east-1b
+          cidrBlock: 10.0.32.0/19
+          vpcIdSelector:
+            matchControllerRef: true
+          mapPublicIPOnLaunch: true
+          tags:
+            Name: crossplane-minikube-lab-public-subnet-b
+            kubernetes.io/role/internal-elb: "1" # Required for EKS
+            kubernetes.io/cluster/crossplane-minikube-lab-cluster: "owned" # Required for EKS
+            kubernetes.io/cluster/crossplane-minikube-lab: shared
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-public-b"
+
+
+  # Route Table Association Public B
+  - name: rta-public-b
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: RouteTableAssociation
+      metadata:
+        labels:
+          zone: us-east-1b
+          access: public
+      spec:
+        forProvider:
+          region: us-east-1
+          subnetIdSelector:
+            # matchControllerRef: true
+            matchLabels:
+              zone: us-east-1b
+              access: public
+          routeTableIdSelector:
+            # matchControllerRef: true
+            matchLabels:
+              access: public
+          tags:
+            Name: crossplane-minikube-lab-rta-public-b
+            kubernetes.io/role/internal-elb: "1" # Required for EKS
+            kubernetes.io/cluster/crossplane-minikube-lab-cluster: "owned" # Required for EKS
+            kubernetes.io/cluster/crossplane-minikube-lab: shared
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-public-b"
+
+  # Subnet Private A
+  - name: private-subnet-a
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: Subnet
+      metadata:
+        labels:
+          zone: us-east-1a
+          access: private
+      spec:
+        forProvider:
+          region: us-east-1
+          availabilityZone: us-east-1a
+          cidrBlock: 10.0.64.0/19
+          vpcIdSelector:
+            matchControllerRef: true
+          # mapPublicIPOnLaunch: true
+          tags:
+            Name: crossplane-minikube-lab-private-subnet-a
+            kubernetes.io/role/internal-elb: "1" # Required for EKS
+            kubernetes.io/cluster/crossplane-minikube-lab-cluster: "owned" # Required for EKS
+            kubernetes.io/cluster/crossplane-minikube-lab: shared
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-private-a"
+
+  # Route Table Association Private A
+  - name: rta-private-a
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: RouteTableAssociation
+      metadata:
+        labels:
+          zone: us-east-1a
+          access: private
+      spec:
+        forProvider:
+          region: us-east-1
+          subnetIdSelector:
+            # matchControllerRef: true
+            matchLabels:
+              zone: us-east-1a
+              access: private
+          routeTableIdSelector:
+            # matchControllerRef: true
+            matchLabels:
+              access: private
+              zone: a
+          tags:
+            Name: crossplane-minikube-lab-rta-private-a
+            kubernetes.io/role/internal-elb: "1" # Required for EKS
+            kubernetes.io/cluster/crossplane-minikube-lab-cluster: "owned" # Required for EKS
+            kubernetes.io/cluster/crossplane-minikube-lab: shared
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-private-a"
+
+  # Subnet Private B
+  - name: private-subnet-b
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: Subnet
+      metadata:
+        labels:
+          zone: us-east-1b
+          access: private
+      spec:
+        forProvider:
+          region: us-east-1
+          availabilityZone: us-east-1b
+          cidrBlock: 10.0.96.0/19
+          vpcIdSelector:
+            matchControllerRef: true
+          mapPublicIPOnLaunch: true
+          tags:
+            Name: crossplane-minikube-lab-private-subnet-b
+            kubernetes.io/role/internal-elb: "1" # Required for EKS
+            kubernetes.io/cluster/crossplane-minikube-lab-cluster: "owned" # Required for EKS
+            kubernetes.io/cluster/crossplane-minikube-lab: shared
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-private-b"
+
+  # Route Table Association Private B
+  - name: rta-private-b
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: RouteTableAssociation
+      metadata:
+        labels:
+          zone: us-east-1b
+          access: private
+      spec:
+        forProvider:
+          region: us-east-1
+          subnetIdSelector:
+            # matchControllerRef: true
+            matchLabels:
+              zone: us-east-1b
+              access: private
+          routeTableIdSelector:
+            # matchControllerRef: true
+            matchLabels:
+              access: private
+              zone: b
+          tags:
+            Name: crossplane-minikube-lab-rta-private-b
+            kubernetes.io/role/internal-elb: "1" # Required for EKS
+            kubernetes.io/cluster/crossplane-minikube-lab-cluster: "owned" # Required for EKS
+            kubernetes.io/cluster/crossplane-minikube-lab: shared
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-private-b"
+
+  # Internet Gateway
+  - name: internet-gateway
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: InternetGateway
+      metadata:
+        labels:
+          gateway: internet
+      spec:
+        forProvider:
+          region: us-east-1
+          vpcIdSelector:
+            matchControllerRef: true
+          tags:
+            Name: crossplane-minikube-lab-internet-gateway
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      # transforms:
+      #   - type: string
+      #     string:
+      #       fmt: "%s"
+
+  # NAT Gateway A
+  - name: nat-gateway-a
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: NATGateway
+      metadata:
+        labels:
+          gateway: nat
+          zone: a
+      spec:
+        forProvider:
+          region: us-east-1
+          subnetIdSelector:
+            # matchControllerRef: true
+            matchLabels:
+              zone: us-east-1a
+              access: public
+          allocationIdSelector:
+            # matchControllerRef: true
+            matchLabels:
+              zone: us-east-1a
+              access: public
+          tags:
+            Name: crossplane-minikube-lab-nat-gateway-a
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-a"
+
+  # EIP A
+  - name: eip-a
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: EIP
+      metadata:
+        labels:
+          zone: us-east-1a
+          access: public
+      spec:
+        forProvider:
+          region: us-east-1
+          vpc: true
+          tags:
+            Name: crossplane-minikube-lab-eip-a
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-a"
+
+  # NAT Gateway B
+  - name: nat-gateway-b
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: NATGateway
+      metadata:
+        labels:
+          gateway: nat
+          zone: b
+      spec:
+        forProvider:
+          region: us-east-1
+          subnetIdSelector:
+            # matchControllerRef: true
+            matchLabels:
+              zone: us-east-1b
+              access: public
+          allocationIdSelector:
+            # matchControllerRef: true
+            matchLabels:
+              zone: us-east-1b
+              access: public
+          tags:
+            Name: crossplane-minikube-lab-nat-gateway-b
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-b"
+
+  # EIP B
+  - name: eip-b
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: EIP
+      metadata:
+        labels:
+          zone: us-east-1b
+          access: public
+      spec:
+        forProvider:
+          region: us-east-1
+          vpc: true
+          tags:
+            Name: crossplane-minikube-lab-eip-b
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-b"
+
+  # Route Table Public
+  - name: route-table-public
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: RouteTable
+      metadata:
+        labels:
+          access: public
+      spec:
+        forProvider:
+          region: us-east-1
+          vpcIdSelector:
+            matchControllerRef: true
+          tags:
+            Name: crossplane-minikube-lab-route-table-public
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-public"
+
+  # Route Public
+  - name: route-public
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: Route
+      spec:
+        forProvider:
+          region: us-east-1
+          destinationCidrBlock: 0.0.0.0/0
+          gatewayIdSelector:
+            # matchControllerRef: true
+            matchLabels:
+              gateway: internet
+          routeTableIdSelector:
+            # matchControllerRef: true
+            matchLabels:
+              access: public
+          tags:
+            Name: crossplane-minikube-lab-route-public
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-public"
+
+  # Route Table Private A
+  - name: route-table-private-a
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: RouteTable
+      metadata:
+        labels:
+          access: private
+          zone: a
+      spec:
+        forProvider:
+          region: us-east-1
+          vpcIdSelector:
+            matchControllerRef: true
+          tags:
+            Name: crossplane-minikube-lab-route-table-private-a
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-private-a"
+
+  # Route Private A
+  - name: route-private-a
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: Route
+      spec:
+        forProvider:
+          region: us-east-1
+          destinationCidrBlock: 0.0.0.0/0
+          natGatewayIdSelector:
+            # matchControllerRef: true
+            matchLabels:
+              gateway: nat
+              zone: a
+          routeTableIdSelector:
+            # matchControllerRef: true
+            matchLabels:
+              access: private
+              zone: a
+          tags:
+            Name: crossplane-minikube-lab-route-private-a
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-private-a"
+
+  # Route Table Private B
+  - name: route-table-private-b
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: RouteTable
+      metadata:
+        labels:
+          access: private
+          zone: b
+      spec:
+        forProvider:
+          region: us-east-1
+          vpcIdSelector:
+            matchControllerRef: true
+          tags:
+            Name: crossplane-minikube-lab-route-table-private-b
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-private-b"
+
+  # Route Private B
+  - name: route-private-b
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: Route
+      spec:
+        forProvider:
+          region: us-east-1
+          destinationCidrBlock: 0.0.0.0/0
+          natGatewayIdSelector:
+            # matchControllerRef: true
+            matchLabels:
+              gateway: nat
+              zone: b
+          routeTableIdSelector:
+            # matchControllerRef: true
+            matchLabels:
+              access: private
+              zone: b
+          tags:
+            Name: crossplane-minikube-lab-route-private-b
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-private-b"
+
+  # Security Group
+  - name: security-group
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: SecurityGroup
+      spec:
+        forProvider:
+          description: Allow TLS inbound traffic
+          region: us-east-1
+          vpcIdSelector:
+            matchControllerRef: true
+          tags:
+            Name: crossplane-minikube-lab-security-group
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      # transforms:
+      #   - type: string
+      #     string:
+      #       fmt: "%s"
+
+  # Security Group Rule 1
+  - name: security-group-rule-1
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: SecurityGroupRule
+      spec:
+        forProvider:
+          cidrBlocks:
+            - 0.0.0.0/0
+          fromPort: 0
+          protocol: "-1"
+          toPort: 0
+          type: ingress
+          region: us-east-1
+          securityGroupIdSelector:
+            matchControllerRef: true
+          tags:
+            Name: crossplane-minikube-lab-security-group-rule-1
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-1"
+
+  # Security Group Rule 2
+  - name: security-group-rule-2
+    base:
+      apiVersion: ec2.aws.upbound.io/v1beta1
+      kind: SecurityGroupRule
+      spec:
+        forProvider:
+          cidrBlocks:
+            - 0.0.0.0/0
+          fromPort: 0
+          protocol: "-1"
+          toPort: 0
+          type: egress
+          region: us-east-1
+          securityGroupIdSelector:
+            matchControllerRef: true
+          tags:
+            Name: crossplane-minikube-lab-security-group-rule-2
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-2"
+
+  # Open ID Provider
+  ## This binds AWS's IAM with Kubernetes's RBAC. It allows Kubernetes to authenticate AWS users.
+  - name: open-id-provider
+    base:
+      apiVersion: iam.aws.upbound.io/v1beta1
+      kind: OpenIDConnectProvider
+      spec:
+        forProvider:
+          clientIdList:
+            - sts.amazonaws.com
+          thumbprintList:
+            - 9e99a48a9960b14926bb7f3b02e22da2b0ab7280
+          url: https://oidc.eks.us-east-1.amazonaws.com/id/9BBF76B7C9C6D52584F175E783DF54A4
+          tags:
+            Name: crossplane-minikube-lab-open-id-provider
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      # transforms:
+      #   - type: string
+      #     string:
+      #       fmt: "%s"
+
+#########################################################################
+# IAM
+#########################################################################
+
+  # Role Controlplane
+  - name: role-controlplane
+    base:
+      apiVersion: iam.aws.upbound.io/v1beta1
+      kind: Role
+      metadata:
+        labels:
+          role: controlplane
+      spec:
+        forProvider:
+          assumeRolePolicy: |
+            {
+              "Version": "2012-10-17",
+              "Statement": [
+                  {
+                      "Effect": "Allow",
+                      "Principal": {
+                          "Service": [
+                              "eks.amazonaws.com"
+                          ]
+                      },
+                      "Action": [
+                          "sts:AssumeRole"
+                      ]
+                  }
+              ]
+            }
+          tags:
+            Name: crossplane-minikube-lab-role-controlplane
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-controlplane"
+
+  # Role Policy Attachment Controlplane
+  - name: role-policy-attachment-controlplane-eksclusterpolicy
+    base:
+      apiVersion: iam.aws.upbound.io/v1beta1
+      kind: RolePolicyAttachment
+      spec:
+        forProvider:
+          policyArn: arn:aws:iam::aws:policy/AmazonEKSClusterPolicy
+          roleSelector:
+            # matchControllerRef: true
+            matchLabels:
+              role: controlplane
+          tags:
+            Name: crossplane-minikube-lab-role-policy-policy-attachment-controlplane
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-controlplane-eksclusterpolicy"
+
+  # Role Nodegroup
+  - name: role-nodegroup
+    base:
+      apiVersion: iam.aws.upbound.io/v1beta1
+      kind: Role
+      metadata:
+        labels:
+          role: nodegroup
+      spec:
+        forProvider:
+          assumeRolePolicy: |
+            {
+              "Version": "2012-10-17",
+              "Statement": [
+                  {
+                      "Effect": "Allow",
+                      "Principal": {
+                          "Service": [
+                              "ec2.amazonaws.com"
+                          ]
+                      },
+                      "Action": [
+                          "sts:AssumeRole"
+                      ]
+                  }
+              ]
+            }
+          tags:
+            Name: crossplane-minikube-lab-role-nodegroup
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-nodegroup"
+
+  # Role Policy Attachment Nodegroup Workernode
+  - name: role-policy-attachment-nodegroup-workernode
+    base:
+      apiVersion: iam.aws.upbound.io/v1beta1
+      kind: RolePolicyAttachment
+      spec:
+        forProvider:
+          policyArn: arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
+          roleSelector:
+            # matchControllerRef: true
+            matchLabels:
+              role: nodegroup
+          tags:
+            Name: crossplane-minikube-lab-role-policy-policy-attachment-nodegroup-workernode
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-nodegroup-workernode"
+
+  # Role Policy Attachment Nodegroup CNI
+  - name: role-policy-attachment-nodegroup-cni
+    base:
+      apiVersion: iam.aws.upbound.io/v1beta1
+      kind: RolePolicyAttachment
+      spec:
+        forProvider:
+          policyArn: arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
+          roleSelector:
+            # matchControllerRef: true
+            matchLabels:
+              role: nodegroup
+          tags:
+            Name: crossplane-minikube-lab-role-policy-policy-attachment-nodegroup-cni
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-nodegroup-cni"
+
+  # Role Policy Attachment Nodegroup EC2ContainerRegistryReadOnly
+  - name: role-policy-attachment-nodegroup-ec2containerregistryreadonly
+    base:
+      apiVersion: iam.aws.upbound.io/v1beta1
+      kind: RolePolicyAttachment
+      spec:
+        forProvider:
+          policyArn: arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+          roleSelector:
+            # matchControllerRef: true
+            matchLabels:
+              role: nodegroup
+          tags:
+            Name: crossplane-minikube-lab-role-policy-policy-attachment-nodegroup-ec2containerregistryreadonly
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-nodegroup-ec2containerregistryreadonly"
+
+
+#########################################################################
+# EKS
+#########################################################################
+
+  # Cluster
+  - name: cluster
+    base:
+      apiVersion: eks.aws.upbound.io/v1beta1
+      kind: Cluster
+      spec:
+        forProvider:
+          region: us-east-1
+          version: "1.29"
+          roleArnSelector:
+            # matchControllerRef: true
+            matchLabels:
+              role: controlplane
+          vpcConfig:
+            - endpointPublicAccess: true
+              endpointPrivateAccess: false 
+              subnetIdSelector:
+                matchControllerRef: true
+          tags:
+            Name: crossplane-minikube-lab-cluster
+        # writeConnectionSecretToRef:
+        #   namespace: crossplane-system
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      # transforms:
+      #   - type: string
+      #     string:
+      #       fmt: "%s"
+
+    - fromFieldPath: spec.id
+      toFieldPath: spec.writeConnectionSecretToRef.name
+    - fromFieldPath: spec.claimRef.namespace # We tell it to create the secret in the same namespace as the claim
+      toFieldPath: spec.writeConnectionSecretToRef.namespace
+
+
+    - fromFieldPath: spec.parameters.version
+      toFieldPath: spec.forProvider.version
+
+    - type: ToCompositeFieldPath
+      fromFieldPath: metadata.annotations[crossplane.io/external-name]
+      toFieldPath: status.clusterName
+    - type: ToCompositeFieldPath
+      fromFieldPath: status.atProvider.status
+      toFieldPath: status.controlPlaneStatus
+    - fromFieldPath: spec.writeConnectionSecretToRef.namespace
+      toFieldPath: spec.writeConnectionSecretToRef.namespace
+    readinessChecks:
+    - type: MatchString
+      fieldPath: status.atProvider.status
+      matchString: ACTIVE
+    connectionDetails:
+      - fromConnectionSecretKey: kubeconfig
+
+
+
+  # # NodeGroup
+  # - name: eksnodegroup
+  #   base:
+  #     apiVersion: eks.aws.upbound.io/v1beta1
+  #     kind: NodeGroup
+  #     spec:
+  #       forProvider:
+  #         region: us-east-1
+  #         clusterNameSelector:
+  #           matchControllerRef: true
+  #         nodeRoleArnSelector:
+  #           # matchControllerRef: true
+  #           matchLabels:
+  #             role: nodegroup
+  #         subnetIdSelector:
+  #           # matchControllerRef: true
+  #           matchLabels:
+  #             access: private
+  #         scalingConfig:
+  #           - desiredSize: 1
+  #             minSize: 1
+  #             maxSize: 10
+  #         instanceTypes:
+  #           - t3.nano
+  #         diskSize: 5
+  #         tags:
+  #           Name: crossplane-minikube-lab-nodegroup
+  #   patches:
+  #   - fromFieldPath: metadata.annotations
+  #     toFieldPath: metadata.annotations
+  #   - fromFieldPath: spec.id
+  #     toFieldPath: metadata.name
+  #     # transforms:
+  #     #   - type: string
+  #     #     string:
+  #     #       fmt: "%s"
+  #   - fromFieldPath: spec.parameters.nodeSize
+  #     toFieldPath: spec.forProvider.instanceTypes[0]
+  #     transforms:
+  #       - type: map
+  #         map:
+  #           xsmall: t3.nano
+  #           small: t3.small
+  #           medium: t3.medium
+  #           large: t3.large
+  #           xlarge: t3.xlarge
+  #   - fromFieldPath: spec.parameters.minNodeCount
+  #     toFieldPath: spec.forProvider.scalingConfig[0].minSize
+  #   - fromFieldPath: spec.parameters.minNodeCount
+  #     toFieldPath: spec.forProvider.scalingConfig[0].desiredSize
+
+  #   - type: ToCompositeFieldPath
+  #     fromFieldPath: status.atProvider.status
+  #     toFieldPath: status.nodePoolStatus
+  #   readinessChecks:
+  #   - type: MatchString
+  #     fieldPath: status.atProvider.status
+  #     matchString: ACTIVE
