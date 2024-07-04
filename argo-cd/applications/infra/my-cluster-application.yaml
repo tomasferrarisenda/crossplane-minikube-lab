@@ -1,7 +1,7 @@
 # apiVersion: argoproj.io/v1alpha1
 # kind: Application
 # metadata:
-#   name: crossplane-managed-resources
+#   name: my-cluster
 #   namespace: argocd
 #   # annotations:
 #   #   argocd.argoproj.io/sync-wave: "0"
@@ -14,7 +14,7 @@
 #   project: default
 #   source:
 #     repoURL: https://github.com/tomasferrarisenda/crossplane-minikube-lab.git # This value was modified by the initial-setup python script
-#     path: helm-charts/infra/crossplane-managed-resources
+#     path: helm-charts/infra/my-cluster
 #     directory:
 #       recurse: true
 #       jsonnet: {}
