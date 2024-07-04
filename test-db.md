@@ -1,0 +1,58 @@
+# TESTING SQL DEPLOYMENT
+
+### Different Hyperscaler return different secrets. To find the DB endpoit in each of them use:
+
+For AWS use ```export HOST_KEY=endpoint```
+For GCP use ```export HOST_KEY=host```
+For Azure use ```export HOST_KEY=publicIP```
+
+
+### Run
+
+```bash
+export DB=my-db
+
+export PGUSER=$(kubectl --namespace my-sql \
+    get secret $DB --output jsonpath="{.data.username}" \
+    | base64 -d)
+
+export PGPASSWORD=$(kubectl --namespace my-sql \
+    get secret $DB --output jsonpath="{.data.password}" \
+    | base64 -d)
+
+export HOST_KEY=endpoint
+
+export PGHOST=$(kubectl --namespace my-sql \
+    get secret $DB --output jsonpath="{.data.$HOST_KEY}" \
+    | base64 -d)
+
+kubectl run postgresql-client --rm -ti --restart='Never' \
+    --image docker.io/bitnami/postgresql:16 \
+    --env PGPASSWORD=$PGPASSWORD --env PGHOST=$PGHOST \
+    --env PGUSER=$PGUSER --command -- sh
+```
+
+#### Inside the pod run:
+```bash
+psql --host $PGHOST -U $PGUSER -d postgres -p 5432
+```
+ 
+#### Inside the DB run:
+```bash
+\l
+```
+Output should be:
+```sql
+                                                          List of databases
+   Name    |   Owner    | Encoding | Locale Provider |   Collate   |    Ctype    | ICU Locale | ICU Rules |     Access privileges
+-----------+------------+----------+-----------------+-------------+-------------+------------+-----------+---------------------------
+ my-db     | masteruser | UTF8     | libc            | en_US.UTF-8 | en_US.UTF-8 |            |           |
+ postgres  | masteruser | UTF8     | libc            | en_US.UTF-8 | en_US.UTF-8 |            |           |
+ rdsadmin  | rdsadmin   | UTF8     | libc            | en_US.UTF-8 | en_US.UTF-8 |            |           | rdsadmin=CTc/rdsadmin
+ template0 | rdsadmin   | UTF8     | libc            | en_US.UTF-8 | en_US.UTF-8 |            |           | =c/rdsadmin              +
+           |            |          |                 |             |             |            |           | rdsadmin=CTc/rdsadmin
+ template1 | masteruser | UTF8     | libc            | en_US.UTF-8 | en_US.UTF-8 |            |           | =c/masteruser            +
+           |            |          |                 |             |             |            |           | masteruser=CTc/masteruser
+```
+
+Where "my-db" is the DB created through the composition.
