@@ -1,11 +1,14 @@
 #!/bin/bash
 
 # Prompt the user for their GitHub token
-read -p "Enter your AWS access key ID: " AWS_ACCESS_KEY_ID
-read -p "Enter your AWS secret access key: " AWS_SECRET_ACCESS_KEY
+read -p "Enter your DockerHub username: " DOCKERHUB_USERNAME
+read -p "Enter your DockerHub password: " DOCKERHUB_PASSWORD
+read -p "Enter the new version tag (e.g.: v1.0.1): " TAG
+
+rm -rf cluster/aatt-cluster-*.xpkg
 
 crossplane xpkg build -f ./cluster
 
-docker login -u "tferrari92" -p "password"
+docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_PASSWORD"
 
-crossplane xpkg push -f ./cluster/aatt-cluster-*.xpkg index.docker.io/tferrari92/aatt-cluster:v1.0.0
+crossplane xpkg push -f ./cluster/aatt-cluster-*.xpkg index.docker.io/$DOCKERHUB_USERNAME/aatt-cluster:$TAG
