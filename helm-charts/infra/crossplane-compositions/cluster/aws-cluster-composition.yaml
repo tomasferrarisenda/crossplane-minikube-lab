@@ -1009,9 +1009,6 @@ spec:
           clusterNameSelector:
             matchControllerRef: true
           region: us-east-1
-        writeConnectionSecretToRef:
-          name: sample-eks-cluster-conn
-          namespace: upbound-system
     patches:
     - fromFieldPath: metadata.annotations
       toFieldPath: metadata.annotations
