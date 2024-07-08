@@ -1105,10 +1105,10 @@ spec:
       toFieldPath: spec.credentials.secretRef.namespace
     - fromFieldPath: spec.id
       toFieldPath: spec.credentials.secretRef.name
-      # transforms:
-      # - type: string
-      #   string:
-      #     fmt: '%s-cluster'
+      transforms:
+      - type: string
+        string:
+          fmt: '%s-helm'
     # readinessChecks:
 
   - name: crossplane
@@ -1157,10 +1157,10 @@ spec:
       toFieldPath: spec.credentials.secretRef.namespace
     - fromFieldPath: spec.id
       toFieldPath: spec.credentials.secretRef.name
-      # transforms:
-      # - type: string
-      #   string:
-      #     fmt: '%s-cluster'
+      transforms:
+      - type: string
+        string:
+          fmt: '%s-kubernetes'
     # readinessChecks:
     # - type: None
 
