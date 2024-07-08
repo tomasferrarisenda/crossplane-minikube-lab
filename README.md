@@ -25,6 +25,17 @@ CAN BE LISTED WITH kubectl get pkgrev
 2. Compositions
 3. CompositeResources
 
+
+kubectl --namespace my-cluster \
+    get secret my-cluster \
+    --output jsonpath="{.data.kubeconfig}" \
+    | base64 -d
+
+kubectl --namespace my-cluster \
+    get secret my-cluster \
+    --output jsonpath="{.data.kubeconfig}" \
+    | base64 -d > kubeconfig.yaml
+
 <p title="Banner" align="center"> <img src="https://i.imgur.com/FbsIwSJ.jpg"> </p>
 
 # INDEX
