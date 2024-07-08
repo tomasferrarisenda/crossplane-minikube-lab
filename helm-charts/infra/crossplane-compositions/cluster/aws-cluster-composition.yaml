@@ -1133,7 +1133,7 @@ spec:
     - fromFieldPath: metadata.annotations
       toFieldPath: metadata.annotations
     - fromFieldPath: spec.id
-      toFieldPath: spec.providerConfigRef.name
+      toFieldPath: spec.providerConfigRef.name # Use the helm provider config
       transforms:
       - type: string
         string:
@@ -1161,7 +1161,7 @@ spec:
     - fromFieldPath: metadata.annotations
       toFieldPath: metadata.annotations
     - fromFieldPath: spec.id
-      toFieldPath: spec.providerConfigRef.name
+      toFieldPath: spec.providerConfigRef.name # Use the helm provider config
       transforms:
       - type: string
         string:
@@ -1219,7 +1219,7 @@ spec:
     - fromFieldPath: metadata.annotations
       toFieldPath: metadata.annotations
     - fromFieldPath: spec.id
-      toFieldPath: spec.providerConfigRef.name
+      toFieldPath: spec.providerConfigRef.name # Use the kubernetes provider config
       transforms:
       - type: string
         string:
