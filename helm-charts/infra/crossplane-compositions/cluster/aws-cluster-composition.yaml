@@ -1150,8 +1150,8 @@ spec:
           chart:
             name: argocd
             repository: https://argoproj.github.io/argo-helm
-            version: "7.3.4"
-            # version: "argo-cd-7.3.4"
+            # version: "7.3.4"
+            version: "argo-cd-7.3.4"
     patches:
     - fromFieldPath: spec.id
       toFieldPath: metadata.name
