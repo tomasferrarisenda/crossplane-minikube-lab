@@ -1111,33 +1111,33 @@ spec:
       toFieldPath: spec.credentials.secretRef.name
     # readinessChecks:
 
-  - name: crossplane
-    base:
-      apiVersion: helm.crossplane.io/v1beta1
-      kind: Release
-      spec:
-        rollbackLimit: 3
-        forProvider:
-          namespace: crossplane-system
-          chart:
-            name: crossplane
-            repository: https://charts.crossplane.io/stable
-            version: 1.9.0
-    patches:
-    - fromFieldPath: spec.id
-      toFieldPath: metadata.name
-      transforms:
-      - type: string
-        string:
-          fmt: '%s-crossplane'
-    - fromFieldPath: metadata.annotations
-      toFieldPath: metadata.annotations
-    - fromFieldPath: spec.id
-      toFieldPath: spec.providerConfigRef.name # Use the helm provider config
-      transforms:
-      - type: string
-        string:
-          fmt: '%s-helm'
+  # - name: crossplane
+  #   base:
+  #     apiVersion: helm.crossplane.io/v1beta1
+  #     kind: Release
+  #     spec:
+  #       rollbackLimit: 3
+  #       forProvider:
+  #         namespace: crossplane-system
+  #         chart:
+  #           name: crossplane
+  #           repository: https://charts.crossplane.io/stable
+  #           version: 1.9.0
+  #   patches:
+  #   - fromFieldPath: spec.id
+  #     toFieldPath: metadata.name
+  #     transforms:
+  #     - type: string
+  #       string:
+  #         fmt: '%s-crossplane'
+  #   - fromFieldPath: metadata.annotations
+  #     toFieldPath: metadata.annotations
+  #   - fromFieldPath: spec.id
+  #     toFieldPath: spec.providerConfigRef.name # Use the helm provider config
+  #     transforms:
+  #     - type: string
+  #       string:
+  #         fmt: '%s-helm'
 
   - name: argocd
     base:
