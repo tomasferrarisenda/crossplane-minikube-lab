@@ -985,20 +985,20 @@ spec:
     - fromFieldPath: spec.parameters.version
       toFieldPath: spec.forProvider.version
 
-    - type: ToCompositeFieldPath
-      fromFieldPath: metadata.annotations[crossplane.io/external-name]
-      toFieldPath: status.clusterName
-    - type: ToCompositeFieldPath
-      fromFieldPath: status.atProvider.status
-      toFieldPath: status.controlPlaneStatus
-    # - fromFieldPath: spec.writeConnectionSecretToRef.namespace
-    #   toFieldPath: spec.writeConnectionSecretToRef.namespace
-    readinessChecks:
-    - type: MatchString
-      fieldPath: status.atProvider.status
-      matchString: ACTIVE
-    connectionDetails:
-      - fromConnectionSecretKey: kubeconfig
+    # - type: ToCompositeFieldPath
+    #   fromFieldPath: metadata.annotations[crossplane.io/external-name]
+    #   toFieldPath: status.clusterName
+    # - type: ToCompositeFieldPath
+    #   fromFieldPath: status.atProvider.status
+    #   toFieldPath: status.controlPlaneStatus
+    # # - fromFieldPath: spec.writeConnectionSecretToRef.namespace
+    # #   toFieldPath: spec.writeConnectionSecretToRef.namespace
+    # readinessChecks:
+    # - type: MatchString
+    #   fieldPath: status.atProvider.status
+    #   matchString: ACTIVE
+    # connectionDetails:
+    #   - fromConnectionSecretKey: kubeconfig
 
   - name: clusterauth
     base:
@@ -1074,13 +1074,13 @@ spec:
     - fromFieldPath: spec.parameters.minNodeCount
       toFieldPath: spec.forProvider.scalingConfig[0].desiredSize
 
-    - type: ToCompositeFieldPath
-      fromFieldPath: status.atProvider.status
-      toFieldPath: status.nodePoolStatus
-    readinessChecks:
-    - type: MatchString
-      fieldPath: status.atProvider.status
-      matchString: ACTIVE
+    # - type: ToCompositeFieldPath
+    #   fromFieldPath: status.atProvider.status
+    #   toFieldPath: status.nodePoolStatus
+    # readinessChecks:
+    # - type: MatchString
+    #   fieldPath: status.atProvider.status
+    #   matchString: ACTIVE
 
 
 #########################################################################
