@@ -1154,6 +1154,10 @@ spec:
             # version: "7.3.4"
             version: "v7.3.4"
             # version: "argo-cd-7.3.4"
+          values:
+            configs:
+              params:
+                server.insecure: true
     patches:
     - fromFieldPath: spec.id
       toFieldPath: metadata.name
@@ -1212,6 +1216,7 @@ spec:
             version: 61.2.0
           values:
             # fullnameOverride: "kube-prometheus-stack"
+
             # Since we are using EKS, control plane is abstracted from us so we don´t neet to manage or monitor etcd, scheduler or controller
             defaultRules:
               rules:
