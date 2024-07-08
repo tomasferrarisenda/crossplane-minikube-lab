@@ -30,6 +30,7 @@ spec:
                 description: Cluster ID
               parameters:
                 type: object
+                description: Parameters used to customize the cluster
                 properties:
                   version:
                     description: The Kubernetes version for the cluster.

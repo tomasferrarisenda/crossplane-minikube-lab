@@ -971,7 +971,6 @@ spec:
     patches:
     - fromFieldPath: metadata.annotations
       toFieldPath: metadata.annotations
-
     - fromFieldPath: spec.id
       toFieldPath: metadata.name
       # transforms:
@@ -983,8 +982,6 @@ spec:
       toFieldPath: spec.writeConnectionSecretToRef.name
     - fromFieldPath: spec.claimRef.namespace # We tell it to create the secret in the same namespace as the claim
       toFieldPath: spec.writeConnectionSecretToRef.namespace
-
-
     - fromFieldPath: spec.parameters.version
       toFieldPath: spec.forProvider.version
 
@@ -1005,61 +1002,143 @@ spec:
 
 
 
-  # # NodeGroup
-  # - name: eksnodegroup
-  #   base:
-  #     apiVersion: eks.aws.upbound.io/v1beta1
-  #     kind: NodeGroup
-  #     spec:
-  #       forProvider:
-  #         region: us-east-1
-  #         clusterNameSelector:
-  #           matchControllerRef: true
-  #         nodeRoleArnSelector:
-  #           # matchControllerRef: true
-  #           matchLabels:
-  #             role: nodegroup
-  #         subnetIdSelector:
-  #           # matchControllerRef: true
-  #           matchLabels:
-  #             access: private
-  #         scalingConfig:
-  #           - desiredSize: 1
-  #             minSize: 1
-  #             maxSize: 10
-  #         instanceTypes:
-  #           - t3.nano
-  #         diskSize: 5
-  #         tags:
-  #           Name: crossplane-minikube-lab-nodegroup
-  #   patches:
-  #   - fromFieldPath: metadata.annotations
-  #     toFieldPath: metadata.annotations
-  #   - fromFieldPath: spec.id
-  #     toFieldPath: metadata.name
-  #     # transforms:
-  #     #   - type: string
-  #     #     string:
-  #     #       fmt: "%s"
-  #   - fromFieldPath: spec.parameters.nodeSize
-  #     toFieldPath: spec.forProvider.instanceTypes[0]
-  #     transforms:
-  #       - type: map
-  #         map:
-  #           xsmall: t3.nano
-  #           small: t3.small
-  #           medium: t3.medium
-  #           large: t3.large
-  #           xlarge: t3.xlarge
-  #   - fromFieldPath: spec.parameters.minNodeCount
-  #     toFieldPath: spec.forProvider.scalingConfig[0].minSize
-  #   - fromFieldPath: spec.parameters.minNodeCount
-  #     toFieldPath: spec.forProvider.scalingConfig[0].desiredSize
+  # NodeGroup
+  - name: eksnodegroup
+    base:
+      apiVersion: eks.aws.upbound.io/v1beta1
+      kind: NodeGroup
+      spec:
+        forProvider:
+          region: us-east-1
+          clusterNameSelector:
+            matchControllerRef: true
+          nodeRoleArnSelector:
+            # matchControllerRef: true
+            matchLabels:
+              role: nodegroup
+          subnetIdSelector:
+            # matchControllerRef: true
+            matchLabels:
+              access: private
+          scalingConfig:
+            - desiredSize: 1
+              minSize: 1
+              maxSize: 10
+          instanceTypes:
+            - t3.nano
+          diskSize: 5
+          tags:
+            Name: crossplane-minikube-lab-nodegroup
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      # transforms:
+      #   - type: string
+      #     string:
+      #       fmt: "%s"
+    - fromFieldPath: spec.parameters.nodeSize
+      toFieldPath: spec.forProvider.instanceTypes[0]
+      transforms:
+        - type: map
+          map:
+            xsmall: t3.nano
+            small: t3.small
+            medium: t3.medium
+            large: t3.large
+            xlarge: t3.xlarge
+    - fromFieldPath: spec.parameters.minNodeCount
+      toFieldPath: spec.forProvider.scalingConfig[0].minSize
+    - fromFieldPath: spec.parameters.minNodeCount
+      toFieldPath: spec.forProvider.scalingConfig[0].desiredSize
 
-  #   - type: ToCompositeFieldPath
-  #     fromFieldPath: status.atProvider.status
-  #     toFieldPath: status.nodePoolStatus
-  #   readinessChecks:
-  #   - type: MatchString
-  #     fieldPath: status.atProvider.status
-  #     matchString: ACTIVE
+    - type: ToCompositeFieldPath
+      fromFieldPath: status.atProvider.status
+      toFieldPath: status.nodePoolStatus
+    readinessChecks:
+    - type: MatchString
+      fieldPath: status.atProvider.status
+      matchString: ACTIVE
+
+
+#########################################################################
+# Helm
+#########################################################################
+
+  - name: helm
+    base:
+      apiVersion: helm.crossplane.io/v1beta1
+      kind: ProviderConfig
+      spec:
+        credentials:
+          source: Secret
+          secretRef:
+            key: kubeconfig
+    patches:
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.claimRef.namespace
+      toFieldPath: spec.credentials.secretRef.namespace
+    - fromFieldPath: spec.id
+      toFieldPath: spec.credentials.secretRef.name
+      # transforms:
+      # - type: string
+      #   string:
+      #     fmt: '%s-cluster'
+    readinessChecks:
+
+
+#########################################################################
+# Kubernetes
+#########################################################################
+
+  - name: kubernetes
+    base:
+      apiVersion: kubernetes.crossplane.io/v1alpha1
+      kind: ProviderConfig
+      spec:
+        credentials:
+          source: Secret
+          secretRef:
+            key: kubeconfig
+    patches:
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.claimRef.namespace
+      toFieldPath: spec.credentials.secretRef.namespace
+    - fromFieldPath: spec.id
+      toFieldPath: spec.credentials.secretRef.name
+      # transforms:
+      # - type: string
+      #   string:
+      #     fmt: '%s-cluster'
+    # readinessChecks:
+    # - type: None
+
+  - name: ns-prod
+    base:
+      apiVersion: kubernetes.crossplane.io/v1alpha1
+      kind: Object
+      spec:
+        forProvider:
+          manifest:
+            apiVersion: v1
+            kind: Namespace
+            metadata:
+              name: production
+    patches:
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+      - type: string
+        string:
+          fmt: '%s-ns-prod'
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: spec.providerConfigRef.name
