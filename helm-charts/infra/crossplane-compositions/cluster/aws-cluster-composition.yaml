@@ -1150,6 +1150,7 @@ spec:
           chart:
             name: argocd
             repository: https://argoproj.github.io/argo-helm
+            # version: 7.3.4
             # version: "7.3.4"
             version: "v7.3.4"
             # version: "argo-cd-7.3.4"
@@ -1169,25 +1170,55 @@ spec:
         string:
           fmt: '%s-helm'
 
-  - name: prometheus
+  # - name: prometheus
+  #   base:
+  #     apiVersion: helm.crossplane.io/v1beta1
+  #     kind: Release
+  #     spec:
+  #       rollbackLimit: 3
+  #       forProvider:
+  #         namespace: prometheus
+  #         chart:
+  #           name: prometheus
+  #           repository: https://prometheus-community.github.io/helm-charts
+  #           version: 25.22.1
+  #   patches:
+  #   - fromFieldPath: spec.id
+  #     toFieldPath: metadata.name
+  #     transforms:
+  #     - type: string
+  #       string:
+  #         fmt: '%s-prometheus'
+  #   - fromFieldPath: metadata.annotations
+  #     toFieldPath: metadata.annotations
+  #   - fromFieldPath: spec.id
+  #     toFieldPath: spec.providerConfigRef.name # Use the helm provider config
+  #     transforms:
+  #     - type: string
+  #       string:
+  #         fmt: '%s-helm'
+
+  - name: kube-prometheus-stack
     base:
       apiVersion: helm.crossplane.io/v1beta1
       kind: Release
       spec:
         rollbackLimit: 3
         forProvider:
-          namespace: prometheus
+          namespace: kube-prometheus-stack
           chart:
-            name: prometheus
+            name: kube-prometheus-stack
             repository: https://prometheus-community.github.io/helm-charts
-            version: 25.22.1
+            version: 61.2.0
+          # values:
+          #   fullnameOverride: "kube-prometheus-stack"
     patches:
-    # - fromFieldPath: spec.id
-    #   toFieldPath: metadata.name
-    #   transforms:
-    #   - type: string
-    #     string:
-    #       fmt: '%s-prometheus'
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+      - type: string
+        string:
+          fmt: '%s-kube-prometheus-stack'
     - fromFieldPath: metadata.annotations
       toFieldPath: metadata.annotations
     - fromFieldPath: spec.id
@@ -1196,6 +1227,7 @@ spec:
       - type: string
         string:
           fmt: '%s-helm'
+
 
 #########################################################################
 # Kubernetes
