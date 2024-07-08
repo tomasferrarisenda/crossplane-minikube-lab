@@ -1151,9 +1151,6 @@ spec:
             name: argo
             repository: https://argoproj.github.io/argo-helm
             version: 7.3.4
-            # version: "7.3.4"
-            # version: "v7.3.4"
-            # version: "argo-cd-7.3.4"
           values:
             configs:
               params:
