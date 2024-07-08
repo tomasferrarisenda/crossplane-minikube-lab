@@ -1021,6 +1021,8 @@ spec:
       toFieldPath: spec.writeConnectionSecretToRef.namespace
     - fromFieldPath: spec.id # We tell it to name the secret same as the ID
       toFieldPath: spec.writeConnectionSecretToRef.name
+    connectionDetails:
+      - fromConnectionSecretKey: kubeconfig
 
 
 
