@@ -1139,37 +1139,37 @@ spec:
         string:
           fmt: '%s-helm'
 
-  # - name: argocd
-  #   base:
-  #     apiVersion: helm.crossplane.io/v1beta1
-  #     kind: Release
-  #     spec:
-  #       rollbackLimit: 3
-  #       forProvider:
-  #         namespace: argocd
-  #         chart:
-  #           name: argo-cd
-  #           repository: https://argoproj.github.io/argo-helm
-  #           version: 7.3.4
-  #         values:
-  #           configs:
-  #             params:
-  #               server.insecure: true
-  #   patches:
-  #   - fromFieldPath: spec.id
-  #     toFieldPath: metadata.name
-  #     transforms:
-  #     - type: string
-  #       string:
-  #         fmt: '%s-argocd'
-  #   - fromFieldPath: metadata.annotations
-  #     toFieldPath: metadata.annotations
-  #   - fromFieldPath: spec.id
-  #     toFieldPath: spec.providerConfigRef.name # Use the helm provider config
-  #     transforms:
-  #     - type: string
-  #       string:
-  #         fmt: '%s-helm'
+  - name: argocd
+    base:
+      apiVersion: helm.crossplane.io/v1beta1
+      kind: Release
+      spec:
+        rollbackLimit: 3
+        forProvider:
+          namespace: argocd
+          chart:
+            name: argo-cd
+            repository: https://argoproj.github.io/argo-helm
+            version: 7.3.4
+          values:
+            configs:
+              params:
+                server.insecure: true
+    patches:
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+      - type: string
+        string:
+          fmt: '%s-argocd'
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: spec.providerConfigRef.name # Use the helm provider config
+      transforms:
+      - type: string
+        string:
+          fmt: '%s-helm'
 
   - name: kube-prometheus-stack
     base:
