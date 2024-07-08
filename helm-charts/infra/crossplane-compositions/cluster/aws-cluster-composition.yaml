@@ -1168,33 +1168,33 @@ spec:
         string:
           fmt: '%s-helm'
 
-  # - name: prometheus
-  #   base:
-  #     apiVersion: helm.crossplane.io/v1beta1
-  #     kind: Release
-  #     spec:
-  #       rollbackLimit: 3
-  #       forProvider:
-  #         namespace: prometheus
-  #         chart:
-  #           name: prometheus
-  #           repository: https://prometheus-community.github.io/helm-charts
-  #           version: 25.22.1
-  #   patches:
-  #   # - fromFieldPath: spec.id
-  #   #   toFieldPath: metadata.name
-  #   #   transforms:
-  #   #   - type: string
-  #   #     string:
-  #   #       fmt: '%s-prometheus'
-  #   - fromFieldPath: metadata.annotations
-  #     toFieldPath: metadata.annotations
-  #   - fromFieldPath: spec.id
-  #     toFieldPath: spec.providerConfigRef.name # Use the helm provider config
-  #     transforms:
-  #     - type: string
-  #       string:
-  #         fmt: '%s-helm'
+  - name: prometheus
+    base:
+      apiVersion: helm.crossplane.io/v1beta1
+      kind: Release
+      spec:
+        rollbackLimit: 3
+        forProvider:
+          namespace: prometheus
+          chart:
+            name: prometheus
+            repository: https://prometheus-community.github.io/helm-charts
+            version: 25.22.1
+    patches:
+    # - fromFieldPath: spec.id
+    #   toFieldPath: metadata.name
+    #   transforms:
+    #   - type: string
+    #     string:
+    #       fmt: '%s-prometheus'
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: spec.providerConfigRef.name # Use the helm provider config
+      transforms:
+      - type: string
+        string:
+          fmt: '%s-helm'
 
 #########################################################################
 # Kubernetes
