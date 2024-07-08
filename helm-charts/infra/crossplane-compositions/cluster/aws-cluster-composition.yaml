@@ -978,10 +978,10 @@ spec:
       #     string:
       #       fmt: "%s"
 
-    - fromFieldPath: spec.id
-      toFieldPath: spec.writeConnectionSecretToRef.name
-    - fromFieldPath: spec.claimRef.namespace # We tell it to create the secret in the same namespace as the claim
-      toFieldPath: spec.writeConnectionSecretToRef.namespace
+    # - fromFieldPath: spec.id
+    #   toFieldPath: spec.writeConnectionSecretToRef.name
+    # - fromFieldPath: spec.claimRef.namespace # We tell it to create the secret in the same namespace as the claim
+    #   toFieldPath: spec.writeConnectionSecretToRef.namespace
     - fromFieldPath: spec.parameters.version
       toFieldPath: spec.forProvider.version
 
@@ -991,14 +991,36 @@ spec:
     - type: ToCompositeFieldPath
       fromFieldPath: status.atProvider.status
       toFieldPath: status.controlPlaneStatus
-    - fromFieldPath: spec.writeConnectionSecretToRef.namespace
-      toFieldPath: spec.writeConnectionSecretToRef.namespace
+    # - fromFieldPath: spec.writeConnectionSecretToRef.namespace
+    #   toFieldPath: spec.writeConnectionSecretToRef.namespace
     readinessChecks:
     - type: MatchString
       fieldPath: status.atProvider.status
       matchString: ACTIVE
     connectionDetails:
       - fromConnectionSecretKey: kubeconfig
+
+  - name: clusterauth
+    base:
+      apiVersion: eks.aws.upbound.io/v1beta1
+      kind: ClusterAuth
+      spec:
+        forProvider:
+          clusterNameSelector:
+            matchControllerRef: true
+          region: us-east-1
+        writeConnectionSecretToRef:
+          name: sample-eks-cluster-conn
+          namespace: upbound-system
+    patches:
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+    - fromFieldPath: spec.claimRef.namespace # We tell it to create the secret in the same namespace as the claim
+      toFieldPath: spec.writeConnectionSecretToRef.namespace
+    - fromFieldPath: spec.id # We tell it to name the secret same as the ID
+      toFieldPath: spec.writeConnectionSecretToRef.name
 
 
 
