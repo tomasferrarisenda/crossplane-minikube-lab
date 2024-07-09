@@ -21,9 +21,12 @@ PROVIDERS, CONFIGURATIONS AND FUNCTIONS ARE ALL TYPES of "PACKAGES"
 CAN BE LISTED WITH kubectl get pkgrev
 
 
-1. CompositeResourceDefinitions: Extend k8s API by creating CRDs
+1. CompositeResourceDefinitions: Extend k8s API by creating CRDs. Define what parameters are available and required for a Composition that uses this XRD
 2. Compositions
 3. CompositeResources
+
+
+we dont use packages in this example so you can see all the moving parts. We could use packages like this.....
 
 
 kubectl --namespace my-cluster \

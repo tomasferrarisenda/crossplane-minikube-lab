@@ -1,0 +1,13 @@
+environment: prod
+
+deployment:
+  image:
+    tag: backstage-minikube-lab
+  replicas: 1
+
+  labels:
+    environment: prod
+    app: crossplane-app-backend-prod
+
+  env:
+    redis_host: crossplane-app-redis-prod-master 

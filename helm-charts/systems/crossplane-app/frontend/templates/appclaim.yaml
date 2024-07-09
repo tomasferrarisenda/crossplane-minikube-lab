@@ -1,16 +1,16 @@
 apiVersion: devopstoolkitseries.com/v1alpha1
 kind: AppClaim
 metadata:
-  name: devops-toolkit
+  name: {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-appclaim
   labels:
     app-owner: vfarcic
 spec:
-  id: devops-toolkit
+  id: {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}
   compositionSelector:
     matchLabels:
       type: frontend
   parameters:
-    namespace: a-team
+    namespace: {{ .Values.system }}-{{ .Values.environment }}
     image: vfarcic/devops-toolkit-series:4.0.0
     host: devops-toolkit.127.0.0.1.nip.io
 

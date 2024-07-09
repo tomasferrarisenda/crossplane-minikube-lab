@@ -1,0 +1,13 @@
+environment: stage
+
+deployment:
+  image:
+    tag: backstage-minikube-lab
+  replicas: 1
+
+  labels:
+    environment: stage
+    app: crossplane-app-backend-stage
+
+  env:
+    redis_host: crossplane-app-redis-stage-master 

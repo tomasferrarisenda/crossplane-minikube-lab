@@ -1,0 +1,4 @@
+apiVersion: v2
+name: crossplane-app-backend
+description: A Helm chart for deploying crossplane-app-backend
+version: 1.0
