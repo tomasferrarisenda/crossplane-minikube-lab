@@ -6,8 +6,7 @@
 
 2. Single point of failure: all components of the application are running on standalone VMs. If any single one of these fails, the whole system goes down.
 
-REVISE
-3. Bottlenecks: the synchronous upload process can cause slow request times on slower networks. NFS volume can be a bottleneck as it needs to handle a large number of I/O operations from the document processor.
+3. Bottlenecks: NFS volume can be a bottleneck as it needs to handle a large number of I/O operations from the document processor.
 
 4. Redundancy and availability: we have data redundancy for the images with the RAID 1 solution. This protects us from disk failure, but not from server failure. If the VM goes down, we might have the images backed up but there would be no way to access them.
 

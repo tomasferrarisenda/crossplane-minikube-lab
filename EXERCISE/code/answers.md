@@ -1,4 +1,4 @@
-### Disclaimer
+## Disclaimer
 I didn't have experience coding in Go but since Tomas mentioned GO is what you mostly used, I decided to go with it.
 
 I had a lot of help from Copilot when solving this exercise. I do understand everything that goes on in the code but it would have been a lot harder it would have taken me a lot longer without the help of AI. I left the code very commented as a guide to myself.
@@ -6,7 +6,7 @@ I had a lot of help from Copilot when solving this exercise. I do understand eve
 It also helped me in figuring out the time and space complexity of the program.
 
 
-### To run:
+## To run:
 ```bash
 docker run --rm -it -v $(pwd)/input.txt:/app/input.txt -v $(pwd)/output:/app/output top-numbers-app -n 5 --input-file input.txt --output-file /app/output/output.txt
 ```
@@ -34,9 +34,9 @@ go build -o top_numbers .
 ```
 
 
-### What would be the time and space complexity of your program? Why?
+## What would be the time and space complexity of your program? Why?
 
-#### Time Complexity
+### Time Complexity
 1. Reading the input file:
    - The program reads the file line by line using a scanner. This operation is O(n), where n is the number of lines in the file.
 
@@ -64,7 +64,7 @@ Where n is the number of valid numbers in the input file.
 It's worth noting that while the program allows for up to 30,000,000 top results, the actual number of results (N) doesn't significantly affect the time complexity because the entire dataset is sorted regardless of N. The N value only affects the final output step, which is linear.
 
 
-#### Space Complexity
+### Space Complexity
 1. Input storage:
    - The program stores all valid numbers from the input file in a slice called `numbers`.
    - This requires O(n) space, where n is the number of valid numbers in the input file.
@@ -85,7 +85,7 @@ It's worth noting that while the program allows for up to 30,000,000 top results
 The dominant factor in space usage is the slice that stores all the numbers from the input file. Therefore, the overall space complexity of this program is O(n), where n is the number of valid numbers in the input file.
 
 
-### Do you think there is still room for improvement in your solution? If so, please elaborate.
+## Do you think there is still room for improvement in your solution? If so, please elaborate.
 
 Efficiency in Sorting:
 Currently, the program sorts all valid numbers to find the top N largest. For very large input files with tens of millions of lines, this sorting operation could be optimized further. One approach could involve using a min-heap (priority queue) of size N to efficiently maintain the top N largest numbers as we iterate through the input.
