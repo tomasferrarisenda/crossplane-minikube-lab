@@ -1,10 +1,3 @@
-go build -o top_numbers top_numbers.go
-
-go mod init topnumbers.com/m
-
-docker run --rm -it -v $(pwd)/input.txt:/app/input.txt -v $(pwd)/output:/app/output top-numbers-app -n 5 --input-file input.txt --output-file /app/output/output.txt
-
-
 # SOLUTION
 
 ## 1. Bottlenecks and Risks
