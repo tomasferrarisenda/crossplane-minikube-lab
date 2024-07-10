@@ -32,8 +32,8 @@ In terms of image storage Amazon S3: Stores images, providing high availability,
 With this setup we can:
 1. In terms of scalability: we can take full advantage of both K8s and AWSs auto scaling solutions. Horizontal pod autoscaler for the Document Processor deployment. And AWS's Autoscaling Groups for automatic deployment of new EC2 worker nodes when a predefined CPU or RAM threshold has been reached in the running nodes.
 2. In terms of single point of failure: Using EKS with multiple replicas and an ALB eliminates the single point of failure. The architecture is designed to be automatically scalable in every stage. Except for some data center wide issue... for this case we would need to set up a disaster recovery environment in another region.
-3. In terms of bottlenecks: we don't have any bottlenecks anymore because all of our components scale automatically.
-4. In terms of redundancy and availability: leveraging the power of S3, we can ensure.... S3 provides eleven 9's of durability and replicates data across multiple Availability Zones (AZs). EFS also provides multi-AZ redundancy.
+3. In terms of bottlenecks: we don't have any bottlenecks anymore because all of our components will scale automatically under heavy loads.
+4. In terms of redundancy and availability: leveraging the power of S3, we can ensure redundancy and availability. S3 can automatically replicate data within a the same region and across multiple ones. It also guarantees 99.99% availability and durability.
 
 ### Further improvements
 
