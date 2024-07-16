@@ -3,7 +3,7 @@ kind: AppClaim
 metadata:
   name: {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-appclaim
   labels:
-    app-owner: vfarcic
+    app-owner: tferrari
 spec:
   id: {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}
   compositionSelector:
@@ -11,8 +11,8 @@ spec:
       type: frontend
   parameters:
     namespace: {{ .Values.system }}-{{ .Values.environment }}
-    image: vfarcic/devops-toolkit-series:4.0.0
-    host: devops-toolkit.127.0.0.1.nip.io
+    image: {{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}
+    host: crossplane-app-frontend.{{ .Values.system }}-{{ .Values.environment }}.com
 
 
     # lo q dice eeste archivo es. Ey! quiero una composition basada en este appclain. Quiero la composition q tiene el label type: frontend
