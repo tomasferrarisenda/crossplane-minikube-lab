@@ -3,7 +3,7 @@ kind: AppClaim
 metadata:
   name: {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-appclaim
   labels:
-    app-owner: vfarcic
+    app-owner: tferrari
 spec:
   id: {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}
   compositionSelector:

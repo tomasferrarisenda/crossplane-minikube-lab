@@ -13,7 +13,11 @@ spec:
     namespace: {{ .Values.system }}-{{ .Values.environment }}
     image: {{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}
     port: {{ .Values.port }}
-    host: {{ .Values.host }}
+    dbSecret: {{ .Values.host }}
+      name:
+      namespace:
+    db:
+      version: 5.7
 
 
     # lo q dice eeste archivo es. Ey! quiero una composition basada en este appclain. Quiero la composition q tiene el label type: frontend
