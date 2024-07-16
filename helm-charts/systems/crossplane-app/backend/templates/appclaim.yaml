@@ -10,7 +10,7 @@ spec:
     matchLabels:
       type: backend
   parameters:
-    namespace: a-team
-    image: vfarcic/silly-demo:1.0.8
-    port: 8080
-    host: silly-demo.54.159.206.46.nip.io
+    namespace: {{ .Values.system }}-{{ .Values.environment }}
+    image: {{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}
+    port: {{ .Values.port }}
+    # host: silly-demo.54.159.206.46.nip.io
