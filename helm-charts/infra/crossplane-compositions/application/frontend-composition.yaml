@@ -184,7 +184,7 @@ spec:
             apiVersion: autoscaling/v1
             kind: HorizontalPodAutoscaler
             spec:
-              minReplicas: 2
+              minReplicas: 1
               maxReplicas: 6
               scaleTargetRef:
                 apiVersion: apps/v1

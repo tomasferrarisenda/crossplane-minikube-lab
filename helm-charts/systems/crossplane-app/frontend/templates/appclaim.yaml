@@ -12,7 +12,8 @@ spec:
   parameters:
     namespace: {{ .Values.system }}-{{ .Values.environment }}
     image: {{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}
-    host: crossplane-app-frontend.{{ .Values.system }}-{{ .Values.environment }}.com
+    port: {{ .Values.port }}
+    host: {{ .Values.host }}
 
 
     # lo q dice eeste archivo es. Ey! quiero una composition basada en este appclain. Quiero la composition q tiene el label type: frontend
