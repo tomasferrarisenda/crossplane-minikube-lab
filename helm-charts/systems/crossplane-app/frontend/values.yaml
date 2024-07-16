@@ -8,7 +8,7 @@ port: 80
 
 deployment:
   image:
-    repository: tferrari92/crossplane-app-frontend # This value was modified by the initial-setup python script
+    repository: tferrari92/my-app-frontend # This value was modified by the initial-setup python script
   labels:
     system: crossplane-app
     service: frontend
