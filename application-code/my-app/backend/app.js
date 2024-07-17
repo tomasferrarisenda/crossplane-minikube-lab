@@ -5,7 +5,7 @@ const app = express();
 // Create a PostgreSQL connection pool
 const pool = new Pool({
   // user: "masteruser",
-  user: process.env.DB_USER,
+  user: process.env.DB_USERNAME,
   // host: "terraform-2024071715563921910000000e.ct60s04eu0uw.us-east-1.rds.amazonaws.com",
   host: process.env.DB_HOST,
   // database: "crossplane-app-backend-dev-db",

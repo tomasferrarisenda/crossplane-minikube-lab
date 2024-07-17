@@ -58,7 +58,7 @@ spec:
                         cpu: 125m
                         memory: 128Mi
                     env:
-                    - name: DB_ENDPOINT
+                    - name: DB_HOST
                       valueFrom:
                         secretKeyRef:
                           key: endpoint

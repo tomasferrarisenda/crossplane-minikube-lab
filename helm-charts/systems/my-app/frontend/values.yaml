@@ -14,8 +14,6 @@ deployment:
     service: frontend
     backstage.io/kubernetes-id: my-app-frontend 
     istio: monitor
-  
-
 
 configmap:
   images: |-
