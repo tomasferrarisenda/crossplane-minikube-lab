@@ -7,7 +7,7 @@ deployment:
 
   labels:
     environment: dev
-    app: crossplane-app-backend-dev
+    app: my-app-backend-dev
     
   env:
-    redis_host: crossplane-app-redis-dev-master 
+    redis_host: my-app-redis-dev-master 

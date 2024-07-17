@@ -1,4 +1,4 @@
-system: crossplane-app
+system: my-app
 
 service: frontend
 
@@ -10,9 +10,9 @@ deployment:
   image:
     repository: tferrari92/meme-web-frontend # This value was modified by the initial-setup python script
   labels:
-    system: crossplane-app
+    system: my-app
     service: frontend
-    backstage.io/kubernetes-id: crossplane-app-frontend 
+    backstage.io/kubernetes-id: my-app-frontend 
     istio: monitor
   
 

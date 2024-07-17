@@ -1,2 +1,3 @@
 .vscode/
 aws-credentials.txt
+*node_modules/

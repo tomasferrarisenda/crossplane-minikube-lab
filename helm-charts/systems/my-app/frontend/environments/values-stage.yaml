@@ -1,0 +1,14 @@
+environment: stage
+
+deployment:
+  image:
+    tag: 6
+  replicas: 1
+  labels:
+    full-name: my-app-frontend-stage
+
+configmap: 
+  nginxConf: |-
+    location /api {
+        proxy_pass http://my-app-backend-stage-service:3000/;
+    }

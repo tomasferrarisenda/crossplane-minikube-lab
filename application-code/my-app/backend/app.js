@@ -4,9 +4,13 @@ const app = express();
 
 // Create a PostgreSQL connection pool
 const pool = new Pool({
+  // user: "masteruser",
   user: process.env.DB_USER,
+  // host: "terraform-2024071715563921910000000e.ct60s04eu0uw.us-east-1.rds.amazonaws.com",
   host: process.env.DB_HOST,
+  // database: "crossplane-app-backend-dev-db",
   database: process.env.DB_NAME,
+  // password: "postgres",
   password: process.env.DB_PASSWORD,
   port: process.env.DB_PORT || 5432,
 });

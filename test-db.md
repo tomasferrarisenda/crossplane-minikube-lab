@@ -10,19 +10,19 @@ For Azure use ```export HOST_KEY=publicIP```
 ### Run
 
 ```bash
-export DB=my-db
+export DB=crossplane-app-backend-dev-db
 
-export PGUSER=$(kubectl --namespace my-sql \
+export PGUSER=$(kubectl --namespace crossplane-app-dev \
     get secret $DB --output jsonpath="{.data.username}" \
     | base64 -d)
 
-export PGPASSWORD=$(kubectl --namespace my-sql \
+export PGPASSWORD=$(kubectl --namespace crossplane-app-dev \
     get secret $DB --output jsonpath="{.data.password}" \
     | base64 -d)
 
 export HOST_KEY=endpoint
 
-export PGHOST=$(kubectl --namespace my-sql \
+export PGHOST=$(kubectl --namespace crossplane-app-dev \
     get secret $DB --output jsonpath="{.data.$HOST_KEY}" \
     | base64 -d)
 

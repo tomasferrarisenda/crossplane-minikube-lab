@@ -1,0 +1,14 @@
+environment: dev
+
+deployment:
+  image:
+    tag: 6
+  replicas: 1
+  labels:
+    full-name: my-app-frontend-dev
+
+configmap: 
+  nginxConf: |-
+    location /api {
+        proxy_pass http://my-app-backend-dev-service:3000/; 
+    }
