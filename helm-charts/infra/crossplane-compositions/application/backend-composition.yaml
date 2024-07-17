@@ -204,83 +204,84 @@ spec:
   #     toFieldPath: status.host
   #   readinessChecks:
   #   - type: None
-  - name: secret
-    base:
-      apiVersion: kubernetes.crossplane.io/v1alpha1
-      kind: Object
-      spec:
-        forProvider:
-          manifest:
-            apiVersion: v1
-            kind: Secret
-            # metadata:
-            #   name: silly-demo-db-password
-            data:
-              password: cG9zdGdyZXM=
-    patches:
-    - fromFieldPath: spec.id
-      toFieldPath: metadata.name
-      transforms:
-      - type: string
-        string:
-          fmt: "%s-secret"
-    - fromFieldPath: spec.id
-      toFieldPath: spec.forProvider.manifest.metadata.name
-    - fromFieldPath: spec.parameters.namespace
-      toFieldPath: spec.forProvider.manifest.metadata.namespace
-    - fromFieldPath: spec.id
-      toFieldPath: spec.forProvider.manifest.metadata.labels.app
-    - fromFieldPath: spec.id
-      toFieldPath: spec.forProvider.manifest.spec.selector.app
-    - fromFieldPath: spec.parameters.port
-      toFieldPath: spec.forProvider.manifest.spec.ports[0].port
-    - fromFieldPath: spec.parameters.port
-      toFieldPath: spec.forProvider.manifest.spec.ports[0].targetPort
-    - fromFieldPath: spec.id
-      toFieldPath: spec.providerConfigRef.name
-    readinessChecks:
-    - type: None
+  # - name: secret
+  #   base:
+  #     apiVersion: kubernetes.crossplane.io/v1alpha1
+  #     kind: Object
+  #     spec:
+  #       forProvider:
+  #         manifest:
+  #           apiVersion: v1
+  #           kind: Secret
+  #           # metadata:
+  #           #   name: silly-demo-db-password
+  #           data:
+  #             password: cG9zdGdyZXM=
+  #   patches:
+  #   - fromFieldPath: spec.id
+  #     toFieldPath: metadata.name
+  #     transforms:
+  #     - type: string
+  #       string:
+  #         fmt: "%s-secret"
+  #   - fromFieldPath: spec.id
+  #     toFieldPath: spec.forProvider.manifest.metadata.name
+  #   - fromFieldPath: spec.parameters.namespace
+  #     toFieldPath: spec.forProvider.manifest.metadata.namespace
+  #   - fromFieldPath: spec.id
+  #     toFieldPath: spec.forProvider.manifest.metadata.labels.app
+  #   - fromFieldPath: spec.id
+  #     toFieldPath: spec.forProvider.manifest.spec.selector.app
+  #   - fromFieldPath: spec.parameters.port
+  #     toFieldPath: spec.forProvider.manifest.spec.ports[0].port
+  #   - fromFieldPath: spec.parameters.port
+  #     toFieldPath: spec.forProvider.manifest.spec.ports[0].targetPort
+  #   - fromFieldPath: spec.id
+  #     toFieldPath: spec.providerConfigRef.name
+  #   readinessChecks:
+  #   - type: None
 
-  - name: sql
-    base:
-      apiVersion: kubernetes.crossplane.io/v1alpha1
-      kind: Object
-      spec:
-        forProvider:
-          manifest:
-            apiVersion: devopstoolkitseries.com/v1alpha1
-            kind: SQLClaim
-            spec:
-              compositionSelector:
-                matchLabels:
-                  provider: aws
-                  db: postgresql
-              parameters:
-                version: "13"
-                size: small
-                databases:
-                  - silly-demo-db
-    patches:
-    - fromFieldPath: spec.id
-      toFieldPath: metadata.name
-      transforms:
-      - type: string
-        string:
-          fmt: "%s-sql"
-    - fromFieldPath: spec.id
-      toFieldPath: spec.forProvider.manifest.metadata.labels.app
-    - fromFieldPath: spec.id
-      toFieldPath: spec.forProvider.manifest.spec.id
-    - fromFieldPath: spec.parameters.dbVersion
-      toFieldPath: spec.forProvider.manifest.spec.parameters.version
-    - fromFieldPath: spec.parameters.db.version
-      toFieldPath: spec.forProvider.manifest.spec.parameters.version
-    - fromFieldPath: spec.parameters.db.type
-      toFieldPath: spec.forProvider.manifest.spec.parameters.version
-    - fromFieldPath: spec.id
-      toFieldPath: spec.providerConfigRef.name
-    - fromFieldPath: spec.parameters.namespace
-      toFieldPath: spec.forProvider.manifest.metadata.namespace
+  # - name: sql
+  #   base:
+  #     apiVersion: kubernetes.crossplane.io/v1alpha1
+  #     kind: Object
+  #     spec:
+  #       forProvider:
+  #         manifest:
+  #           apiVersion: devopstoolkitseries.com/v1alpha1
+  #           kind: SQLClaim
+  #           spec:
+  #             compositionSelector:
+  #               matchLabels:
+  #                 provider: aws
+  #                 db: postgresql
+  #             parameters:
+  #               version: "13"
+  #               size: small
+  #               databases:
+  #                 - silly-demo-db
+  #   patches:
+  #   - fromFieldPath: spec.id
+  #     toFieldPath: metadata.name
+  #     transforms:
+  #     - type: string
+  #       string:
+  #         fmt: "%s-sql"
+  #   - fromFieldPath: spec.id
+  #     toFieldPath: spec.forProvider.manifest.metadata.labels.app
+  #   - fromFieldPath: spec.id
+  #     toFieldPath: spec.forProvider.manifest.spec.id
+  #   - fromFieldPath: spec.parameters.dbVersion
+  #     toFieldPath: spec.forProvider.manifest.spec.parameters.version
+  #   - fromFieldPath: spec.parameters.db.version
+  #     toFieldPath: spec.forProvider.manifest.spec.parameters.version
+  #   - fromFieldPath: spec.parameters.db.type
+  #     toFieldPath: spec.forProvider.manifest.spec.parameters.version
+  #   - fromFieldPath: spec.id
+  #     toFieldPath: spec.providerConfigRef.name
+  #   - fromFieldPath: spec.parameters.namespace
+  #     toFieldPath: spec.forProvider.manifest.metadata.namespace
+
   # - name: sql-secret
   #   base:
   #     apiVersion: kubernetes.crossplane.io/v1alpha1

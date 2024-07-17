@@ -1,3 +1,11 @@
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   name: silly-demo-db-password
+# data:
+#   password: cG9zdGdyZXM=
+# ---
+
 apiVersion: devopstoolkitseries.com/v1alpha1
 kind: AppClaim
 metadata:

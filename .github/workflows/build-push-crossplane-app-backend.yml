@@ -1,4 +1,4 @@
-name: Build & push my-app-frontend image
+name: Build & push my-app-backend image
 
 on:
   workflow_dispatch:
@@ -6,11 +6,11 @@ on:
     branches:
       - main
     paths:
-      - 'application-code/my-app/frontend/**'
+      - 'application-code/crossplane-app/backend/**'
 
 env:
-  SYSTEM: my-app
-  SERVICE: frontend
+  SYSTEM: crossplane-app
+  SERVICE: backend
 
 jobs:
   build-and-push:
@@ -30,3 +30,11 @@ jobs:
           dockerfile: application-code/${{ env.SYSTEM }}/${{ env.SERVICE }}/Dockerfile
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+
+# RELOADED
+  # update-image-tag:
+  #   name: Update image tag
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3

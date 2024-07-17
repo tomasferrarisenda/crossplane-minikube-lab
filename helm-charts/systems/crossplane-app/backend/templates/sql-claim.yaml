@@ -1,16 +1,16 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: silly-demo-db-password
+  name: {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-db-password
 data:
   password: cG9zdGdyZXM=
 ---
 apiVersion: devopstoolkitseries.com/v1alpha1
 kind: SQLClaim
 metadata:
-  name: silly-demo-db
+  name: {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-app-claim
 spec:
-  id: silly-demo-db
+  id: {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-db
   compositionSelector:
     matchLabels:
       provider: aws
@@ -19,4 +19,4 @@ spec:
     version: "13"
     size: small
     databases:
-      - silly-demo-db
+      - {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-db

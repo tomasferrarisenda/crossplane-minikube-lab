@@ -17,6 +17,9 @@ spec:
     - fromFieldPath: spec.id
       toFieldPath: metadata.name
   resources:
+#########################################################################
+# NETWORKING
+#########################################################################
   - name: vpc
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -30,6 +33,7 @@ spec:
     patches:
     - type: PatchSet
       patchSetName: metadata
+
   - name: subnet-a
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -53,6 +57,7 @@ spec:
         - type: string
           string:
             fmt: "%s-a"
+
   - name: subnet-b
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -76,6 +81,7 @@ spec:
         - type: string
           string:
             fmt: "%s-b"
+
   - name: subnet-c
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -99,6 +105,7 @@ spec:
         - type: string
           string:
             fmt: "%s-c"
+
   - name: subnetgroup
     base:
       apiVersion: rds.aws.upbound.io/v1beta1
@@ -112,6 +119,7 @@ spec:
     patches:
     - type: PatchSet
       patchSetName: metadata
+
   - name: gateway
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -124,6 +132,7 @@ spec:
     patches:
     - type: PatchSet
       patchSetName: metadata
+
   - name: routeTable
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -136,6 +145,7 @@ spec:
     patches:
     - type: PatchSet
       patchSetName: metadata
+
   - name: route
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -151,6 +161,7 @@ spec:
     patches:
     - type: PatchSet
       patchSetName: metadata
+
   - name: mainRouteTableAssociation
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -165,6 +176,7 @@ spec:
     patches:
     - type: PatchSet
       patchSetName: metadata
+
   - name: routeTableAssociation1a
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -187,6 +199,7 @@ spec:
       - type: string
         string:
           fmt: '%s-1a'
+
   - name: routeTableAssociation1b
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -209,6 +222,7 @@ spec:
       - type: string
         string:
           fmt: '%s-1b'
+
   - name: routeTableAssociation1c
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -231,6 +245,7 @@ spec:
       - type: string
         string:
           fmt: '%s-1c'
+
   - name: securityGroup
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -244,6 +259,7 @@ spec:
     patches:
     - type: PatchSet
       patchSetName: metadata
+
   - name: securityGroupRule
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -263,6 +279,10 @@ spec:
     patches:
     - type: PatchSet
       patchSetName: metadata
+
+#########################################################################
+# RDS
+#########################################################################
   - name: rdsinstance
     base:
       apiVersion: rds.aws.upbound.io/v1beta1
@@ -302,6 +322,7 @@ spec:
           fmt: "%s-password"
     - fromFieldPath: spec.claimRef.namespace
       toFieldPath: spec.forProvider.passwordSecretRef.namespace
+
   - name: sql-config
     base:
       apiVersion: postgresql.sql.crossplane.io/v1alpha1
@@ -332,6 +353,7 @@ spec:
       patchSetName: metadata
     - fromFieldPath: spec.id
       toFieldPath: spec.providerConfigRef.name
+      
   - name: kubernetes
     base:
       apiVersion: kubernetes.crossplane.io/v1alpha1
@@ -350,6 +372,7 @@ spec:
           fmt: "%s-sql"
     readinessChecks:
     - type: None
+
   - name: sql-secret
     base:
       apiVersion: kubernetes.crossplane.io/v1alpha1
