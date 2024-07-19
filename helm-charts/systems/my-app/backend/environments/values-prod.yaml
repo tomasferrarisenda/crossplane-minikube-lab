@@ -2,12 +2,12 @@ environment: prod
 
 deployment:
   image:
-    tag: backstage-minikube-lab
+    tag: crossplane-minikube-lab
   replicas: 1
 
   labels:
     environment: prod
     app: my-app-backend-prod
 
-  env:
-    redis_host: my-app-redis-prod-master 
+  # env:
+  #   db_host: my-app-redis-prod-master 
