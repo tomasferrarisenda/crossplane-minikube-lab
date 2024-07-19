@@ -13,8 +13,8 @@ spec:
   id: {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-db
   compositionSelector:
     matchLabels:
-      provider: aws
-      db: postgresql
+      provider: {{ .Values.database.cloudProvider }}
+      db: {{ .Values.database.dbProvider }}
   parameters:
     version: "13"
     size: small

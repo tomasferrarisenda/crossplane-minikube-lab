@@ -10,3 +10,8 @@ deployment:
     system: my-app
     service: backend
     backstage.io/kubernetes-id: my-app-backend
+
+
+database:
+  cloudProvider: aws
+  dbProvider: postgresql
