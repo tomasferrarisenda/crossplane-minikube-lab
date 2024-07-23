@@ -17,9 +17,13 @@ spec:
     - fromFieldPath: spec.id
       toFieldPath: metadata.name
   resources:
+
+
 #########################################################################
 # NETWORKING
 #########################################################################
+
+  # VPC
   - name: vpc
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -34,6 +38,7 @@ spec:
     - type: PatchSet
       patchSetName: metadata
 
+  # Subnet A
   - name: subnet-a
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -58,6 +63,7 @@ spec:
           string:
             fmt: "%s-a"
 
+  # Subnet B
   - name: subnet-b
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -82,6 +88,7 @@ spec:
           string:
             fmt: "%s-b"
 
+  # Subnet C
   - name: subnet-c
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -106,6 +113,7 @@ spec:
           string:
             fmt: "%s-c"
 
+  # Subnet Group
   - name: subnetgroup
     base:
       apiVersion: rds.aws.upbound.io/v1beta1
@@ -120,6 +128,7 @@ spec:
     - type: PatchSet
       patchSetName: metadata
 
+  # Internet Gateway
   - name: gateway
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -133,6 +142,7 @@ spec:
     - type: PatchSet
       patchSetName: metadata
 
+  # Route Table
   - name: routeTable
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -146,6 +156,7 @@ spec:
     - type: PatchSet
       patchSetName: metadata
 
+  # Route
   - name: route
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -162,6 +173,7 @@ spec:
     - type: PatchSet
       patchSetName: metadata
 
+  # Main Route Table Association
   - name: mainRouteTableAssociation
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -177,6 +189,7 @@ spec:
     - type: PatchSet
       patchSetName: metadata
 
+  # Route Table Association 1 A
   - name: routeTableAssociation1a
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -200,6 +213,7 @@ spec:
         string:
           fmt: '%s-1a'
 
+  # Route Table Association 1 B
   - name: routeTableAssociation1b
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -223,6 +237,7 @@ spec:
         string:
           fmt: '%s-1b'
 
+  # Route Table Association 1 C
   - name: routeTableAssociation1c
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -246,6 +261,7 @@ spec:
         string:
           fmt: '%s-1c'
 
+  # Security Group
   - name: securityGroup
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -260,6 +276,7 @@ spec:
     - type: PatchSet
       patchSetName: metadata
 
+  # Security Group Rule
   - name: securityGroupRule
     base:
       apiVersion: ec2.aws.upbound.io/v1beta1
@@ -283,6 +300,8 @@ spec:
 #########################################################################
 # RDS
 #########################################################################
+
+  # RDS Instance
   - name: rdsinstance
     base:
       apiVersion: rds.aws.upbound.io/v1beta1
@@ -327,6 +346,8 @@ spec:
 #########################################################################
 # SQL
 #########################################################################
+
+  # SQL Provider Config
   - name: sql-config
     base:
       apiVersion: postgresql.sql.crossplane.io/v1alpha1
@@ -346,6 +367,8 @@ spec:
       toFieldPath: spec.credentials.connectionSecretRef.namespace
     readinessChecks:
     - type: None
+
+  # Database
   - name: sql-db
     base:
       apiVersion: postgresql.sql.crossplane.io/v1alpha1
@@ -358,6 +381,7 @@ spec:
     - fromFieldPath: spec.id
       toFieldPath: spec.providerConfigRef.name
       
+  # Kubernetes Provider Config
   - name: kubernetes
     base:
       apiVersion: kubernetes.crossplane.io/v1alpha1
@@ -377,6 +401,7 @@ spec:
     readinessChecks:
     - type: None
 
+  # SQL Secret
   - name: sql-secret
     base:
       apiVersion: kubernetes.crossplane.io/v1alpha1
@@ -388,8 +413,8 @@ spec:
           manifest:
             apiVersion: v1
             kind: Secret
-            metadata:
-              namespace: crossplane-system
+            # metadata:
+            #   namespace: crossplane-system
             data:
               port: NTQzMg==
         references:
