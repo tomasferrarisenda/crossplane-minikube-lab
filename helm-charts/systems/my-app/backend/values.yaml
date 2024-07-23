@@ -11,8 +11,27 @@ deployment:
   labels:
     system: my-app
     service: backend
-    backstage.io/kubernetes-id: my-app-backend
 
 database:
+  includeDatabase: true
   cloudProvider: aws
   dbProvider: postgresql
+  version: "13"
+  size: small
+  databases:
+    - my-app-backend-db-1
+    - my-app-backend-db-2
+    - my-app-backend-db-3
+
+
+  # spec:
+#   id: {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-db
+#   compositionSelector:
+#     matchLabels:
+#       provider: {{ .Values.database.cloudProvider }}
+#       db: {{ .Values.database.dbProvider }}
+#   parameters:
+#     version: "13"
+#     size: small
+#     databases:
+#       - {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-db

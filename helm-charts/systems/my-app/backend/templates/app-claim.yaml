@@ -6,6 +6,9 @@
 #   password: cG9zdGdyZXM=
 # ---
 
+
+# kubectl create secret generic -n my-app-dev my-app-backend-dev-database-password --from-literal=password=postgres
+
 apiVersion: devopstoolkitseries.com/v1alpha1
 kind: AppClaim
 metadata:
@@ -23,4 +26,15 @@ spec:
     namespace: {{ .Values.system }}-{{ .Values.environment }}
     image: {{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}
     port: {{ .Values.port }}
+
+    database:
+      includeDatabase: {{ .Values.database.includeDatabase }}
+      cloudProvider: {{ .Values.database.cloudProvider }}
+      dbProvider: {{ .Values.database.dbProvider }}
+      version: "13"
+      size: small
+      databases: # Databases to be created within the RDS instance
+        - my-app-backend-db-1
+        - my-app-backend-db-2
+        - my-app-backend-db-3
     # host: terraform-20240723144510407800000018.ct60s04eu0uw.us-east-1.rds.amazonaws.com
