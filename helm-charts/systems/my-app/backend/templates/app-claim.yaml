@@ -23,4 +23,4 @@ spec:
     namespace: {{ .Values.system }}-{{ .Values.environment }}
     image: {{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}
     port: {{ .Values.port }}
-    # host: silly-demo.54.159.206.46.nip.io
+    # host: terraform-20240723144510407800000018.ct60s04eu0uw.us-east-1.rds.amazonaws.com

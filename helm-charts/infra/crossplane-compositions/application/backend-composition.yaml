@@ -104,14 +104,34 @@ spec:
       toFieldPath: spec.forProvider.manifest.spec.template.spec.containers[0].readinessProbe.httpGet.port
     - fromFieldPath: spec.id
       toFieldPath: spec.forProvider.manifest.spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.name
+      transforms:
+      - type: string
+        string:
+          fmt: "%s-db"
     - fromFieldPath: spec.id
       toFieldPath: spec.forProvider.manifest.spec.template.spec.containers[0].env[1].valueFrom.secretKeyRef.name
+      transforms:
+      - type: string
+        string:
+          fmt: "%s-db"
     - fromFieldPath: spec.id
       toFieldPath: spec.forProvider.manifest.spec.template.spec.containers[0].env[2].valueFrom.secretKeyRef.name
+      transforms:
+      - type: string
+        string:
+          fmt: "%s-db"
     - fromFieldPath: spec.id
       toFieldPath: spec.forProvider.manifest.spec.template.spec.containers[0].env[3].valueFrom.secretKeyRef.name
+      transforms:
+      - type: string
+        string:
+          fmt: "%s-db"
     - fromFieldPath: spec.id
       toFieldPath: spec.forProvider.manifest.spec.template.spec.containers[0].env[4].value
+      transforms:
+      - type: string
+        string:
+          fmt: "%s-db"
     - fromFieldPath: spec.id
       toFieldPath: spec.providerConfigRef.name
     readinessChecks:
@@ -128,8 +148,8 @@ spec:
             spec:
               type: ClusterIP
               ports:
-              - port: 80
-                targetPort: 80
+              - port: 3000
+                targetPort: 3000
                 protocol: TCP
                 name: http
     patches:
