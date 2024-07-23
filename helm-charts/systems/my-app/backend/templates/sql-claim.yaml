@@ -5,18 +5,25 @@
 # data:
 #   password: cG9zdGdyZXM=
 # ---
-# apiVersion: devopstoolkitseries.com/v1alpha1
-# kind: SQLClaim
-# metadata:
-#   name: {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-app-claim
-# spec:
-#   id: {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-db
-#   compositionSelector:
-#     matchLabels:
-#       provider: {{ .Values.database.cloudProvider }}
-#       db: {{ .Values.database.dbProvider }}
-#   parameters:
-#     version: "13"
-#     size: small
-#     databases:
-#       - {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-db
+
+# Create the secret with the database password with the following command:
+# kubectl create secret generic -n my-app-dev my-app-backend-dev-database-password --from-literal=password=postgres
+
+
+apiVersion: devopstoolkitseries.com/v1alpha1
+kind: SQLClaim
+metadata:
+  name: {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-app-claim
+spec:
+  id: {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-db
+  compositionSelector:
+    matchLabels:
+      provider: {{ .Values.database.cloudProvider }}
+      db: {{ .Values.database.dbProvider }}
+  parameters:
+    version: "13"
+    size: small
+    databases:
+      - {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-db-1
+      - {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-db-2
+      - {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-db-3

@@ -225,52 +225,52 @@ spec:
 #########################################################################
 # SQL
 #########################################################################
-  - name: sql
-    base:
-      apiVersion: kubernetes.crossplane.io/v1alpha1
-      kind: Object
-      spec:
-        forProvider:
-          manifest:
-            apiVersion: devopstoolkitseries.com/v1alpha1
-            kind: SQLClaim
-            # spec:
-            #   compositionSelector:
-            #     matchLabels:
-            #       provider: aws
-            #       db: postgresql
-            #   parameters:
-            #     version: "13"
-            #     size: small
-            #     databases:
-            #       - silly-demo-db
-    patches:
-    - fromFieldPath: spec.id
-      toFieldPath: metadata.name
-      transforms:
-      - type: string
-        string:
-          fmt: "%s-sql"
-    - fromFieldPath: spec.id
-      toFieldPath: spec.forProvider.manifest.metadata.labels.app
-    - fromFieldPath: spec.id
-      toFieldPath: spec.forProvider.manifest.spec.id
-    - fromFieldPath: spec.parameters.database.cloudProvider
-      toFieldPath: spec.forProvider.manifest.spec.compositionSelector.matchLabels.provider
-    - fromFieldPath: spec.parameters.database.dbProvider
-      toFieldPath: spec.forProvider.manifest.spec.compositionSelector.matchLabels.db
-    - fromFieldPath: spec.parameters.database.version
-      toFieldPath: spec.forProvider.manifest.spec.parameters.version
-    - fromFieldPath: spec.parameters.database.size
-      toFieldPath: spec.forProvider.manifest.spec.parameters.size
-    - fromFieldPath: spec.parameters.database.databases
-      toFieldPath: spec.forProvider.manifest.spec.parameters.databases
-    # - fromFieldPath: spec.parameters.db.type
-    #   toFieldPath: spec.forProvider.manifest.spec.parameters.version
-    - fromFieldPath: spec.id
-      toFieldPath: spec.providerConfigRef.name
-    - fromFieldPath: spec.parameters.namespace
-      toFieldPath: spec.forProvider.manifest.metadata.namespace
+  # - name: sql
+  #   base:
+  #     apiVersion: kubernetes.crossplane.io/v1alpha1
+  #     kind: Object
+  #     spec:
+  #       forProvider:
+  #         manifest:
+  #           apiVersion: devopstoolkitseries.com/v1alpha1
+  #           kind: SQLClaim
+  #           # spec:
+  #           #   compositionSelector:
+  #           #     matchLabels:
+  #           #       provider: aws
+  #           #       db: postgresql
+  #           #   parameters:
+  #           #     version: "13"
+  #           #     size: small
+  #           #     databases:
+  #           #       - silly-demo-db
+  #   patches:
+  #   - fromFieldPath: spec.id
+  #     toFieldPath: metadata.name
+  #     transforms:
+  #     - type: string
+  #       string:
+  #         fmt: "%s-sql"
+  #   - fromFieldPath: spec.id
+  #     toFieldPath: spec.forProvider.manifest.metadata.labels.app
+  #   - fromFieldPath: spec.id
+  #     toFieldPath: spec.forProvider.manifest.spec.id
+  #   - fromFieldPath: spec.parameters.database.cloudProvider
+  #     toFieldPath: spec.forProvider.manifest.spec.compositionSelector.matchLabels.provider
+  #   - fromFieldPath: spec.parameters.database.dbProvider
+  #     toFieldPath: spec.forProvider.manifest.spec.compositionSelector.matchLabels.db
+  #   - fromFieldPath: spec.parameters.database.version
+  #     toFieldPath: spec.forProvider.manifest.spec.parameters.version
+  #   - fromFieldPath: spec.parameters.database.size
+  #     toFieldPath: spec.forProvider.manifest.spec.parameters.size
+  #   - fromFieldPath: spec.parameters.database.databases
+  #     toFieldPath: spec.forProvider.manifest.spec.parameters.databases
+  #   # - fromFieldPath: spec.parameters.db.type
+  #   #   toFieldPath: spec.forProvider.manifest.spec.parameters.version
+  #   - fromFieldPath: spec.id
+  #     toFieldPath: spec.providerConfigRef.name
+  #   - fromFieldPath: spec.parameters.namespace
+  #     toFieldPath: spec.forProvider.manifest.metadata.namespace
 
 
 
