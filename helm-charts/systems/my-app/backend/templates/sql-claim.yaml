@@ -21,9 +21,9 @@ spec:
       provider: {{ .Values.database.cloudProvider }}
       db: {{ .Values.database.dbProvider }}
   parameters:
-    version: "13"
-    size: small
-    databases:
-      - {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-db-1
-      - {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-db-2
-      - {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-db-3
+    version: {{ .Values.database.version }}
+    size: {{ .Values.database.size }}
+    databases: {{ .Values.database.databases }}
+      # - {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-db-1
+      # - {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-db-2
+      # - {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-db-3
