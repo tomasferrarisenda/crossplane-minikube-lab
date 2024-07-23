@@ -1,10 +1,11 @@
 apiVersion: apiextensions.crossplane.io/v1
 kind: Composition
 metadata:
-  name: app-backend-db-aws
+  name: app-backend
   labels:
-    type: backend-db-aws
-    location: local
+    type: backend
+    # type: backend-db-aws
+    # location: local
 spec:
   compositeTypeRef:
     apiVersion: devopstoolkitseries.com/v1alpha1

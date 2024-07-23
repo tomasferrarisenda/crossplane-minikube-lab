@@ -323,6 +323,10 @@ spec:
     - fromFieldPath: spec.claimRef.namespace
       toFieldPath: spec.forProvider.passwordSecretRef.namespace
 
+
+#########################################################################
+# SQL
+#########################################################################
   - name: sql-config
     base:
       apiVersion: postgresql.sql.crossplane.io/v1alpha1
