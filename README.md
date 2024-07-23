@@ -26,7 +26,6 @@ CAN BE LISTED WITH kubectl get pkgrev
 3. CompositeResources
 
 
-we dont use packages in this example so you can see all the moving parts. We could use packages like this.....
 
 
 kubectl --namespace my-cluster \
@@ -45,6 +44,7 @@ kubectl --namespace my-cluster \
 
 - [Introduction](#introduction)
 - [Prerequisites](#prerequisites)
+- [Initial Setup](#initial-setup)
 - [Initial Setup](#initial-setup)
 - [Run Backstage Locally](#run-backstage-locally)
 - [Customising Backstage](#customising-backstage)
@@ -73,6 +73,22 @@ We'll be using a GitOps methodology with Helm, ArgoCD and the App Of Apps Patter
 
 </br>
 </br>
+
+# WHAT WE'LL BE DEPLOYING
+
+A frontend and backend services within the minikube cluster
+
+The backend will include an RDS instance deployed in AWS.
+
+For the sake of simplicity and understability, we'll keep the backend's [AppClaim](/helm-charts/systems/my-app/backend/templates/sql-claim.yaml) and [SQLClaim](/helm-charts/systems/my-app/backend/templates/app-claim.yaml) separated. We could have included an SQLClaim within the [Backend App composition](/helm-charts/infra/crossplane-compositions/application/backend-composition.yaml).
+
+A standalone EKS cluster. This cluster is unrelated to our my-app applciation, 
+
+we dont use packages in this example so you can see all the moving parts. We could use packages like this.....
+
+</br>
+</br>
+
 
 # INITIAL SETUP
 
