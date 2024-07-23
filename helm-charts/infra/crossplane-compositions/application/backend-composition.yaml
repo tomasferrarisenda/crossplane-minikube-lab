@@ -210,7 +210,7 @@ spec:
       transforms:
         - type: string
           string:
-            fmt: "%s-ingress"
+            fmt: "%s-hpa"
     - fromFieldPath: spec.id
       toFieldPath: spec.forProvider.manifest.metadata.name
     - fromFieldPath: spec.parameters.namespace
