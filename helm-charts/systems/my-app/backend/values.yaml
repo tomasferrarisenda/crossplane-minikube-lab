@@ -2,6 +2,8 @@ system: my-app
 
 service: backend
 
+port: 3000
+
 deployment:
   image:
     repository: tferrari92/my-app-backend # This value was modified by the initial-setup script
@@ -10,7 +12,6 @@ deployment:
     system: my-app
     service: backend
     backstage.io/kubernetes-id: my-app-backend
-
 
 database:
   cloudProvider: aws

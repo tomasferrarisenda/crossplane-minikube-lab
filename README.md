@@ -88,6 +88,8 @@ Let's take a look a the my-app backend deployment. On the helm chart, we'll find
 what does the app backed composition include?
 ProviderConfig (required for deploying Kuberntes objects within this same Minikube cluster), NECESITO EL PROVIDER Q SE INSTALA EN EL CHART DE PROVIDERSA??????deplyomenty and service. we could have nested within the backend composition an sql composition For the sake of simplicity and understability, we'll keep the backend's [AppClaim](/helm-charts/systems/my-app/backend/templates/sql-claim.yaml) and [SQLClaim](/helm-charts/systems/my-app/backend/templates/app-claim.yaml) separated. We could have included an SQLClaim within the [Backend App composition](/helm-charts/infra/crossplane-compositions/application/backend-composition.yaml).
 
+the 
+
 ## EKS Cluster
 A standalone EKS cluster. This cluster is unrelated to our my-app applciation, 
 

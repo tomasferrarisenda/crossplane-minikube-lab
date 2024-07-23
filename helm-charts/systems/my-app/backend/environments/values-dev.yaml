@@ -8,6 +8,3 @@ deployment:
   labels:
     environment: dev
     app: my-app-backend-dev
-    
-  # env:
-  #   db_host: my-app-redis-dev-master 
