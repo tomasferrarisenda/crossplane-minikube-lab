@@ -13,9 +13,9 @@ spec:
     namespace: {{ .Values.system }}-{{ .Values.environment }}
     image: {{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}
     port: {{ .Values.port }}
-    dbSecret: {{ .Values.host }}
-      name: silly-demo-db-password
-      namespace: {{ .Values.system }}-{{ .Values.environment }}
+    # dbSecret: {{ .Values.host }}
+    #   name: silly-demo-db-password
+    #   namespace: {{ .Values.system }}-{{ .Values.environment }}
 
 
     # lo q dice eeste archivo es. Ey! quiero una composition basada en este appclain. Quiero la composition q tiene el label type: frontend
