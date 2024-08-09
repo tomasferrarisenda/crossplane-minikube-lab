@@ -5,19 +5,24 @@ Different Hyperscaler return different secrets. To find the DB endpoit in each o
 - For GCP run ```export HOST_KEY=host```
 - For Azure run ```export HOST_KEY=publicIP```
 
+Chose environment:
+- For dev run ```export ENVIRONMENT=dev```
+- For stage run ```export HOST_KEY=stage```
+- For prod run ```export HOST_KEY=prod```
+
 Then
 ```bash
 export DB=my-app-backend-dev-db
 
-export PGUSER=$(kubectl --namespace my-app-dev \
+export PGUSER=$(kubectl --namespace my-app-$ENVIRONMENT \
     get secret $DB --output jsonpath="{.data.username}" \
     | base64 -d)
 
-export PGPASSWORD=$(kubectl --namespace my-app-dev \
+export PGPASSWORD=$(kubectl --namespace my-app-$ENVIRONMENT \
     get secret $DB --output jsonpath="{.data.password}" \
     | base64 -d)
 
-export PGHOST=$(kubectl --namespace my-app-dev \
+export PGHOST=$(kubectl --namespace my-app-$ENVIRONMENT \
     get secret $DB --output jsonpath="{.data.$HOST_KEY}" \
     | base64 -d)
 

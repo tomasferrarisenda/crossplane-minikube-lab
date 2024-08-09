@@ -24,7 +24,10 @@ spec:
     # version: {{ .Values.database.version }}
     version: "13"
     size: {{ .Values.database.size }}
-    databases: {{ .Values.database.databases }}
+    databases:
+      {{- range .Values.databases }}
+      - {{ . }}
+      {{- end }}
 
 
       # - {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-db-1
