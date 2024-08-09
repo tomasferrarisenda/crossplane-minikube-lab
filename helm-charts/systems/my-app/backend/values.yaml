@@ -16,7 +16,7 @@ database:
   # includeDatabase: true
   cloudProvider: aws
   dbProvider: postgresql
-  version: 13
+  version: "13"
   size: small
   databases:
     - my-app-backend-db-1
