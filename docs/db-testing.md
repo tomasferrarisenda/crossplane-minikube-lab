@@ -1,14 +1,11 @@
 # TESTING SQL DEPLOYMENT
 
-### Different Hyperscaler return different secrets. To find the DB endpoit in each of them use:
+Different Hyperscaler return different secrets. To find the DB endpoit in each of them use:
+- For AWS run ```export HOST_KEY=endpoint```
+- For GCP run ```export HOST_KEY=host```
+- For Azure run ```export HOST_KEY=publicIP```
 
-For AWS use ```export HOST_KEY=endpoint```
-For GCP use ```export HOST_KEY=host```
-For Azure use ```export HOST_KEY=publicIP```
-
-
-### Run
-
+Then
 ```bash
 export DB=my-app-backend-dev-db
 
@@ -19,8 +16,6 @@ export PGUSER=$(kubectl --namespace my-app-dev \
 export PGPASSWORD=$(kubectl --namespace my-app-dev \
     get secret $DB --output jsonpath="{.data.password}" \
     | base64 -d)
-
-export HOST_KEY=endpoint
 
 export PGHOST=$(kubectl --namespace my-app-dev \
     get secret $DB --output jsonpath="{.data.$HOST_KEY}" \
