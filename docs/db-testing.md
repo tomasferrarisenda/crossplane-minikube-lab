@@ -41,7 +41,7 @@ psql --host $PGHOST -U $PGUSER -d postgres -p 5432
 ```bash
 \l
 ```
-Output should be:
+Output should be something like:
 ```sql
                                                           List of databases
    Name    |   Owner    | Encoding | Locale Provider |   Collate   |    Ctype    | ICU Locale | ICU Rules |     Access privileges
@@ -57,6 +57,10 @@ Output should be:
 
 Where "my-db" is the DB created through the composition.
 
+#### Delete postgresql-client pod:
+```bash
+kubectl delete pod postgresql-client
+```
 
 
 ### When deleting some resources will be left hanging

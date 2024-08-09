@@ -140,6 +140,10 @@ spec:
           fmt: "%s-db"
     - fromFieldPath: spec.id
       toFieldPath: spec.forProvider.manifest.spec.template.spec.containers[0].env[4].value
+      transforms:
+      - type: string
+        string:
+          fmt: "%s-db"
     - fromFieldPath: spec.id
       toFieldPath: spec.providerConfigRef.name
     readinessChecks:
