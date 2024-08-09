@@ -223,5 +223,7 @@ spec:
       toFieldPath: spec.forProvider.manifest.metadata.labels.app
     - fromFieldPath: spec.id
       toFieldPath: spec.forProvider.manifest.spec.scaleTargetRef.name
+    - fromFieldPath: spec.id
+      toFieldPath: spec.providerConfigRef.name
     readinessChecks:
       - type: None

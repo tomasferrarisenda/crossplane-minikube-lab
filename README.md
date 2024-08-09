@@ -91,7 +91,7 @@ ProviderConfig (required for deploying Kuberntes objects within this same Miniku
 junto c0n el   [SQLClaim](/helm-charts/systems/my-app/backend/templates/sql-claim.yaml) creamos el secret que contiene la password que el sqlclaim va a usar para ponerle a la db. ESTO DEBERIA ENCONTRA UNA FORMA MEJOR DE HACERLONAPRAS QUE NO QUED EEL SECRET AHI EXPUESTO
 
 
-ku
+kubectl port-forward -n my-app service/my-app-frontend 8081:80
 
 ## EKS Cluster
 A standalone EKS cluster. This cluster is unrelated to our my-app applciation, 

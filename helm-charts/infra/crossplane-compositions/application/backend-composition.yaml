@@ -27,7 +27,7 @@ spec:
       kind: ProviderConfig
       spec:
         credentials:
-          source: InjectedIdentity
+          source: InjectedIdentity # This means you want to use this composition within the same cluster.
     patches:
     - fromFieldPath: spec.id
       toFieldPath: metadata.name
