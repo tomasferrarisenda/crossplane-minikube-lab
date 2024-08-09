@@ -18,8 +18,8 @@ database:
   dbProvider: postgresql
   version: 13
   size: small
-  databases:
-    - my-app-backend-db-1
+  # databases:
+  #   - my-app-backend-db-1
     # ESTO NO FUNCIONA
     # - my-app-backend-db-2
     # - my-app-backend-db-3
