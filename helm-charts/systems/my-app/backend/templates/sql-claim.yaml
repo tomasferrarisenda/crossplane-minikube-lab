@@ -21,8 +21,8 @@ spec:
       provider: {{ .Values.database.cloudProvider }}
       db: {{ .Values.database.dbProvider }}
   parameters:
-    version: {{ .Values.database.version }}
-    # version: 13
+    # version: {{ .Values.database.version }}
+    version: "13"
     size: {{ .Values.database.size }}
     databases: {{ .Values.database.databases }}
 
