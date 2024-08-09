@@ -2,7 +2,7 @@ environment: dev
 
 deployment:
   image:
-    tag: 6
+    tag: 4
   replicas: 1
   labels:
     full-name: my-app-frontend-dev
