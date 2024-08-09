@@ -14,15 +14,15 @@ Then
 ```bash
 export DB=my-app-backend-db
 
-export PGUSER=$(kubectl --namespace my-app-$ENVIRONMENT \
+export PGUSER=$(kubectl --namespace my-app \
     get secret $DB --output jsonpath="{.data.username}" \
     | base64 -d)
 
-export PGPASSWORD=$(kubectl --namespace my-app-$ENVIRONMENT \
+export PGPASSWORD=$(kubectl --namespace my-app \
     get secret $DB --output jsonpath="{.data.password}" \
     | base64 -d)
 
-export PGHOST=$(kubectl --namespace my-app-$ENVIRONMENT \
+export PGHOST=$(kubectl --namespace my-app \
     get secret $DB --output jsonpath="{.data.$HOST_KEY}" \
     | base64 -d)
 
