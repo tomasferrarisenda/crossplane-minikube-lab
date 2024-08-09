@@ -25,7 +25,7 @@ spec:
     version: "13"
     size: {{ .Values.database.size }}
     databases:
-      {{- range .Values.databases }}
+      {{- range .Values.database.databases }}
       - {{ . }}
       {{- end }}
 
