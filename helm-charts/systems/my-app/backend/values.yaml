@@ -7,6 +7,8 @@ port: 3000
 deployment:
   image:
     repository: tferrari92/my-app-backend # This value was modified by the initial-setup script
+    tag: crossplane-minikube-lab
+  replicas: 1
     
   labels:
     system: my-app
@@ -23,3 +25,18 @@ database:
     # ESTO NO FUNCIONA
     # - my-app-backend-db-2
     # - my-app-backend-db-3
+
+
+
+    
+
+# environment: dev
+
+# deployment:
+#   image:  
+#     tag: crossplane-minikube-lab
+#   replicas: 1
+
+#   labels:
+#     environment: dev
+#     app: my-app-backend-dev

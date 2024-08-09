@@ -2,18 +2,18 @@
 apiVersion: devopstoolkitseries.com/v1alpha1
 kind: AppClaim
 metadata:
-  name: {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-appclaim
+  name: {{ .Values.system }}-{{ .Values.service }}-appclaim
   labels:
     {{- range $key, $value := .Values.deployment.labels }}
     {{ $key }}: {{ $value | quote }}
     {{- end }}
 spec:
-  id: {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}
+  id: {{ .Values.system }}-{{ .Values.service }}
   compositionSelector:
     matchLabels:
       type: backend
   parameters:
-    namespace: {{ .Values.system }}-{{ .Values.environment }}
+    namespace: {{ .Values.system }}
     image: {{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}
     port: {{ .Values.port }}
 

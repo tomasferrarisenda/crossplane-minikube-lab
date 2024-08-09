@@ -6,7 +6,25 @@ port: 80
 
 deployment:
   image:
-    repository: tferrari92/my-app-frontend # This value was modified by the initial-setup python script
+    repository: tferrari92/my-app-frontend 
+    tag: 5
+  replicas: 1
   labels:
     system: my-app
     service: frontend
+
+
+# environment: dev
+
+# deployment:
+  # image:
+  #   tag: 5
+  # replicas: 1
+  # labels:
+  #   full-name: my-app-frontend-dev
+
+# configmap: 
+#   nginxConf: |-
+#     location /api {
+#         proxy_pass http://my-app-backend-dev-service:3000/; 
+#     }
