@@ -20,5 +20,5 @@ database:
   size: small
   databases:
     - my-app-backend-db-1
-    - my-app-backend-db-2
-    - my-app-backend-db-3
+    # - my-app-backend-db-2
+    # - my-app-backend-db-3
