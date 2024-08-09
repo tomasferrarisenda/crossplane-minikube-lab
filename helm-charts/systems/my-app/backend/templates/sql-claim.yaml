@@ -13,7 +13,7 @@ data:
 apiVersion: devopstoolkitseries.com/v1alpha1
 kind: SQLClaim
 metadata:
-  name: {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-sql-claim
+  name: {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-sqlclaim
 spec:
   id: {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-db
   compositionSelector:
