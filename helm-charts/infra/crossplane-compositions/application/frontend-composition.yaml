@@ -53,14 +53,14 @@ spec:
                   - name: frontend
                     ports:
                     - containerPort: 80
-                    livenessProbe:
-                      httpGet:
-                        path: /
-                        port: 80
-                    readinessProbe:
-                      httpGet:
-                        path: /
-                        port: 80
+                    # livenessProbe:
+                    #   httpGet:
+                    #     path: /
+                    #     port: 80
+                    # readinessProbe:
+                    #   httpGet:
+                    #     path: /
+                    #     port: 80
                     resources:
                       limits:
                         cpu: 250m
@@ -89,10 +89,10 @@ spec:
       toFieldPath: spec.forProvider.manifest.spec.template.spec.containers[0].image
     - fromFieldPath: spec.parameters.port
       toFieldPath: spec.forProvider.manifest.spec.template.spec.containers[0].ports[0].containerPort
-    - fromFieldPath: spec.parameters.port
-      toFieldPath: spec.forProvider.manifest.spec.template.spec.containers[0].livenessProbe.httpGet.port
-    - fromFieldPath: spec.parameters.port
-      toFieldPath: spec.forProvider.manifest.spec.template.spec.containers[0].readinessProbe.httpGet.port
+    # - fromFieldPath: spec.parameters.port
+    #   toFieldPath: spec.forProvider.manifest.spec.template.spec.containers[0].livenessProbe.httpGet.port
+    # - fromFieldPath: spec.parameters.port
+    #   toFieldPath: spec.forProvider.manifest.spec.template.spec.containers[0].readinessProbe.httpGet.port
     - fromFieldPath: spec.id
       toFieldPath: spec.providerConfigRef.name
     readinessChecks:
