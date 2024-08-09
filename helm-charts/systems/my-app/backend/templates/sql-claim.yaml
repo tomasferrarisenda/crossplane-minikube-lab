@@ -13,7 +13,7 @@ data:
 apiVersion: devopstoolkitseries.com/v1alpha1
 kind: SQLClaim
 metadata:
-  name: {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-app-claim
+  name: {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-sql-claim
 spec:
   id: {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-db
   compositionSelector:
@@ -25,7 +25,7 @@ spec:
     size: {{ .Values.database.size }}
     databases: {{ .Values.database.databases }}
 
-    
+
       # - {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-db-1
       # - {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-db-2
       # - {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-db-3
