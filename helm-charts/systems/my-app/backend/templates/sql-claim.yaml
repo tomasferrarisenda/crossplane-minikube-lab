@@ -22,14 +22,10 @@ spec:
       db: {{ .Values.database.dbProvider }}
   parameters:
     version: {{ .Values.database.version  | quote }} 
-    # version: "13"
     size: {{ .Values.database.size }}
+
+    # ESTE PARAMETRO NO SE QUE FUNCION CUMPLE PORQ SE CREA UNA SOLA DB CON EL NOMBRE DEL ID
     # databases:
     #   {{- range .Values.database.databases }}
     #   - {{ . }}
     #   {{- end }}
-
-
-      # - {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-db-1
-      # - {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-db-2
-      # - {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-db-3
