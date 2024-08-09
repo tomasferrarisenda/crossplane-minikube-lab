@@ -1,21 +1,21 @@
 apiVersion: devopstoolkitseries.com/v1alpha1
 kind: AppClaim
 metadata:
-  name: {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}-appclaim
+  name: {{ .Values.system }}-{{ .Values.service }}-appclaim
   labels:
     app-owner: tferrari
 spec:
-  id: {{ .Values.system }}-{{ .Values.service }}-{{ .Values.environment }}
+  id: {{ .Values.system }}-{{ .Values.service }}
   compositionSelector:
     matchLabels:
       type: frontend
   parameters:
-    namespace: {{ .Values.system }}-{{ .Values.environment }}
+    namespace: {{ .Values.system }}
     image: {{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}
     port: {{ .Values.port }}
     # dbSecret: {{ .Values.host }}
     #   name: silly-demo-db-password
-    #   namespace: {{ .Values.system }}-{{ .Values.environment }}
+    #   namespace: {{ .Values.system }}
 
 
     # lo q dice eeste archivo es. Ey! quiero una composition basada en este appclain. Quiero la composition q tiene el label type: frontend
