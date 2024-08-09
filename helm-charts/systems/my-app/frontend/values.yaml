@@ -7,7 +7,7 @@ port: 80
 deployment:
   image:
     repository: tferrari92/my-app-frontend 
-    tag: 5
+    tag: 6
   replicas: 1
   labels:
     system: my-app
