@@ -62,7 +62,6 @@ Where "my-db" is the DB created through the composition.
 kubectl delete pod postgresql-client
 ```
 
-
 ### When deleting some resources will be left hanging
 ```bash
 kubectl patch database.postgresql.sql.crossplane.io $DB \
