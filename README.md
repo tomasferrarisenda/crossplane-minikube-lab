@@ -77,9 +77,14 @@ We'll be using a GitOps methodology with Helm, ArgoCD and the App Of Apps Patter
 # WHAT WE'LL BE DEPLOYING
 
 ## My-App
-A frontend and backend services within the minikube cluster
+My-app is composed of a frontend service and backend service.
 
-The backend will include an RDS instance deployed in AWS.
+### Frontend service
+The fronted service is com
+
+### Backend service
+
+The backend service will include the backend application but also it's required database will include an RDS instance deployed in AWS.
 
 Let's take a look a the my-app backend deployment. On the helm chart, we'll find only two manifest templates: [app-claim.yaml](/helm-charts/systems/my-app/backend/templates/app-claim.yaml) and [sql-claim.yaml](/helm-charts/systems/my-app/backend/templates/sql-claim.yaml)
 
