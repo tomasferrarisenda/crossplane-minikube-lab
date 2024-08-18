@@ -21,21 +21,3 @@ spec:
     name: cluster
   # providerConfigRef: # Se esta usando default pero no se donde cambiarlo
   #   name: aws
-
-
-
-# apiVersion: devopstoolkitseries.com/v1alpha1
-# kind: ClusterClaim
-# metadata:
-#   name: cluster-01
-# spec:
-#   id: cluster-01
-#   compositionSelector:
-#     matchLabels:
-#       provider: aws
-#       cluster: eks
-#   parameters:
-#     nodeSize: small
-#     minNodeCount: 3
-
-# #
