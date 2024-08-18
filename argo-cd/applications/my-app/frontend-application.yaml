@@ -12,9 +12,6 @@ spec:
   project: default
   source:
     path: helm-charts/my-app/frontend
-    # helm:
-    #   valueFiles:
-    #     - environments/values.yaml
     repoURL: https://github.com/tomasferrarisenda/crossplane-minikube-lab.git # This value was modified by the initial-setup python script
   syncPolicy:
     automated:
