@@ -17,8 +17,7 @@
     <a  href="/docs/readme_es.md">Versión en Español</a>
 </p> -->
 
-PROVIDERS, CONFIGURATIONS AND FUNCTIONS ARE ALL TYPES of "PACKAGES"
-CAN BE LISTED WITH kubectl get pkgrev
+
 
 
 1. CompositeResourceDefinitions: Extend k8s API by creating CRDs. Define what parameters are available and required for a Composition that uses this XRD
@@ -109,8 +108,14 @@ kubectl port-forward -n my-app service/my-app-frontend 8081:80
 A standalone EKS cluster. This cluster is unrelated to our my-app applciation, 
 
 
-## No Packages
-we dont use packages in this example so you can see all the moving parts. We could use packages like this.....
+</br>
+</br>
+
+
+# CROSSPLANE PACKAGES
+We wont use Crossplane Packages in this example so you can see all the moving parts. We could use packages like this.....
+PROVIDERS, CONFIGURATIONS AND FUNCTIONS ARE ALL TYPES of "PACKAGES"
+CAN BE LISTED WITH kubectl get pkgrev
 
 
 </br>
