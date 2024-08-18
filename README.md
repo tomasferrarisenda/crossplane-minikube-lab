@@ -107,6 +107,9 @@ kubectl port-forward -n my-app service/my-app-frontend 8081:80
 ## EKS Cluster
 A standalone EKS cluster. This cluster is unrelated to our my-app applciation, 
 
+Comes with Prometheus and ArgoCD
+GitOps ready: https://youtu.be/AVHyltqgmSU?si=bV2U4OLCUFrgNhym
+
 
 </br>
 </br>
