@@ -80,20 +80,26 @@ We'll be using a GitOps methodology with Helm, ArgoCD and the App Of Apps Patter
 My-app is composed of a frontend service and backend service.
 
 ### Frontend service
-The fronted service is com
+The fronted service is composed of a Deployment, a Service, an Horizontal Pod Autoscaler and...  But if we look at the [helm chart](/helm-charts/my-app/frontend/), we'll find only the [AppClaim manifest](/helm-charts/systems/my-app/backend/templates/app-claim.yaml). Why is this?
+
+We are using Crossplane to define what a frontend application looks like. Through the use of the [Frontend Application Composition](/helm-charts/infra/crossplane-compositions/application/frontend-composition.yaml) we can define exactly how a frontend application must be deployed. [Here's a video](https://youtu.be/eIQpGXUGEow?si=nsm-uR1AyGZFbf6y) further explaining this concept.
 
 ### Backend service
+The backend service will include the backend appication but also it's required database.
 
-The backend service will include the backend application but also it's required database will include an RDS instance deployed in AWS.
+Let's take a look a the my-app backend helm chart. In this case we'll find two manifest templates: [app-claim.yaml](/helm-charts/my-app/backend/templates/app-claim.yaml) and [sql-claim.yaml](/helm-charts/my-app/backend/templates/sql-claim.yaml)
 
-Let's take a look a the my-app backend deployment. On the helm chart, we'll find only two manifest templates: [app-claim.yaml](/helm-charts/systems/my-app/backend/templates/app-claim.yaml) and [sql-claim.yaml](/helm-charts/systems/my-app/backend/templates/sql-claim.yaml)
+As for the frontend, we have a [Backend Application Composition](/helm-charts/infra/crossplane-compositions/application/backend-composition.yaml) which defines how a backend application is deployed.
 
+But in this case we also have the [SQL Claim](/helm-charts/my-app/backend/templates/sql-claim.yaml).
+junto c0n el  [SQLClaim](/helm-charts/systems/my-app/backend/templates/sql-claim.yaml) creamos el secret que contiene la password que el sqlclaim va a usar para ponerle a la db. ESTO DEBERIA ENCONTRA UNA FORMA MEJOR DE HACERLONAPRAS QUE NO QUED EEL SECRET AHI EXPUESTO
+ RDS instance deployed in AWS.
 
 
 what does the app backed composition include?
 ProviderConfig (required for deploying Kuberntes objects within this same Minikube cluster), NECESITO EL PROVIDER Q SE INSTALA EN EL CHART DE PROVIDERSA??????deplyomenty and service. we could have nested within the backend composition an sql composition For the sake of simplicity and understability, we'll keep the backend's [AppClaim](/helm-charts/systems/my-app/backend/templates/app-claim.yaml) and [SQLClaim](/helm-charts/systems/my-app/backend/templates/sql-claim.yaml) separated. We could have included an SQLClaim within the [Backend App composition](/helm-charts/infra/crossplane-compositions/application/backend-composition.yaml).
 
-junto c0n el   [SQLClaim](/helm-charts/systems/my-app/backend/templates/sql-claim.yaml) creamos el secret que contiene la password que el sqlclaim va a usar para ponerle a la db. ESTO DEBERIA ENCONTRA UNA FORMA MEJOR DE HACERLONAPRAS QUE NO QUED EEL SECRET AHI EXPUESTO
+
 
 
 
