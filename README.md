@@ -43,12 +43,12 @@ kubectl --namespace my-cluster \
 
 - [Introduction](#introduction)
 - [Prerequisites](#prerequisites)
+- [Some Crossplane Concepts](#some-crossplane-concepts)
+- [What We'll Be Deploying](#what-well-be-deploying)
+  - [My App](#my-app)
+  - [Standalone EKS Cluster](#standalone-eks-cluster)
 - [Initial Setup](#initial-setup)
-- [Initial Setup](#initial-setup)
-- [Run Backstage Locally](#run-backstage-locally)
-- [Customising Backstage](#customising-backstage)
-  - [OAuth With GitHub](#oauth-with-github)
-- [Run Backstage In Minikube](#run-backstage-in-minikube)
+- [Run Lab](#run-backstage-locally)
 - [Conclusion](#conclusion)
 
 </br>
@@ -78,7 +78,6 @@ We'll be using a GitOps methodology with Helm, ArgoCD and the App Of Apps Patter
 <p title="Diagrama fundamentales" align="center"> <img src="https://i.imgur.com/rBLyH8I.jpg"> </p>
 
 # WHAT WE'LL BE DEPLOYING
-
 ## My-App
 My-app is composed of a frontend service and backend service.
 
@@ -108,7 +107,7 @@ ProviderConfig (required for deploying Kuberntes objects within this same Miniku
 
 kubectl port-forward -n my-app service/my-app-frontend 8081:80
 
-## EKS Cluster
+## Standalone EKS Cluster
 A standalone EKS cluster. This cluster is unrelated to our my-app applciation, 
 
 Comes with Prometheus and ArgoCD
@@ -167,41 +166,7 @@ git push
 </br>
 </br>
 
-
-</br>
-</br>
-
-# RUN BACKSTAGE IN MINIKUBE
-Ok, lets run Backstage in Minikube. `Ctrl + C` to kill the `yarn dev` process.
-
-We first need to build and push the Backstage Docker image. Login to Docker
-```bash
-docker login
-```
-
-Then run the build-push-image.sh script
-```bash
-chmod +x build-push-image.sh
-./build-push-image.sh
-```
-
-`cd` to the root of the repo:
-```bash
-cd ../..
-```
-
-Update the value of backstage.image.tag in the backstage values-custom.yaml 
-```bash
-vim helm-charts/infra/backstage/values-custom.yaml
-```
-
-Save and push to repo
-```bash
-git add .
-git commit -m "Updated backstage image tag"
-git push
-```
-
+# RUN LAB
 If you have a Minikube cluster running, delete it first with `minikube delete`.
 
 Now run the deploy-in-minikube.sh script to get everything setup:
@@ -211,7 +176,7 @@ chmod +x deploy-in-minikube.sh
 ```
 </br>
 
-Now go to localhost:8080 on your browser and Voilá!
+Now go to localhost:8080 on your browser to access the ArgoCD UI. You'll get the credentials from deploy script.
 
 You should be able to access ArgoCD UI on localhost:8081 server to check everything is runnin fine.
 
