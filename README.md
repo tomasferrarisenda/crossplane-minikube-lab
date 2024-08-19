@@ -160,7 +160,7 @@ chmod +x build-and-push-package.sh
 ./build-and-push-package.sh
 ```
 
-
+Explicar despues como uno utilizaria el package
 
 </br>
 </br>
