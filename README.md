@@ -73,6 +73,10 @@ We'll be using a GitOps methodology with Helm, ArgoCD and the App Of Apps Patter
 </br>
 </br>
 
+# SOME CROSSPLANE CONCEPTS
+
+<p title="Diagrama fundamentales" align="center"> <img src="https://i.imgur.com/rBLyH8I.jpg"> </p>
+
 # WHAT WE'LL BE DEPLOYING
 
 ## My-App
@@ -116,6 +120,8 @@ GitOps ready: https://youtu.be/AVHyltqgmSU?si=bV2U4OLCUFrgNhym
 
 
 # CROSSPLANE PACKAGES
+<p title="Diagrama packages" align="center"> <img src="https://i.imgur.com/5CW8ZyB.jpg"> </p>
+
 We wont use Crossplane Packages in this example so you can see all the moving parts. We could use packages like this.....
 PROVIDERS, CONFIGURATIONS AND FUNCTIONS ARE ALL TYPES of "PACKAGES"
 CAN BE LISTED WITH kubectl get pkgrev
