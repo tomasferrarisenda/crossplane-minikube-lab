@@ -47,8 +47,9 @@ kubectl --namespace my-cluster \
 - [What We'll Be Deploying](#what-well-be-deploying)
   - [My App](#my-app)
   - [Standalone EKS Cluster](#standalone-eks-cluster)
+- [Crossplane Packages](#crossplane-packages)
 - [Initial Setup](#initial-setup)
-- [Run Lab](#run-backstage-locally)
+- [Run Lab](#run-lab)
 - [Conclusion](#conclusion)
 
 </br>
