@@ -20,9 +20,6 @@
 
 
 
-1. CompositeResourceDefinitions: Extend k8s API by creating CRDs. Define what parameters are available and required for a Composition that uses this XRD
-2. Compositions
-3. CompositeResources
 
 
 HACER SCRIPT DE DESTROY
@@ -96,6 +93,12 @@ Will only create a ClusterClaim manifest. They could create a Cluster but we usu
 What will happen next:
 1. 
 
+
+
+1. CompositeResourceDefinitions: Extend k8s API by creating CRDs. Define what parameters are available and required for a Composition that uses this XRD
+2. Compositions
+3. CompositeResources
+
 </br>
 </br>
 
@@ -129,7 +132,6 @@ ProviderConfig (required for deploying Kuberntes objects within this same Miniku
 
 
 
-kubectl port-forward -n my-app service/my-app-frontend 8081:80
 
 </br>
 
@@ -213,6 +215,9 @@ chmod +x deploy-in-minikube.sh
 </br>
 
 Now go to localhost:8080 on your browser to access the ArgoCD UI. You'll get the credentials from deploy script.
+
+kubectl port-forward -n my-app service/my-app-frontend 8081:80
+
 
 </br>
 </br>
