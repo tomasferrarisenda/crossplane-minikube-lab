@@ -153,6 +153,14 @@ CAN BE LISTED WITH kubectl get pkgrev
 
 INCLUIR COMANDOS PARA CREAR Y SUBIR PACKAGE
 
+```bash
+cd crossplane-configuration-packages
+
+chmod +x build-and-push-package.sh
+./build-and-push-package.sh
+```
+
+
 
 </br>
 </br>
