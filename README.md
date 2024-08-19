@@ -78,6 +78,22 @@ We'll be using a GitOps methodology with Helm, ArgoCD and the App Of Apps Patter
 
 <p title="Diagrama fundamentales" align="center"> <img src="https://i.imgur.com/rBLyH8I.jpg"> </p>
 
+Wont go into details.
+
+### Operations team
+
+1. Create CompositeResourceDefinition: 
+2. Create Composition: 
+3. Create Providers:
+4. Create ProviderConfig
+
+### Dev team
+
+Will only create a ClusterClaim manifest. They could create a Cluster but we usually want resources to be namescpace scoped so we use CLusterClaim over Cluster.
+
+What will happen next:
+1. 
+
 </br>
 </br>
 
@@ -133,6 +149,8 @@ We wont use Crossplane Packages in this example so you can see all the moving pa
 PROVIDERS, CONFIGURATIONS AND FUNCTIONS ARE ALL TYPES of "PACKAGES"
 CAN BE LISTED WITH kubectl get pkgrev
 
+INCLUIR COMANDOS PARA CREAR Y SUBIR PACKAGE
+
 
 </br>
 </br>
@@ -186,85 +204,12 @@ chmod +x deploy-in-minikube.sh
 
 Now go to localhost:8080 on your browser to access the ArgoCD UI. You'll get the credentials from deploy script.
 
-You should be able to access ArgoCD UI on localhost:8081 server to check everything is runnin fine.
-
-Grafana will also be exposed on localhost:8082. The credentials are:
-- user: admin
-- password: automate-all-the-things
-
 </br>
 </br>
 
 # CONCLUSION
-That's it! This is your own Backstage implementation now. 
-
-Feel free to add your own plugins, templates and whatever else you might think of. Customize it to fit your own needs.
+That's it! This is your own Crossplane implementation now. 
 
 For more DevOps and Platform Engineering goodness, check out my [Automate All The Things](https://github.com/tferrari92/automate-all-the-things) project.
 
 Happy automating!
-
-
-
-
-<!-- 
-##### Info interesante:
-https://backstage.spotify.com/learn/backstage-for-all/software-catalog/4-modeling/
-https://backstage.spotify.com/learn/standing-up-backstage/putting-backstage-into-action/8-integration/
-https://backstage.spotify.com/learn/onboarding-software-to-backstage/onboarding-software-to-backstage/5-register-component/
-
-##### Info datallada sobre objetos de tipo template:
-https://backstage.io/docs/features/software-catalog/descriptor-format#kind-template
-##### Aqui las acciones q puede hacer el template:
-http://localhost:3000/create/actions
-##### Para acciones q no existen default:
-https://backstage.io/docs/features/software-templates/writing-custom-actions/
-##### A note on RepoUrlPicker
-In the template.yaml file of the template we created, you must have noticed ui:field: RepoUrlPicker in the spec.parameters field. This is known as Scaffolder Field Extensions.
-
-These field extensions are used in taking certain types of input from users like GitHub repository URL, teams registered in catalog for the owners field, etc. Such field extensions can also be customized for your own organization. See https://backstage.io/docs/features/software-templates/writing-custom-field-extensions/
-
-##### Aca hay ejemplos de templates:
-https://github.com/backstage/software-templates
-
-##### Software Templates at Spotify
-At Spotify, we have dozens of Software Templates. We divide them into several disciples like Backend, Frontend, Data pipelines, etc. Inside Spotify, we also have stakeholder groups for Web, Backend, Data, etc. separately. These Software Templates are hosted on our internal GitHub enterprise, maintained and reviewed by the concerned experts in the discipline.
-
-The Technical Architecture Group (TAG) at Spotify is the body responsible for reducing fragmentation by deciding on the various Backend, Frontend, Data frameworks to be used inside Spotify. Hence, new Software Templates with completely new frameworks are carefully discussed and reviewed.
-
-Our Software Templates are fundamental to the concept of Golden Paths at Spotify. The Golden Path is the opinionated and supported way to build something (for example, build a backend service, put up a website, create a data pipeline). The Golden Path Tutorial is a step-by-step instructions that walks you through this opinionated and supported path.
-
-The blessed tools — those on the Golden Path — are visualized in the Explore section of Backstage. Read more https://engineering.atspotify.com/2020/08/how-we-use-golden-paths-to-solve-fragmentation-in-our-software-ecosystem/
-
-
-
-Searching through App Metadata with Backstage Search
-The Backstage Search feature allows you to integrate custom search engine providers. You can also use any of the three default search engines: Lunr, Postgres, or Elasticsearch. Lunr is the current search engine enabled on your Backstage app. However, the documentation does not recommend this setup for a production environment because this search engine may not perform indexing well enough when the volume of app metadata and documentation increases.
-https://www.kosli.com/blog/implementing-backstage-2-using-the-core-features/
-
-Optimizing Search Highlighting
-For a better search highlighting experience, add these lines of config to app-config.yaml:
-```yaml
-search:
-  pg:
-    highlightOptions:
-      useHighlight: true
-      maxWord: 35 # Used to set the longest headlines to output. The default value is 35.
-      minWord: 15 # Used to set the shortest headlines to output. The default value is 15.
-      shortWord: 3 # Words of this length or less will be dropped at the start and end of a headline, unless they are query terms. The default value of three (3) eliminates common English articles.
-      highlightAll: false # If true the whole document will be used as the headline, ignoring the preceding three parameters. The default is false.
-      maxFragments: 0 # Maximum number of text fragments to display. The default value of zero selects a non-fragment-based headline generation method. A value greater than zero selects fragment-based headline generation (see the linked documentation above for more details).
-      fragmentDelimiter: ' ... ' # Delimiter string used to concatenate fragments. Defaults to " ... ".
-```
-https://www.kosli.com/blog/implementing-backstage-2-using-the-core-features/ -->
-
-
-
-<!-- VER PORQ EL RESOURCE REDIS NO APARECE BAJO OWNERSHIP DEL GRUPO REDIS
-PORQ My-App Redis Subteam no muestra ownership de resource redis??? http://localhost:3000/catalog/default/group/my-app-redis-subteam
-# BACKSTAGE
-If the only change you've made is to the app-config.yaml (or other configuration files) and not to the application code itself, you don't necessarily need to run yarn build or yarn build:backend. The Docker image build process should copy the updated configuration files into the image.
-
-AGREGARLE DESCRIPTION AL REPO DE GHUB
-ARREGLAR DLO DE LOS TAGS EN LOS TEMPLATES DE CREAR SERVICIOS
-AGREGAR DEPENDS ON EN TEMPLATE -->
