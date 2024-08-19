@@ -78,6 +78,9 @@ We'll be using a GitOps methodology with Helm, ArgoCD and the App Of Apps Patter
 
 <p title="Diagrama fundamentales" align="center"> <img src="https://i.imgur.com/rBLyH8I.jpg"> </p>
 
+</br>
+</br>
+
 # WHAT WE'LL BE DEPLOYING
 ## My-App
 My-app is composed of a frontend service and backend service.
@@ -86,6 +89,8 @@ My-app is composed of a frontend service and backend service.
 The fronted service is composed of a Deployment, a Service, an Horizontal Pod Autoscaler and...  But if we look at the [helm chart](/helm-charts/my-app/frontend/), we'll find only the [AppClaim manifest](/helm-charts/systems/my-app/backend/templates/app-claim.yaml). Why is this?
 
 We are using Crossplane to define what a frontend application looks like. Through the use of the [Frontend Application Composition](/helm-charts/infra/crossplane-compositions/application/frontend-composition.yaml) we can define exactly how a frontend application must be deployed. [Here's a video](https://youtu.be/eIQpGXUGEow?si=nsm-uR1AyGZFbf6y) further explaining this concept.
+
+</br>
 
 ### Backend service
 The backend service will include the backend appication but also it's required database.
@@ -107,6 +112,8 @@ ProviderConfig (required for deploying Kuberntes objects within this same Miniku
 
 
 kubectl port-forward -n my-app service/my-app-frontend 8081:80
+
+</br>
 
 ## Standalone EKS Cluster
 A standalone EKS cluster. This cluster is unrelated to our my-app applciation, 
