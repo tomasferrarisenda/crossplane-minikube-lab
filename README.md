@@ -67,9 +67,11 @@ We'll be using a GitOps methodology with Helm, ArgoCD and the App Of Apps Patter
 
 # PREREQUISITES
 - Active DockerHub account
-- minikube installed
+- Minikube installed
 - kubectl installed
-- helm installed
+- Helm installed
+- (Optional) docker cli installed
+- (Optional) crossplane cli installed
 
 </br>
 </br>
@@ -142,7 +144,7 @@ GitOps ready: https://youtu.be/AVHyltqgmSU?si=bV2U4OLCUFrgNhym
 </br>
 
 
-# CROSSPLANE PACKAGES
+# (OPTIONAL) CROSSPLANE PACKAGES
 <p title="Diagrama packages" align="center"> <img src="https://i.imgur.com/5CW8ZyB.jpg"> </p>
 
 We wont use Crossplane Packages in this example so you can see all the moving parts. We could use packages like this.....
