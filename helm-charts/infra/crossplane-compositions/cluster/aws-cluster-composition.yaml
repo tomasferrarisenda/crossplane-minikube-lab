@@ -1103,34 +1103,6 @@ spec:
     - fromFieldPath: spec.id
       toFieldPath: spec.credentials.secretRef.name
 
-  # - name: crossplane
-  #   base:
-  #     apiVersion: helm.crossplane.io/v1beta1
-  #     kind: Release
-  #     spec:
-  #       rollbackLimit: 3
-  #       forProvider:
-  #         namespace: crossplane-system
-  #         chart:
-  #           name: crossplane
-  #           repository: https://charts.crossplane.io/stable
-  #           version: 1.9.0
-  #   patches:
-  #   - fromFieldPath: spec.id
-  #     toFieldPath: metadata.name
-  #     transforms:
-  #     - type: string
-  #       string:
-  #         fmt: '%s-crossplane'
-  #   - fromFieldPath: metadata.annotations
-  #     toFieldPath: metadata.annotations
-  #   - fromFieldPath: spec.id
-  #     toFieldPath: spec.providerConfigRef.name # Use the helm provider config
-  #     transforms:
-  #     - type: string
-  #       string:
-  #         fmt: '%s-helm'
-
   - name: argocd
     base:
       apiVersion: helm.crossplane.io/v1beta1
@@ -1163,60 +1135,88 @@ spec:
         string:
           fmt: '%s-helm'
 
-  - name: kube-prometheus-stack
-    base:
-      apiVersion: helm.crossplane.io/v1beta1
-      kind: Release
-      spec:
-        rollbackLimit: 3
-        forProvider:
-          namespace: kube-prometheus-stack
-          chart:
-            name: kube-prometheus-stack
-            repository: https://prometheus-community.github.io/helm-charts
-            version: 61.2.0
-          values:
-            # fullnameOverride: "kube-prometheus-stack"
+  # - name: crossplane
+  #   base:
+  #     apiVersion: helm.crossplane.io/v1beta1
+  #     kind: Release
+  #     spec:
+  #       rollbackLimit: 3
+  #       forProvider:
+  #         namespace: crossplane-system
+  #         chart:
+  #           name: crossplane
+  #           repository: https://charts.crossplane.io/stable
+  #           version: 1.9.0
+  #   patches:
+  #   - fromFieldPath: spec.id
+  #     toFieldPath: metadata.name
+  #     transforms:
+  #     - type: string
+  #       string:
+  #         fmt: '%s-crossplane'
+  #   - fromFieldPath: metadata.annotations
+  #     toFieldPath: metadata.annotations
+  #   - fromFieldPath: spec.id
+  #     toFieldPath: spec.providerConfigRef.name # Use the helm provider config
+  #     transforms:
+  #     - type: string
+  #       string:
+  #         fmt: '%s-helm'
 
-            # Since we are using EKS, control plane is abstracted from us so we don´t neet to manage or monitor etcd, scheduler or controller
-            defaultRules:
-              rules:
-                etcd: false
-                kubeScheduler: false
-            kubeControllerManager:
-              enabled: false
-            kubeEtcd:
-              enabled: false
-            kubeScheduler:
-              enabled: false
+  # - name: kube-prometheus-stack
+  #   base:
+  #     apiVersion: helm.crossplane.io/v1beta1
+  #     kind: Release
+  #     spec:
+  #       rollbackLimit: 3
+  #       forProvider:
+  #         namespace: kube-prometheus-stack
+  #         chart:
+  #           name: kube-prometheus-stack
+  #           repository: https://prometheus-community.github.io/helm-charts
+  #           version: 61.2.0
+  #         values:
+  #           # fullnameOverride: "kube-prometheus-stack"
 
-            prometheus:
-              prometheusSpec:
-                # Configure Persistent Volume for Prometheus storage to avoid data loss if pods are restarted
-                storageSpec:
-                  volumeClaimTemplate:
-                    spec:
-                      storageClassName: gp2
-                      accessModes:
-                      - ReadWriteOnce
-                      resources:
-                        requests:
-                          storage: 1Gi
-    patches:
-    - fromFieldPath: spec.id
-      toFieldPath: metadata.name
-      transforms:
-      - type: string
-        string:
-          fmt: '%s-kube-prometheus-stack'
-    - fromFieldPath: metadata.annotations
-      toFieldPath: metadata.annotations
-    - fromFieldPath: spec.id
-      toFieldPath: spec.providerConfigRef.name # Use the helm provider config
-      transforms:
-      - type: string
-        string:
-          fmt: '%s-helm'
+  #           # Since we are using EKS, control plane is abstracted from us so we don´t neet to manage or monitor etcd, scheduler or controller
+  #           defaultRules:
+  #             rules:
+  #               etcd: false
+  #               kubeScheduler: false
+  #           kubeControllerManager:
+  #             enabled: false
+  #           kubeEtcd:
+  #             enabled: false
+  #           kubeScheduler:
+  #             enabled: false
+
+  #           prometheus:
+  #             prometheusSpec:
+  #               # Configure Persistent Volume for Prometheus storage to avoid data loss if pods are restarted
+  #               storageSpec:
+  #                 volumeClaimTemplate:
+  #                   spec:
+  #                     storageClassName: gp2
+  #                     accessModes:
+  #                     - ReadWriteOnce
+  #                     resources:
+  #                       requests:
+  #                         storage: 1Gi
+  #   patches:
+  #   - fromFieldPath: spec.id
+  #     toFieldPath: metadata.name
+  #     transforms:
+  #     - type: string
+  #       string:
+  #         fmt: '%s-kube-prometheus-stack'
+  #   - fromFieldPath: metadata.annotations
+  #     toFieldPath: metadata.annotations
+  #   - fromFieldPath: spec.id
+  #     toFieldPath: spec.providerConfigRef.name # Use the helm provider config
+  #     transforms:
+  #     - type: string
+  #       string:
+  #         fmt: '%s-helm'
 
 
 #########################################################################
