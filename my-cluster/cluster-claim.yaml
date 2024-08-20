@@ -12,7 +12,7 @@ spec:
       provider: aws  # Possible values aws, azure, gcp
       cluster: eks # Possible values eks, aks, gke
   parameters:
-    nodeSize: xsmall # Possible values xsmall, small, medium, large, xlarge. Default value: xsmall
+    nodeSize: small # Possible values xsmall, small, medium, large, xlarge. Default value: xsmall
     # version: "1.20" # Default value: "1.29"
     # minNodeCount: 2 # Default value: 1
   writeConnectionSecretToRef:
