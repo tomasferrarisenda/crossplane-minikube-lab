@@ -6,8 +6,6 @@ metadata:
     provider: aws
     cluster: eks
 spec:
-  # writeConnectionSecretsToNamespace: crossplane-system
-
   compositeTypeRef:
     apiVersion: devopstoolkitseries.com/v1alpha1 # This is spec.group + spec.version from CompositeResourceDefinition
     kind: Cluster # This is spec.names.kind from CompositeResourceDefinition
@@ -68,10 +66,6 @@ spec:
       toFieldPath: metadata.annotations
     - fromFieldPath: spec.id
       toFieldPath: metadata.name
-      # transforms:
-      #   - type: string
-      #     string:
-      #       fmt: "%s"
 
   # Subnet Public A
   - name: public-subnet-a
@@ -118,12 +112,10 @@ spec:
         forProvider:
           region: us-east-1
           subnetIdSelector:
-            # matchControllerRef: true
             matchLabels:
               zone: us-east-1a
               access: public
           routeTableIdSelector:
-            # matchControllerRef: true
             matchLabels:
               access: public
           tags:
@@ -187,12 +179,10 @@ spec:
         forProvider:
           region: us-east-1
           subnetIdSelector:
-            # matchControllerRef: true
             matchLabels:
               zone: us-east-1b
               access: public
           routeTableIdSelector:
-            # matchControllerRef: true
             matchLabels:
               access: public
           tags:
@@ -226,7 +216,6 @@ spec:
           cidrBlock: 10.0.64.0/19
           vpcIdSelector:
             matchControllerRef: true
-          # mapPublicIPOnLaunch: true
           tags:
             Name: crossplane-minikube-lab-private-subnet-a
             kubernetes.io/role/internal-elb: "1" # Required for EKS
@@ -255,12 +244,10 @@ spec:
         forProvider:
           region: us-east-1
           subnetIdSelector:
-            # matchControllerRef: true
             matchLabels:
               zone: us-east-1a
               access: private
           routeTableIdSelector:
-            # matchControllerRef: true
             matchLabels:
               access: private
               zone: a
@@ -324,12 +311,10 @@ spec:
         forProvider:
           region: us-east-1
           subnetIdSelector:
-            # matchControllerRef: true
             matchLabels:
               zone: us-east-1b
               access: private
           routeTableIdSelector:
-            # matchControllerRef: true
             matchLabels:
               access: private
               zone: b
@@ -368,10 +353,6 @@ spec:
       toFieldPath: metadata.annotations
     - fromFieldPath: spec.id
       toFieldPath: metadata.name
-      # transforms:
-      #   - type: string
-      #     string:
-      #       fmt: "%s"
 
   # NAT Gateway A
   - name: nat-gateway-a
@@ -386,12 +367,10 @@ spec:
         forProvider:
           region: us-east-1
           subnetIdSelector:
-            # matchControllerRef: true
             matchLabels:
               zone: us-east-1a
               access: public
           allocationIdSelector:
-            # matchControllerRef: true
             matchLabels:
               zone: us-east-1a
               access: public
@@ -445,12 +424,10 @@ spec:
         forProvider:
           region: us-east-1
           subnetIdSelector:
-            # matchControllerRef: true
             matchLabels:
               zone: us-east-1b
               access: public
           allocationIdSelector:
-            # matchControllerRef: true
             matchLabels:
               zone: us-east-1b
               access: public
@@ -526,11 +503,9 @@ spec:
           region: us-east-1
           destinationCidrBlock: 0.0.0.0/0
           gatewayIdSelector:
-            # matchControllerRef: true
             matchLabels:
               gateway: internet
           routeTableIdSelector:
-            # matchControllerRef: true
             matchLabels:
               access: public
           tags:
@@ -581,12 +556,10 @@ spec:
           region: us-east-1
           destinationCidrBlock: 0.0.0.0/0
           natGatewayIdSelector:
-            # matchControllerRef: true
             matchLabels:
               gateway: nat
               zone: a
           routeTableIdSelector:
-            # matchControllerRef: true
             matchLabels:
               access: private
               zone: a
@@ -638,12 +611,10 @@ spec:
           region: us-east-1
           destinationCidrBlock: 0.0.0.0/0
           natGatewayIdSelector:
-            # matchControllerRef: true
             matchLabels:
               gateway: nat
               zone: b
           routeTableIdSelector:
-            # matchControllerRef: true
             matchLabels:
               access: private
               zone: b
@@ -677,10 +648,6 @@ spec:
       toFieldPath: metadata.annotations
     - fromFieldPath: spec.id
       toFieldPath: metadata.name
-      # transforms:
-      #   - type: string
-      #     string:
-      #       fmt: "%s"
 
   # Security Group Rule 1
   - name: security-group-rule-1
@@ -758,10 +725,6 @@ spec:
       toFieldPath: metadata.annotations
     - fromFieldPath: spec.id
       toFieldPath: metadata.name
-      # transforms:
-      #   - type: string
-      #     string:
-      #       fmt: "%s"
 
 #########################################################################
 # IAM
@@ -815,7 +778,6 @@ spec:
         forProvider:
           policyArn: arn:aws:iam::aws:policy/AmazonEKSClusterPolicy
           roleSelector:
-            # matchControllerRef: true
             matchLabels:
               role: controlplane
           tags:
@@ -878,7 +840,6 @@ spec:
         forProvider:
           policyArn: arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
           roleSelector:
-            # matchControllerRef: true
             matchLabels:
               role: nodegroup
           tags:
@@ -902,7 +863,6 @@ spec:
         forProvider:
           policyArn: arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
           roleSelector:
-            # matchControllerRef: true
             matchLabels:
               role: nodegroup
           tags:
@@ -926,7 +886,6 @@ spec:
         forProvider:
           policyArn: arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
           roleSelector:
-            # matchControllerRef: true
             matchLabels:
               role: nodegroup
           tags:
@@ -954,9 +913,8 @@ spec:
       spec:
         forProvider:
           region: us-east-1
-          version: "1.29"
+          version: "1.30"
           roleArnSelector:
-            # matchControllerRef: true
             matchLabels:
               role: controlplane
           vpcConfig:
@@ -966,8 +924,6 @@ spec:
                 matchControllerRef: true
           tags:
             Name: crossplane-minikube-lab-cluster
-        # writeConnectionSecretToRef:
-        #   namespace: crossplane-system
     patches:
     - fromFieldPath: metadata.annotations
       toFieldPath: metadata.annotations
