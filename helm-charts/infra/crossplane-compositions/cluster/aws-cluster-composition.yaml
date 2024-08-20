@@ -1040,8 +1040,8 @@ spec:
             matchLabels:
               access: private
           scalingConfig:
-            - desiredSize: 1
-              minSize: 1
+            - desiredSize: 2
+              minSize: 2
               maxSize: 10
           instanceTypes:
             - t3.small
