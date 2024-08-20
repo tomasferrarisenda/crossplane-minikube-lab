@@ -1034,11 +1034,9 @@ spec:
           clusterNameSelector:
             matchControllerRef: true
           nodeRoleArnSelector:
-            # matchControllerRef: true
             matchLabels:
               role: nodegroup
           subnetIdSelector:
-            # matchControllerRef: true
             matchLabels:
               access: private
           scalingConfig:
@@ -1046,7 +1044,7 @@ spec:
               minSize: 1
               maxSize: 10
           instanceTypes:
-            - t3.nano
+            - t3.small
           diskSize: 5
           tags:
             Name: crossplane-minikube-lab-nodegroup
@@ -1055,16 +1053,11 @@ spec:
       toFieldPath: metadata.annotations
     - fromFieldPath: spec.id
       toFieldPath: metadata.name
-      # transforms:
-      #   - type: string
-      #     string:
-      #       fmt: "%s"
     - fromFieldPath: spec.parameters.nodeSize
       toFieldPath: spec.forProvider.instanceTypes[0]
       transforms:
         - type: map
           map:
-            xsmall: t3.nano
             small: t3.small
             medium: t3.medium
             large: t3.large
@@ -1109,7 +1102,6 @@ spec:
       toFieldPath: spec.credentials.secretRef.namespace
     - fromFieldPath: spec.id
       toFieldPath: spec.credentials.secretRef.name
-    # readinessChecks:
 
   # - name: crossplane
   #   base:
@@ -1253,8 +1245,6 @@ spec:
       toFieldPath: spec.credentials.secretRef.namespace
     - fromFieldPath: spec.id
       toFieldPath: spec.credentials.secretRef.name
-    # readinessChecks:
-    # - type: None
 
   - name: ns-prod
     base:
