@@ -87,14 +87,18 @@ To better understand this, lets divide ourselves into two separete roles: the op
 
 What needs to happen in order for a developer to be able to deploy an EKS cluster by only creating a simple Kubernetes manifest?
 
+</br>
+
 ### Operations team
+To get everything set up the ops team needs to:
 1. Create CompositeResourceDefinition: This is a Crossplane resource that defines the schema of a "Composite Resource". In this case, the CompositeResourceDefinition named "Cluster" creates and defines the API schema for the "Cluster" Composite Resource.
 2. Create Composition: This is a Crossplane resource that defines how a Composite Resource should be composed or implemented. In this case, the "Composition" resource specifies that the "Cluster" Composite Resource is composed of a VPC, Subnet, InternetGateway, Role, Cluster, and NodeGroup resources.
 3. Create Providers: This is a Crossplane resource that represents an external service provider, in this case, the AWS provider. The "Provider" resource contains the necessary configuration, such as the AWS secret, to connect to the AWS API.
 4. Create ProviderConfig: This is a Crossplane resource that holds the configuration details for the Provider. In this case, it holds the aws-secret which is used to authenticate with AWS.
 
-### Development team
+</br>
 
+### Development team
 The dev team will only create and apply a [ClusterClaim manifest](/my-cluster/cluster-claim.yaml). They could use a Cluster manifest instead, but we usually want resources to be namespace scoped so we use ClusterClaim over Cluster.
 
 What will happen next:
