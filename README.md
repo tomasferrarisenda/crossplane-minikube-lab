@@ -92,8 +92,8 @@ What needs to happen in order for a developer to be able to deploy an EKS cluste
 ### Operations team
 To get everything set up the ops team needs to:
 1. Create CompositeResourceDefinition: This is a Crossplane resource that defines the schema of a "Composite Resource". In this case, the CompositeResourceDefinition named "Cluster" creates and defines the API schema for the "Cluster" Composite Resource.
-2. Create Composition: This is a Crossplane resource that defines how a Composite Resource should be composed or implemented. In this case, the "Composition" resource specifies that the "Cluster" Composite Resource is composed of a VPC, Subnet, InternetGateway, Role, Cluster, and NodeGroup resources.
-3. Create Providers: This is a Crossplane resource that represents an external service provider, in this case, the AWS provider. The "Provider" resource contains the necessary configuration, such as the AWS secret, to connect to the AWS API.
+2. Create Composition: This is a Crossplane resource that defines how a Composite Resource should be composed or implemented. In this case, the "Composition" resource specifies that the "Cluster" Composite Resource is composed of a VPC, Subnet, InternetGateway, Role, Cluster, and NodeGroup resources (there are many more but they didn't fit in the diagram).
+3. Create Providers: This is a Crossplane resource that represents an external service provider, in this case, the AWS provider. Providers enable Crossplane to provision infrastructure on an external service. Providers create new Kubernetes APIs and map them to external APIs. They bundle a set of Managed Resources and controllers to allow Crossplane to provision and manage the respective infrastructure resources.
 4. Create ProviderConfig: This is a Crossplane resource that holds the configuration details for the Provider. In this case, it holds the aws-secret which is used to authenticate with AWS.
 
 </br>
