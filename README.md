@@ -44,7 +44,7 @@ kubectl --namespace my-cluster \
 - [What We'll Be Deploying](#what-well-be-deploying)
   - [My App](#my-app)
   - [Standalone EKS Cluster](#standalone-eks-cluster)
-- [Crossplane Packages](#optional-crossplane-packages)
+- [(Optional) Crossplane Packages](#optional-crossplane-packages)
 - [Initial Setup](#initial-setup)
 - [Run Lab](#run-lab)
 - [Conclusion](#conclusion)
@@ -63,10 +63,10 @@ We'll be using a GitOps methodology with Helm, ArgoCD and the App Of Apps Patter
 </br>
 
 # PREREQUISITES
-- Active DockerHub account
 - Minikube installed
 - kubectl installed
 - Helm installed
+- (Optional) Active DockerHub account
 - (Optional) docker cli installed
 - (Optional) crossplane cli installed
 
@@ -75,29 +75,42 @@ We'll be using a GitOps methodology with Helm, ArgoCD and the App Of Apps Patter
 
 # SOME CROSSPLANE CONCEPTS
 
+Crossplne is complex, so we won't go into the nitty gritty on this README. I suggest you take a look at Victor Farcic's ongoing [Crossplane Tutorial series](https://www.youtube.com/playlist?list=PLyicRj904Z99i8U5JaNW5X3AyBvfQz-16).
+
+Let's take a look ath this diagram and explain some concepts that I think are fundamental.
+
 <p title="Diagrama fundamentales" align="center"> <img src="https://i.imgur.com/rBLyH8I.jpg"> </p>
 
-Wont go into details.
+In this diagram we are using the deployment of an EKS cluster as an example but this could be any other resource, including an application as we wil see further down the line.
+
+To better understand this, lets divide ourselves into two separete roles: the operations role and the developers role.
+
+What needs to happen in order for a developer to be able to deploy an EKS cluster by only creating a simple Kubernetes manifest?
 
 ### Operations team
-
-1. Create CompositeResourceDefinition: 
-2. Create Composition: 
-3. Create Providers:
-4. Create ProviderConfig
+1. Create CompositeResourceDefinition: This is a Crossplane resource that defines the schema of a "Composite Resource". In this case, the CompositeResourceDefinition named "Cluster" creates and defines the API schema for the "Cluster" Composite Resource.
+2. Create Composition: This is a Crossplane resource that defines how a Composite Resource should be composed or implemented. In this case, the "Composition" resource specifies that the "Cluster" Composite Resource is composed of a VPC, Subnet, InternetGateway, Role, Cluster, and NodeGroup resources.
+3. Create Providers: This is a Crossplane resource that represents an external service provider, in this case, the AWS provider. The "Provider" resource contains the necessary configuration, such as the AWS secret, to connect to the AWS API.
+4. Create ProviderConfig: This is a Crossplane resource that holds the configuration details for the Provider. In this case, it holds the aws-secret which is used to authenticate with AWS.
 
 ### Dev team
 
-Will only create a ClusterClaim manifest. They could create a Cluster but we usually want resources to be namescpace scoped so we use CLusterClaim over Cluster.
+Will only create and apply a [ClusterClaim manifest](/my-cluster/cluster-claim.yaml). They could create a Cluster manifest instead, but we usually want resources to be namespace scoped so we use ClusterClaim over Cluster.
 
 What will happen next:
-1. 
-
-
-
-1. CompositeResourceDefinitions: Extend k8s API by creating CRDs. Define what parameters are available and required for a Composition that uses this XRD
-2. Compositions
-3. CompositeResources
+1. Crossplane Observes the ClusterClaim: When the developer applies the ClusterClaim manifest, Crossplane's control loop detects the new resource and begins processing it.
+2. Crossplane Resolves the ClusterClaim: Crossplane looks at the ClusterClaim and resolves the references to the associated CompositeResourceDefinition (XRD) and Composition resources. This allows Crossplane to understand the desired state of the "Cluster" Composite Resource.
+3. Crossplane Provisions the Composite Resource: Based on the Composition resource, Crossplane starts provisioning the underlying resources that make up the "Cluster" Composite Resource. Some of the resources this includes are:
+- Provisioning the VPC
+- Provisioning the Subnet
+- Provisioning the InternetGateway
+- Provisioning the Role
+- Provisioning the Cluster itself
+- Provisioning the NodeGroup
+4. Crossplane Connects to the Provider: To provision the underlying resources, Crossplane needs to connect to the AWS provider. It uses the ProviderConfig resource to obtain the necessary AWS credentials (i.e., the aws-secret) to authenticate with the AWS API.
+5. Crossplane Monitors the Provisioning Process: As Crossplane provisions the underlying resources, it monitors their status and ensures that the "Cluster" Composite Resource is created successfully.
+6. Crossplane Updates the ClusterClaim Status: Once the "Cluster" Composite Resource is fully provisioned, Crossplane updates the status of the ClusterClaim to indicate that the resource has been created successfully.
+7. Developer Accesses the Cluster: The developer can now access the newly created "Cluster" Composite Resource and use it for their application deployment or other operations. For example, they can use the Cluster resource to deploy their application or perform other Kubernetes-related tasks.
 
 </br>
 </br>
