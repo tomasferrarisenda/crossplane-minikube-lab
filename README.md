@@ -123,6 +123,8 @@ What will happen next:
 ## My-App
 My-app is composed of a frontend service and backend service.
 
+</br>
+
 ### Frontend service
 The fronted service is composed of a Deployment, a Service, an Horizontal Pod Autoscaler and...  But if we look at the [helm chart](/helm-charts/my-app/frontend/), we'll find only the [AppClaim manifest](/helm-charts/systems/my-app/backend/templates/app-claim.yaml). Why is this?
 
