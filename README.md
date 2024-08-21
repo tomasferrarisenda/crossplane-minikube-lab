@@ -75,13 +75,13 @@ We'll be using a GitOps methodology with Helm, ArgoCD and the App Of Apps Patter
 
 # SOME CROSSPLANE CONCEPTS
 
-Crossplne is complex, so we won't go into the nitty gritty on this README. I suggest you take a look at Victor Farcic's ongoing [Crossplane Tutorial series](https://www.youtube.com/playlist?list=PLyicRj904Z99i8U5JaNW5X3AyBvfQz-16).
+Crossplne is complex, so we won't go into the nitty gritty on this README. I suggest you take a look at Victor Farcic's ongoing [Crossplane Tutorial series](https://www.youtube.com/playlist?list=PLyicRj904Z99i8U5JaNW5X3AyBvfQz-16) to get a good grasp of all Crossplane concepts.
 
-Let's take a look ath this diagram and explain some concepts that I think are fundamental.
+Let's take a look at this diagram and explain some concepts that I think are fundamental:
 
 <p title="Diagrama fundamentales" align="center"> <img src="https://i.imgur.com/rBLyH8I.jpg"> </p>
 
-In this diagram we are using the deployment of an EKS cluster as an example but this could be any other resource, including an application as we wil see further down the line.
+In this diagram we are using the deployment of an EKS cluster as an example, but this could be any other resource, including an application as we wil see further down the line.
 
 To better understand this, lets divide ourselves into two separete roles: the operations role and the developers role.
 
@@ -93,9 +93,9 @@ What needs to happen in order for a developer to be able to deploy an EKS cluste
 3. Create Providers: This is a Crossplane resource that represents an external service provider, in this case, the AWS provider. The "Provider" resource contains the necessary configuration, such as the AWS secret, to connect to the AWS API.
 4. Create ProviderConfig: This is a Crossplane resource that holds the configuration details for the Provider. In this case, it holds the aws-secret which is used to authenticate with AWS.
 
-### Dev team
+### Development team
 
-Will only create and apply a [ClusterClaim manifest](/my-cluster/cluster-claim.yaml). They could create a Cluster manifest instead, but we usually want resources to be namespace scoped so we use ClusterClaim over Cluster.
+The dev team will only create and apply a [ClusterClaim manifest](/my-cluster/cluster-claim.yaml). They could use a Cluster manifest instead, but we usually want resources to be namespace scoped so we use ClusterClaim over Cluster.
 
 What will happen next:
 1. Crossplane Observes the ClusterClaim: When the developer applies the ClusterClaim manifest, Crossplane's control loop detects the new resource and begins processing it.
