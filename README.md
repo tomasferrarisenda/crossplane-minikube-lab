@@ -235,8 +235,9 @@ chmod +x deploy-in-minikube.sh
 
 Now go to localhost:8080 on your browser to access the ArgoCD UI. You'll get the credentials from deploy script.
 
+<!-- ```bash
 kubectl port-forward -n my-app service/my-app-frontend 8081:80
-
+``` -->
 
 </br>
 </br>
