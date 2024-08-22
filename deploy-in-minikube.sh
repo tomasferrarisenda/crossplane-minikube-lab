@@ -61,6 +61,12 @@ while [[ $(kubectl get database.postgresql.sql.crossplane.io/my-app-backend-db -
     sleep 5
 done
 
+echo "#############################################################################"
+echo "Database is ready!"
+echo "#############################################################################"
+echo " "
+echo " "
+
 # Port forward the frontend service
 kubectl port-forward -n my-app service/my-app-frontend 8081:80
 
