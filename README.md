@@ -233,7 +233,7 @@ chmod +x deploy-in-minikube.sh
 ```
 </br>
 
-It will take a while. Remember that this need to deploy a RDS...... possibly a little more than 10 minutes
+It will take a while. Remember that this need to deploy a RDS...... possibly a little more than 15 minutes
 Now go to localhost:8080 on your browser to access the ArgoCD UI. You'll get the credentials from deploy script.
 
 <!-- ```bash

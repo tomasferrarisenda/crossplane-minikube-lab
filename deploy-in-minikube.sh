@@ -50,7 +50,7 @@ kubectl port-forward -n argocd service/argocd-server 8080:443 &
 
 # Create a secret with AWS credentials
 echo -e "[default]\naws_access_key_id = $AWS_ACCESS_KEY_ID\naws_secret_access_key = $AWS_SECRET_ACCESS_KEY" > aws-credentials.txt
-# kubectl create ns crossplane-system
+kubectl create ns crossplane-system
 kubectl create secret generic aws-secret -n crossplane-system --from-file=creds=./aws-credentials.txt
 rm aws-credentials.txt
 

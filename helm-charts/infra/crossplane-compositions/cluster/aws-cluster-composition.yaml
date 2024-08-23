@@ -1001,7 +1001,7 @@ spec:
               maxSize: 10
           instanceTypes:
             - t3.small
-          diskSize: 5
+          diskSize: 20
           tags:
             Name: crossplane-minikube-lab-nodegroup
     patches:
