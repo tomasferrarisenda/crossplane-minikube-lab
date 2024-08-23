@@ -257,6 +257,16 @@ export KUBECONFIG=kubeconfig.yaml
 </br>
 </br>
 
+# DESTROY EVERYTHING
+
+```bash
+chmod +x destroy-everything.sh
+./destroy-everything.sh
+```
+
+</br>
+</br>
+
 # CONCLUSION
 That's it! This is your own Crossplane implementation now. 
 
