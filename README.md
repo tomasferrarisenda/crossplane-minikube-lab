@@ -260,6 +260,8 @@ export KUBECONFIG=kubeconfig.yaml
 # DESTROY EVERYTHING
 
 ```bash
+export KUBECONFIG=~/.kube/config
+
 chmod +x destroy-everything.sh
 ./destroy-everything.sh
 ```
