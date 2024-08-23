@@ -239,6 +239,21 @@ kubectl --namespace my-cluster \
 export KUBECONFIG=kubeconfig.yaml
 ```
 
+These are temporary.... to renew youll need to to go back to minikube and t
+```bash
+export KUBECONFIG=~/.kube/config
+```
+
+hen run again
+```bash
+kubectl --namespace my-cluster \
+    get secret my-cluster \
+    --output jsonpath="{.data.kubeconfig}" \
+    | base64 -d > kubeconfig.yaml
+
+export KUBECONFIG=kubeconfig.yaml
+```
+
 </br>
 </br>
 
