@@ -248,3 +248,4 @@ That's it! This is your own Crossplane implementation now.
 For more DevOps and Platform Engineering goodness, check out my [Automate All The Things](https://github.com/tferrari92/automate-all-the-things) project.
 
 Happy automating!
+
