@@ -165,7 +165,6 @@ spec:
           string:
             fmt: "%s-public-b"
 
-
   # Route Table Association Public B
   - name: rta-public-b
     base:
@@ -929,33 +928,10 @@ spec:
       toFieldPath: metadata.annotations
     - fromFieldPath: spec.id
       toFieldPath: metadata.name
-      # transforms:
-      #   - type: string
-      #     string:
-      #       fmt: "%s"
-
-    # - fromFieldPath: spec.id
-    #   toFieldPath: spec.writeConnectionSecretToRef.name
-    # - fromFieldPath: spec.claimRef.namespace # We tell it to create the secret in the same namespace as the claim
-    #   toFieldPath: spec.writeConnectionSecretToRef.namespace
     - fromFieldPath: spec.parameters.version
       toFieldPath: spec.forProvider.version
 
-    # - type: ToCompositeFieldPath
-    #   fromFieldPath: metadata.annotations[crossplane.io/external-name]
-    #   toFieldPath: status.clusterName
-    # - type: ToCompositeFieldPath
-    #   fromFieldPath: status.atProvider.status
-    #   toFieldPath: status.controlPlaneStatus
-    # # - fromFieldPath: spec.writeConnectionSecretToRef.namespace
-    # #   toFieldPath: spec.writeConnectionSecretToRef.namespace
-    # readinessChecks:
-    # - type: MatchString
-    #   fieldPath: status.atProvider.status
-    #   matchString: ACTIVE
-    # connectionDetails:
-    #   - fromConnectionSecretKey: kubeconfig
-
+  # Cluster Auth
   - name: clusterauth
     base:
       apiVersion: eks.aws.upbound.io/v1beta1
@@ -976,8 +952,6 @@ spec:
       toFieldPath: spec.writeConnectionSecretToRef.name
     connectionDetails:
       - fromConnectionSecretKey: kubeconfig
-
-
 
   # NodeGroup
   - name: eksnodegroup
@@ -1023,19 +997,13 @@ spec:
     - fromFieldPath: spec.parameters.minNodeCount
       toFieldPath: spec.forProvider.scalingConfig[0].desiredSize
 
-    # - type: ToCompositeFieldPath
-    #   fromFieldPath: status.atProvider.status
-    #   toFieldPath: status.nodePoolStatus
-    # readinessChecks:
-    # - type: MatchString
-    #   fieldPath: status.atProvider.status
-    #   matchString: ACTIVE
 
 
 #########################################################################
 # Helm
 #########################################################################
 
+  # Helm Provider Config
   - name: helm
     base:
       apiVersion: helm.crossplane.io/v1beta1
