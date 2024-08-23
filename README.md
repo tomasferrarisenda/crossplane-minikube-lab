@@ -17,23 +17,6 @@
     <a  href="/docs/readme_es.md">Versión en Español</a>
 </p> -->
 
-
-
-
-
-
-HACER SCRIPT DE DESTROY
-
-kubectl --namespace my-cluster \
-    get secret my-cluster \
-    --output jsonpath="{.data.kubeconfig}" \
-    | base64 -d
-
-kubectl --namespace my-cluster \
-    get secret my-cluster \
-    --output jsonpath="{.data.kubeconfig}" \
-    | base64 -d > kubeconfig.yaml
-
 <p title="Banner" align="center"> <img src="https://i.imgur.com/FbsIwSJ.jpg"> </p>
 
 # INDEX
@@ -233,12 +216,28 @@ chmod +x deploy-in-minikube.sh
 ```
 </br>
 
+## My-APP
+
 It will take a while. Remember that this need to deploy a RDS...... possibly a little more than 15 minutes
 Now go to localhost:8080 on your browser to access the ArgoCD UI. You'll get the credentials from deploy script.
 
 <!-- ```bash
 kubectl port-forward -n my-app service/my-app-frontend 8081:80
 ``` -->
+
+</br>
+
+## My-Cluster
+
+To switch from Minikube to the newly created EKS cluster run these commands:
+```bash
+kubectl --namespace my-cluster \
+    get secret my-cluster \
+    --output jsonpath="{.data.kubeconfig}" \
+    | base64 -d > kubeconfig.yaml
+
+export KUBECONFIG=kubeconfig.yaml
+```
 
 </br>
 </br>
