@@ -42,7 +42,8 @@ spec:
   #     toFieldPath: metadata.annotations
   #   - fromFieldPath: spec.id
   #     toFieldPath: metadata.name
-  
+
+
 #########################################################################
 # NETWORKING
 #########################################################################
@@ -998,6 +999,62 @@ spec:
       toFieldPath: spec.forProvider.scalingConfig[0].desiredSize
 
 
+#########################################################################
+# Kubernetes
+#########################################################################
+
+  # Kubernetes Provider Config
+  - name: kubernetes
+    base:
+      apiVersion: kubernetes.crossplane.io/v1alpha1
+      kind: ProviderConfig
+      spec:
+        credentials:
+          source: Secret
+          secretRef:
+            key: kubeconfig
+    patches:
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+      - type: string
+        string:
+          fmt: '%s-kubernetes'
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.claimRef.namespace
+      toFieldPath: spec.credentials.secretRef.namespace
+    - fromFieldPath: spec.id
+      toFieldPath: spec.credentials.secretRef.name
+
+  # Namespace production
+  - name: ns-prod
+    base:
+      apiVersion: kubernetes.crossplane.io/v1alpha1
+      kind: Object
+      spec:
+        forProvider:
+          manifest:
+            apiVersion: v1
+            kind: Namespace
+            metadata:
+              name: production
+    patches:
+    - fromFieldPath: spec.id
+      toFieldPath: metadata.name
+      transforms:
+      - type: string
+        string:
+          fmt: '%s-ns-prod'
+    - fromFieldPath: metadata.annotations
+      toFieldPath: metadata.annotations
+    - fromFieldPath: spec.id
+      toFieldPath: spec.providerConfigRef.name # Use the kubernetes provider config
+      transforms:
+      - type: string
+        string:
+          fmt: '%s-kubernetes'
+
 
 #########################################################################
 # Helm
@@ -1144,58 +1201,3 @@ spec:
   #     - type: string
   #       string:
   #         fmt: '%s-helm'
-
-
-#########################################################################
-# Kubernetes
-#########################################################################
-
-  - name: kubernetes
-    base:
-      apiVersion: kubernetes.crossplane.io/v1alpha1
-      kind: ProviderConfig
-      spec:
-        credentials:
-          source: Secret
-          secretRef:
-            key: kubeconfig
-    patches:
-    - fromFieldPath: spec.id
-      toFieldPath: metadata.name
-      transforms:
-      - type: string
-        string:
-          fmt: '%s-kubernetes'
-    - fromFieldPath: metadata.annotations
-      toFieldPath: metadata.annotations
-    - fromFieldPath: spec.claimRef.namespace
-      toFieldPath: spec.credentials.secretRef.namespace
-    - fromFieldPath: spec.id
-      toFieldPath: spec.credentials.secretRef.name
-
-  - name: ns-prod
-    base:
-      apiVersion: kubernetes.crossplane.io/v1alpha1
-      kind: Object
-      spec:
-        forProvider:
-          manifest:
-            apiVersion: v1
-            kind: Namespace
-            metadata:
-              name: production
-    patches:
-    - fromFieldPath: spec.id
-      toFieldPath: metadata.name
-      transforms:
-      - type: string
-        string:
-          fmt: '%s-ns-prod'
-    - fromFieldPath: metadata.annotations
-      toFieldPath: metadata.annotations
-    - fromFieldPath: spec.id
-      toFieldPath: spec.providerConfigRef.name # Use the kubernetes provider config
-      transforms:
-      - type: string
-        string:
-          fmt: '%s-kubernetes'
